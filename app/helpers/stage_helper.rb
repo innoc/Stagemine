@@ -1,0 +1,3 @@
+module StageHelper
+
+end

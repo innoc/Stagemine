@@ -1,0 +1,258 @@
+<div class="season_sidebar1">
+<!--GET THE INTEREST SELECTED BY THE USER. IF THE USER SELECTS "ALL", GET A RNADOM INTEREST-->
+	<%if @filter_code == "all" or @filter_code == "fan" or @filter_code == "fanned" or @filter_code == "task"  or @filter_code.blank?%>
+		<%@interest_season = @random_interest[0]%>
+	<%else%>
+		<%@interest_season = Interest.find(@filter_code)%>
+	<%end%>
+
+	<% if @interest_season.blank?%>
+			<div class="season_header small_bark_font_method">
+					
+					    <div class="season_title_default second_font_method">
+						    <span class="third_font_method">No Interest selected</span><!--The name of the most recent active season-->
+						</div>
+						
+						<!--div class="unit_box">
+							
+						</div-->
+			</div> 
+			<div class="no_season small_bark_font_method">
+				<div class="default_season">
+					<%=image_tag('season_default.png')%>
+				</div>
+				<br/>
+				No interest 
+				<br/>
+				<div class="season_text third_font_method">
+					Select an Interest type to get an incredible Stagemine experience
+				</div>
+			</div>
+	
+	<%else%>
+	<%if Season.all.blank?%>
+	      	<div class="season_header small_bark_font_method">
+					
+					    <div class="season_title_default second_font_method">
+						    <span class="third_font_method">No Season</span><!--The name of the most recent active season-->
+						</div>
+						
+						<!--div class="unit_box">
+							
+						</div-->
+			</div> 
+			<div class="no_season small_bark_font_method">
+				<div class="default_season">
+					<%=image_tag('season_default.png')%>
+				</div>
+				<br/>
+					No season at this time
+				<br/>
+				<div class="season_text third_font_method">
+					A season a period were users accumulate points by enrolling in different dance leagues and tasks.
+				</div>
+			</div>
+	<%else%>
+		<%@user_contains = 1%>
+		<%@user_interest_id = UserInterest.where(["user_id = ? and interest_id = ?",1,1])%>
+	
+			
+		<%unless @interest_season.interest_name == "Random"%>
+	 		<div class="season_header small_bark_font_method">
+					<%@season_status = Season.where(status: "active")%> <!--Get the list of active seasons-->
+					    <div class="season_title second_font_method">
+							<%= link_to @interest_season.interest_name, see_all_path(:id=>@interest_season.id)%>
+							<br/>
+						    <span class="third_font_method">Dance league</span><!--The name of the most recent active season-->
+						</div>
+						<!--div class="unit_box">
+							
+						</div-->
+			</div> 				
+			<!--This markes the end of the season header-->
+			<%unless @season_status.blank? %> 	
+			  <div class="season_duration third_font_method">
+				<!--display the duration of the season-->
+					<%unless @season_status.blank?%>
+					<%=pluralize((@season_status[0].end_date.to_date - DateTime.now.to_date).to_i, 'day')%> remaining
+					<%end%>
+			  </div>
+			<%end%>
+			    <!--End of duration-->
+					<%if Season.league_table(@interest_season.leagues.last.id,@user.id) == 0 %> <!-- if the season has ended -->
+					
+					    <div class="season_cup small_bark_font_method second_font_method">
+							<%=image_tag('season_default.png')%><br/><br/>
+							League has ended
+						</div>
+					<%else%>
+				    	<% if @interest_season.leagues.last.users.blank? and @interest_season.leagues.last.season.status == "active"%> <!-- if no one is enrolled in the season-->
+						    <div class="season_cup small_bark_font_method second_font_method">
+								<%=image_tag('season_default.png')%><br/><br/>
+								<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
+							</div>
+						<%else%>
+							<%@season_table = Season.league_table(@interest_season.leagues.last.id,@user.id)%>  <!-- if league is active and poeple are enrolled-->
+							<%@place = 1%> 	<!--The represents the position of each user in the league-->
+						    <%hash=Hash[@season_table.map.with_index.to_a]%> 
+						    <!--
+						   	Convert the array into a hash to make it easier to find the index.The reason you need this index is prevent the  alogorithm from computing 
+						   	the last entry of the array. because the last entry is reserved for the user position
+						    -->
+							<%for league_user in @season_table.to(3)%>
+							  <%unless hash[league_user] == hash[@season_table.last]%>
+							        <%if @user.id == league_user%>
+							       		<%@user_contains = 0%>
+							       		<%@position = @place%> <!--IMPORTANT FOR THE USER POSITION WHEN SIDEBAR IS HIDDEN-->
+							        <%end%>
+							        <%league_user = User.find(league_user)%>
+									<div class="league_user">
+										<%unless league_user.userimage.blank?%>
+											<%@league_user_image = league_user.userimage%>
+										<%end%>
+								
+										<div class="league_user_detail">
+										<div class="league_rank_color" style="background-color:<%=league_user.rank.rankdetail.rank_color%>">
+									
+										</div>
+											<div class="unit_box">
+												<%=@place.ordinalize%>
+												<%@place = @place + 1%>
+											</div>
+											<div class="league_user_name second_font_method">
+												<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>
+												<span style="font-size:11px;", class="third_font_method">
+												<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.blank?%>
+													 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.point%><br/>
+												<%else%>
+												     Points: 0
+												<%end%>
+												</span>
+											</div>
+										</div>
+									    <div class=""><%if @league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@league_user_image.image.url(:smallest))%><%end%></div>
+									  	<%@league_user_image = nil%>
+									  </div>
+							  <%end%>
+						 <%end%><!--end of loop-->
+							<%unless @user_contains = 0%>	
+				   				<div class="user_position_domain small_bark_font_method">
+						 				<div class="brief_league_header">
+						 				Your current position is
+										</div>	
+										<% if hash[@user.id] == 0 %>
+									 			<!--do nothing-->
+									    <%else%>
+									        <% above_user = hash[@user.id] - 1%>				        
+									        <%unless @user.id == @season_table[@season_table.length-2]%>
+									         <% below_user = hash[@user.id] + 1%>
+									        <%end%>
+									        				        
+									        <%unless above_user.blank?%>
+									          		  <%@above_user = User.find(@season_table[above_user])%>				          
+											          <div class="league_user_transparent">
+																	<%unless @above_user.userimage.blank?%>
+																		<%@brief_league_user_image = @above_user.userimage%>
+																	<%end%>								
+																	<div class="league_user_detail">
+																			<div class="league_rank_color" style="background-color:<%=@above_user.rank.rankdetail.rank_color%>"></div>
+																			<div class="unit_box">
+																					<%position = hash[@above_user.id] + 1%>
+																					<%= position.ordinalize%>
+																			</div>
+																			
+																			<div class="league_user_name second_font_method">
+																					<%= link_to @above_user.user_name,portfolio_path(:id=>@above_user.id)%><br/>
+																					<span style="font-size:11px;", class="third_font_method">
+																					<%unless UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.blank?%>
+																						 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.point%><br/>
+																					<%else%>
+																					     Points: 0
+																					<%end%>
+																					</span>
+																			</div>
+																	</div>
+																    <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+														  			<%@brief_league_user_image  = nil%>
+												      </div>
+									        <%end%>
+									        
+									        
+									         	     <div class="league_user_nontransparent">
+															<%unless @user.userimage.blank?%>
+																<%@brief_league_user_image = @user.userimage%>
+															<%end%>
+													
+															<div class="league_user_detail">
+																	<div class="league_rank_color" style="background-color:<%=@user.rank.rankdetail.rank_color%>"></div>
+																	<div class="unit_box">
+																		<%@position = hash[@user.id] + 1%>
+																		<%=@position.ordinalize%>
+																	</div>
+																	<div class="league_user_name second_font_method">
+																		<%= link_to @user.user_name,portfolio_path(:id=>@user.id)%><br/>
+																		<span style="font-size:11px;", class="third_font_method">
+																		<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.blank?%>
+																			 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.point%><br/>
+																		<%else%>
+																		     Points: 0
+																		<%end%>
+																		</span>
+																	</div>
+															</div>
+														     <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+												  			 <%@brief_league_user_image  = nil%>
+												      </div>
+									        
+									        <%unless below_user.blank?%>
+									          <%@below_user = User.find(@season_table[below_user])%>
+								                <div class="league_user_transparent">
+														<%unless @below_user.userimage.blank?%>
+															<%@brief_league_user_image = @below_user.userimage%>
+														<%end%>
+														<div class="league_user_detail">
+															<div class="league_rank_color" style="background-color:<%=@below_user.rank.rankdetail.rank_color%>"></div>
+															<div class="unit_box">
+																<%position = hash[@below_user.id] + 1%>
+																<%= position.ordinalize%>
+															</div>
+															<div class="league_user_name second_font_method">
+																<%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%><br/>
+																<span style="font-size:11px;", class="third_font_method">
+																	<%unless UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.blank?%>
+																		 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.point%><br/>
+																	<%else%>
+																	     Points: 0
+																	<%end%>
+																</span>
+															</div>
+														</div>
+													     <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+											  			 <%@brief_league_user_image  = nil%>
+										       </div>
+							       </div>
+							   <%end%>
+						<%end%>
+	               <%end%>
+	               <div class="join_leave_league second_font_method">
+														<!--check if user is enrolled or not-->
+														<%unless @user.leagues.include?(@interest_season.leagues.last)%>
+											   				<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+											   			<%else%>
+											   				<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+											   			<%end%>
+											   			<%=link_to "See all", see_all_path(:id=>@interest_season.id)%>
+				   </div>
+			
+	
+	   		<%end%> <!--end of "if not user enrolled in a season"-->
+						   			
+		   <%end%> <!--end of "if season has ended"-->
+								   
+			    
+	<%end%> 
+	<%end%>
+	<%end%>
+</div>
+
+

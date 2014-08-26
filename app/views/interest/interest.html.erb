@@ -1,0 +1,34 @@
+<div class="interest_container">
+<%=image_tag("interest.png")%>	
+<br/>
+<br/>
+<br/>
+
+<div class="interest_box small_bark_font_method">
+Select an Interest type
+<div class="season_text third_font_method">
+Explore the full potential of StageMine by selecting your prefered dance style
+</div>
+<div class="interest_list">
+<%=form_tag create_interest_path do %>
+
+	<table width=70%, align=center>
+	<%@interest = Interest.all%>
+	<%for interest in @interest%>
+	<%unless interest.interest_name == "Random"%>
+		<tr>
+			<td>
+				<%=check_box_tag "interest[#{interest.id}]", interest.id,checked=false, :name => "interest_ids[]" %> <%=interest.interest_name%>
+			</td>
+		</tr>
+	<%end%>
+	<%end%>
+   </table>
+	
+	<div class="login_button">
+	<%=submit_tag "Submit",:class => 'submit_class'%>
+	</div>
+<%end%>
+</div>
+</div>
+</div>

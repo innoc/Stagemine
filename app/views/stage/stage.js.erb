@@ -1,0 +1,8 @@
+$(".stage_content").append("<%= escape_javascript(render("stage_feed")) %>");
+<% if (@feed.current_page < @feed.num_pages) %>
+  $('.pagination').replaceWith('<%= j paginate(@feed) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>
+
+

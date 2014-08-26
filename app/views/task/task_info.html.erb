@@ -1,0 +1,57 @@
+<div class="facebox_header">
+	Task
+</div>
+
+<div class="task_info">
+		<table border="0",align="center" cellspacing="10">
+			<tr>
+				<td>
+					<%=image_tag("task_sample.png")%>
+				</td>
+				
+				<td>
+					A task is an optional challenge to accomplish certain objectives. 
+					This list contains all the available tasks. 
+				</td>
+				
+			</tr>
+		</table>
+		
+		<br/>
+		<div class="task_list">
+		<div class="task_list_header">
+        list of tasks
+        </div>
+		
+			<%@count = 1%>
+			<%for task in @user_task%>
+				
+					
+					 <div class="task_count">
+						<%=@count%>
+					 </div>
+
+					<div class="task_details">
+     			 		<span class="task_title"><%=task.title%></span><br/>
+				 		<span class="task_description"><%=task.description%></span><br/><br/>
+				 		<span class="task_duration">
+				 		Duration <br/>
+				 		&nbsp;<%=task.start_date.strftime("%B %d, %Y")%>
+					 	&nbsp; - &nbsp; 	
+					 	&nbsp;<%=task.end_date.strftime("%B %d, %Y")%>	
+				 		</span>
+				 		<br/><br/>	 		
+     		 			<span class="task_interest">#<%=task.label.interest.interest_name%></span>&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "Click if Interest?", task_path(:id=>task.label.interest.interest_name)%> 
+				   </div>
+				   <br/>
+				   <br/>
+
+				   <%@count = @count + 1%>
+
+			<%end%>
+
+
+	
+		</div>
+	
+</div>

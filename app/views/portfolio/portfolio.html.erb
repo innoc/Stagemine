@@ -1,0 +1,294 @@
+<div class="sidebar_left">
+<div class="season_header">
+	  <div class="season_title_default second_font_method">
+			    <span class="third_font_method">Fans</span><!--The name of the most recent active season-->
+	  </div>
+</div>
+ <%if @fan.blank?%>
+		<div class="network_eeeeee">
+	   		<%=image_tag "network_eeeeee.png"%> <br/><br/> No Fans
+	   	</div>
+ <%else%>
+		<%for fan in @fan%>			
+		  	   <div class="league_user">
+		  	   		<%fan = User.find(fan.user_id)%>
+					<%unless fan.userimage.blank?%>
+						<%@winner_user_image = fan.userimage%>
+					<%end%>
+						<div class="league_user_detail">
+							<div class="league_rank_color" style="background-color:<%=fan.rank.rankdetail.rank_color%>"></div>
+							<div class="unit_box">
+								
+							</div>
+							<div class="league_user_name second_font_method">
+								<%= link_to fan.user_name,portfolio_path(:id=>fan.id)%><br/>
+								<span class="third_font_method">
+								<%=fan.rank.rankdetail.name%>
+								</span>								 
+							</div>
+					    </div>
+					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+				</div>
+		<%end%>
+ <%end%>
+</div>
+
+<div class="sidebar2">
+<div class="season_header">
+	  <div class="season_title_default second_font_method">
+			    <span class="third_font_method">Fanned</span><!--The name of the most recent active season-->
+	  </div>
+</div>
+
+   <%if @fanned.blank?%>
+		<div class="network_eeeeee">
+	   		<%=image_tag "network_eeeeee.png"%> <br/><br/> No Fanned
+	   	</div>
+   <%else%>
+		<%for fanned in @fanned%>			
+		  	   <div class="league_user">
+					<%unless fanned.userimage.blank?%>
+						<%@winner_user_image = fanned.userimage%>
+					<%end%>
+						<div class="league_user_detail">
+							<div class="league_rank_color" style="background-color:<%=fanned.rank.rankdetail.rank_color%>">	</div>
+							<div class="unit_box">
+								
+							</div>
+							<div class="league_user_name second_font_method">
+								<%= link_to fanned.user_name,portfolio_path(:id=>fanned.id)%><br/>
+								<span class="third_font_method">
+								<%=fanned.rank.rankdetail.name%>
+								</span>
+							</div>
+					    </div>
+					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+				</div>
+		<%end%>
+    <%end%>
+</div>  
+
+<div class="container_portfolio">
+ 
+ <div class="content">
+ 	<div class="portfolio_top second_font_method">
+ 			
+ 			<div class="portfolio_notification">	 			
+ 				<div class="portfolio_navigation">
+	 				<table border="0" width="100%" style="font-size: 0.8em;">
+	 						<tr>
+								<td>
+	 								<%if @fan.count == 1 %><%=link_to "Fan"%><%else%><%=link_to "Fans"%><%end%><br/><%=@fan.count%>
+	 							</td>
+	 							<td>
+	 							</td>
+	 							<td>
+	 								<%=link_to "Fanned"%> <br/><%=@fanned.count%>&nbsp;&nbsp;
+	 							</td>
+	 							<td>
+	 								<%=link_to "Post"%> <br/><%=@user.words.count + @user.videos.count + @user.pictures.count%>
+				
+	 							</td>
+	 						</tr>
+	 				</table>
+ 				</div>
+	 			
+	 			<div class="portfolio_page first_font_method">
+	 		    	<div class="dropdown_portfolio">
+	 		    	<!-- put edit for the same user-->
+	 		    	<%if @fan_check.blank?%>
+					&nbsp;&nbsp; <%=link_to "Fan",add_performer_path(:id=>@user.id)%> &nbsp;&nbsp;
+					<%else%>
+					&nbsp;&nbsp; <%=link_to "Unfan", disconnect_path(:fan_id=>@fan_check[0].id,:id=>@user.id)%> &nbsp;&nbsp;
+					<%end%>
+					</div> 			
+	 		    	&nbsp;&nbsp;<%=link_to "Message"%>&nbsp;&nbsp;
+	 		    </div>
+
+			</div> 
+ 			<div class="portfolio_username">
+			<%= link_to "#{@user.first_name} #{@user.last_name}", portfolio_path(:id=>@user.id) %><br/>
+			<span class="third_font_method"><%=@user.user_name%><br/><%=@user.rank.rankdetail.name%></span><br/>
+			</div>
+				 
+			<div class="portfolio_image_container" style="background-color:<%=@user.rank.rankdetail.rank_color%>">
+			<%unless @user.userimage.blank?%>
+				<%@season_user = @user.userimage%>
+			<%end%>	
+			    <div class="portfolio_user_image_smaller_container" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @season_user.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@season_user.image.url(:thumb))%><%end%>) no-repeat;" >
+					<div id="mybutton">
+						<%=form_for :userimage,:url=>{:controller=>"edit",:action=>"user_avatar"},:html=>{:multipart=>true,:id=>"new_image"} do |f|%>
+							<%= f.file_field :image, :id=>"myfile"%>
+							Update
+							<br/>
+						<%end%>
+					</div> 
+			    </div>
+			</div>	
+
+ 	</div>
+ 	<div class="portfolio_column second_font_method">
+ 		<div class="portfolio_small_column">
+ 			<div class="portfolio_fan ">
+ 				<%=image_tag "history.png"%><br/>
+ 				<span class="cheers_count">	<%=link_to"User History"%> </span>
+ 			</div>
+ 			<div class="portfolio_column_color portfolio_fanned">		
+				<div class="portfolio_cheer_number light_bold_font">
+			  		<%=@user_cheers%>
+			  	</div>				
+ 				<div class="cheers_dark_icon third_font_method">
+		  			&nbsp;<%image_tag "cheers_dark_icon_small.png"%>
+			  		<%if @user_cheers > 1%>People cheered you <%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered you<%end%><%end%>
+		  		</div> <!--end of cheers_dark-->
+
+ 			</div>
+ 		</div>
+ 		<div class="portfolio_small_column second_font_method">
+ 			<div class="badge_icon">
+ 			<%=image_tag "badge.png"%><br/><br/>
+ 			<%=link_to "Badges and Awards"%>
+ 			</div>
+ 		</div>
+ 		<div class="portfolio_small_column small_bark_font_method">
+ 			<div class="portfolio_header">
+ 				<div class="portfolio_interest_icon"><%=image_tag "interest_icon.png"%></div>
+ 				<div class="portfolio_dance_interests ">Dance interests</div> 						
+ 			</div>
+ 			<%if @user_interest.blank?%>
+ 				no interest 			
+ 			<%else%>
+ 			  <div class="portfolio_list">
+	 			<%for interest in @user_interest%>
+		 			<div class="interest_padding">
+				 			<%unless interest.interest_name == "Random"%>
+				 				<% @league_position = Season.league_table(interest.leagues.last.id,@user.id)%>
+				 			<%else%>
+				 				<%@league_position = 0%>
+				 			<%end%>
+				 			<%if @league_position == 0 or interest.leagues.last.users.blank?%>
+				 			     <%=link_to interest.interest_name,portfolio_path(:id=>@user.id,:interest=>interest.id)%><br/>
+				 			<%else%>
+					 			<%if @league_position.last == "blank"%>
+				 			     <%=link_to interest.interest_name,portfolio_path(:id=>@user.id,:interest=>interest.id)%><br/>
+					 			<%else%>
+						 			<%hash=Hash[@league_position.map.with_index.to_a]%> 
+						 			<%=link_to interest.interest_name, portfolio_path(:id=>@user.id,:interest=>interest.id)%> 
+						 			&nbsp;&nbsp; <span class="portfolio_interest_position_container"><%=@league_position.last[1..-1].to_i.ordinalize%></span> <br/>
+					 			<%end%>
+				 			<%end%>
+			 		</div>
+	 			<%end%>
+	 		  </div>	 			
+ 			<%end%>
+ 		</div>
+ 	</div>
+ 	<div class="portfolio_interest second_font_method">
+ 		&bull;<br/>
+ 		<%if @interest == 0%>
+ 			All Feeds<br/>
+ 		<%else%>
+ 			<%=link_to @interest.interest_name,portfolio_path(:id=>@user.id,:interest=>@interest.id)%><br/>
+ 		<%end%>
+ 		&bull;<br/>
+ 	</div>
+ 	<div class="portfolio_content">
+ 		<%if @feed.blank?%>
+ 			<div class="feed_icon">
+ 				<%= image_tag "feed.png"%><br/><br/>
+ 				No Feed
+ 			</div>
+ 		<%else%>
+	 		<%for feed in @feed%>
+	 			feed
+	 		<%end%>
+ 		<%end%>
+		
+ 	<div class="paginate_loader">
+	<%= image_tag("loading.gif")%>
+	</div>	
+    <span style="display;"><%=paginate @feed%></span>
+ 	</div>
+ 	
+
+
+	 <div id="columns">
+	 	   <div class="stage_content">		 	   
+				<script>
+				  jQuery(document).ready(function($) {
+				    $('a[rel*=facebox]').live("mousedown", function() { 
+					    $(this).unbind('click'); //everytime you click unbind the past event handled.
+					    $(this).facebox();
+					});
+					$('a[rel*=imagepop]').live("mousedown", function() { 
+					    $(this).unbind('click'); //everytime you click unbind the past event handled.
+					    $(this).imagepop();
+					});
+				  });
+				</script>
+				
+	  	   </div>
+	 </div>
+	</div>	
+   <!-- end .content -->
+
+	<div class="paginate_loader">
+	<%= image_tag("loading.gif")%>
+	</div>	
+
+  
+  <div class="footer small_bark_font_method">
+    <p>www.stagemine.com &copy; 2014</p> 
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+  
+ <script>
+$(document).ready(function(){ 
+	$('#myfile').change(function(evt) {
+       $('#new_image').submit();
+    });
+    
+	  $( ".portfolio_image_container" ).hover(
+		function() {
+	      $("#mybutton").show();
+	    }, function() {
+	       $("#mybutton").hide();
+	    }
+	  );  
+	 
+	  $('a[rel*=block]').block();
+	  if($(window).width() < 1035)
+	  { 
+		$('.sidebar_left').hide();
+	 	$('.sidebar2').hide(); 
+	 	$('.task_cover').show(); 
+	 	
+	  }	  
+	  else if($(window).width() > 1035)
+	  { 
+		$('.sidebar_left').show();
+	    $('.sidebar2').show();
+	    $('.task_cover').hide(); 
+	  }	  
+	$(window).resize(function() {
+	  // This will execute whenever the window is resized
+	 
+	  if($(window).width() < 1035)
+	  { 
+		$('.sidebar_left').hide();
+		$('.sidebar2').hide();
+		$('.task_cover').show(); 
+	  }
+	  else if($(window).width() > 1035)
+	  { 
+		$('.sidebar_left').show();
+		$('.sidebar2').show();
+		$('.task_cover').hide();	
+	  }	
+	});
+	});	
+	  $( ".task_header_title" ).fadeOut( "slow" );
+	  $( ".task_header_title" ).fadeIn( "slow" );	
+</script>
+
+

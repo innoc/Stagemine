@@ -1,0 +1,24 @@
+<div class="facebox_header">
+	Share a dance pose
+</div>
+
+<%=form_for @picture do |f|%>
+		
+		<div class="bold_font">
+				<div id="background_image_form">
+					<%= f.file_field :image, :id=>"myfile_background"%>
+					<br/>
+			    </div>
+	    </div>
+	    
+		<div class="image_text_field">
+				<%= f.text_area :description ,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"describe your image(optional)",:title=>"Describe your image"%>
+		</div>
+	
+		<div id="form_btn">	
+		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		</div>
+		<br/>
+			
+	
+<%end%>

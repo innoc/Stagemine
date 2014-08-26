@@ -1,0 +1,52 @@
+<script>
+$(document).ready(function(){ 
+  $('a[rel*=block]').block();
+});
+</script>
+
+<div class="container_large">
+<div class="task_menu">
+	<%=link_to "Welcome",task_path(:id=>"welcome") %><br/><br/>
+	<%for interest in @interest_list do%>
+	 <%=link_to interest.interest_name,task_path(:id=>interest.interest_name)%><br/>
+	<%end%>
+</div>
+
+<div class="task_body">
+	<%if @params == "welcome"%>
+		Welcome
+	<%else%>
+		
+		<% if @user_task.blank?%>
+			
+			No Task at the moment
+		
+		<%else%>
+			<div class="task_body_info">
+				<div class="small_bark_font_method">
+						<span class="task_title_font"><%=@user_task[0].title%></span><br/><br/>
+						<%=@user_task[0].description%><br/><br/><br/>
+						
+				 		<span class="task_duration">
+				 		Duration <br/><br/>
+					 	<%= @user_task[0].start_date.strftime("%B %d, %Y")%>
+					 	&nbsp; - &nbsp; 	
+					 	<%= @user_task[0].end_date.strftime("%B %d, %Y")%>	
+				 		</span>
+				 		<div class="enroll_header">
+				 		If you are interested in joining this task, click the enroll link below
+				 		</div>
+				</div>		 		
+     		 	<div class="enroll_link">
+     		 		<%=render :partial=>"enroll_change"%>
+     		 	</div>
+
+			</div>
+			
+			
+		<%end%>
+		
+	<%end%>
+</div>
+
+</div>

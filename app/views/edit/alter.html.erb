@@ -1,0 +1,48 @@
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="register_container">
+<div class="facebox_header2">
+	<%=image_tag("stagemine.png")%>
+</div>
+<div class="register_box small_bark_font_method">
+	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
+    <%=form_for @user_detail,:validate=>true do |f|%>
+			         <table border="0" width=90%, align=center >
+						<tr>
+							<td><label>First name<br/><%=f.text_field(:first_name,:class=>"logininput")%></lable></td> 
+							<td>Last name<br/><%=f.text_field(:last_name,:class=>"logininput")%></td>
+						</tr>
+						<tr><td></td><td></td></tr>
+						<tr>
+							<td><label>User name<br/><%=f.text_field(:user_name,:class=>"logininput")%></lable></td> 
+							<td>							
+							Gender&nbsp;&nbsp;&nbsp;
+							<table>
+							<tr>
+								<td><%= f.radio_button(:gender, "Male") %></td> <td>Male</td>
+    							<td><%= f.radio_button(:gender, "Female")%></td> <td>Female	</td>
+    						</tr>
+							</table>
+							
+							</td>
+						</tr>
+						<tr><td></td><td></td></tr>
+						<tr>
+							<td colspan="2"><label>Email:</lable><br/><%=f.text_field(:email,:class=>"loginemailinput")%></td>
+						</tr>
+						<tr><td></td><td></td></tr>
+						<tr>
+						<td><label>Password<br/><%=f.password_field :password,:class=>"logininput" %></lable></td> <td>Re-enter password<br/><%=f.password_field :password_confirmation,:class=>"logininput"%></td>
+						</tr>
+			        </table>
+			        <div class="register_button">
+					<%=submit_tag "Register",:class => 'submit_class'%>
+					</div>
+	<%end%>
+	</div>
+</div>
+</div>

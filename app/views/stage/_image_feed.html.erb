@@ -1,0 +1,54 @@
+	<%@feed_id = feed%>
+	<% @post = Picture.find(feed.picture_id)%>
+	<div class="pin" style="border:1px solid <%=feed.user.rank.rankdetail.rank_color%>;">
+
+
+		<%= link_to(picture_display_path(:id=>feed.picture.id),:rel=>"imagepop") do %>
+				<div class="image_container" style="background: url() no-repeat; ">
+				<%if feed.picture.blank?%>
+					<%=image_tag("Default_small.jpg")%>
+				<%else%>
+					<%=image_tag(feed.picture.image.url(:medium))%>
+				<%end%>
+			    </div>
+		<%end%>
+	    <% unless feed.picture.description.blank?%>
+			    <div class=" feed_content small_bark_font_method">
+			    <%=feed.picture.description%> 
+			    </div>
+	    <%end%>
+
+					 	<div class="interest_tag second_font_method small_bark_font_method">				   
+							         <div class="time_spent third_font_method">
+								     	<%= distance_of_time_in_words_to_now(feed.created_at)%> ago
+     							     </div>
+    	  							<%unless feed.picture.label.blank?%>
+							    	 	&nbsp;&nbsp;<%= link_to "##{feed.picture.label.interest.interest_name}",stage_path(:id=>feed.picture.label.interest.id)%>				    	
+    								<%end%>
+    					</div>
+	
+			    
+			    <%unless feed.user.userimage.blank?%>
+			    	<%@image = feed.user.userimage%>
+			    <%end%>
+			    
+				<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
+		
+		<div class="user_name second_font_method third_font_method">
+			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%>
+			<div class="rank_name">
+			<%=feed.user.rank.rankdetail.name%>
+			</div>
+		</div>
+		
+		<div class="feed_icons">    
+			<%=render :partial=>"point_allocation/cheers_added"%> 
+		</div>
+	
+		
+		   
+		<div class="feed_comment">	
+		  <%=render :partial=>"comment/add_comment", :locals=>{:feed=>feed}%> 
+	    </div>
+			
+	</div>

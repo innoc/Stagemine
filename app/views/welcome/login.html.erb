@@ -1,0 +1,22 @@
+<div class="sign_container">
+<div class="facebox_header2">
+	<%=image_tag("stagemine.png")%>
+</div>
+<div class="signin_box small_bark_font_method">
+	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
+	<%=form_tag session_path do %>
+			        <table width=70%, align=center >
+						<tr>
+							<td><label>Username:</lable></td> <td><%=text_field_tag(:user_name,nil,:class=>"logininput")%></td>
+						</tr>
+						<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+						<tr>
+							<td><label>Password:</lable></td> <td><%= password_field_tag :password,nil,:class =>"logininput"%></td>
+						</tr>
+			        </table>
+			        <div class="login_button">
+					<%=submit_tag "Login",:class => 'submit_class'%>
+					</div>
+	<%end%>
+</div>
+</div>

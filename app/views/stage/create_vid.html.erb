@@ -1,0 +1,67 @@
+<script>
+$(document).ready(function(){ 
+	
+	$(".header_youtube_link").click(function(){
+		
+
+		$(".addlink_form").slideDown();
+		$(".addvid_form").hide();
+	});
+	
+	$(".header_youtube_vid").click(function(){
+
+	$(".addlink_form").hide();
+	$(".addvid_form").slideDown();
+	});
+})
+
+</script>
+
+<div class="facebox_header">
+	Methods of sharing videos
+</div>
+<div class="addlink">
+<div class="header_image_float"></div>
+<div class="header_youtube_link">Paste Youtube Link</div>
+Click this link if you already have a video on youtube. 
+</div>
+
+<div class="addlink_form">
+<br/>
+
+<%=form_tag({:controller=>'stage',:action=>'create_vid',:id=>"1",:task_id=>@task_id}) do%>
+
+	<div class="small_bark_font_method">Paste Youtube link here</div>
+	<%=text_area_tag(:vid,nil,:id=>"video_id",:autocomplete => "off",:placeholder=>"Paste you youtube link here",:title=>"Paste you youtube link here")%>
+	<%if @task_id.blank?%>	
+	<div class="small_bark_font_method">Describe your video (optional)</div>
+	<%=text_area_tag(:description,nil,:id=>"decription",:autocomplete => "off",:placeholder=>"Talk about your video",:title=>"Talk about your video ")%>
+	<div class="small_bark_font_method">Select the appropriate video category</div>
+	 <select id="custom_select" name="label_interest_id">
+		<%for user_interest in @user_interest%>
+		<option value="<%=user_interest.id%>"><%=user_interest.interest_name%></option>
+		<%end%>
+		<%=hidden_field_tag(:vid_label) %>
+	</select>
+	<%end%> 
+	
+	 
+	<div id="form_btn">	
+		<%= submit_tag 'Click to Post',:class => 'classname'%>
+	</div>							   
+			
+<%end%>
+</div>
+<div class="addvid">
+<div class="header_image_float"></div>
+<div class="header_youtube_vid">Upload video</div>
+Click this link if your video is not on youtube.
+</div>
+</div>
+
+
+
+<div class="addvid_form">
+	add video
+</div>
+

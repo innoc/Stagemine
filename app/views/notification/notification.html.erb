@@ -1,0 +1,119 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header small_bark_font_method">
+		Notification list
+	</div>
+	 <%unless @notifications_unread.blank?%>		
+			<% for notification in @notifications_unread%>
+					 <div class="notification_unit small_bark_font_method">
+						  <%if notification.notification_type == "Point"%>
+							   <table>
+							   		<tr>
+									   <td>
+		
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		You have <%=notification.notification_counter%> new Points
+									   </td>
+								</tr>
+							   </table>
+						  <%else%>
+						  <% if notification.notification_type == "Rank" %>
+						  		<table>
+							   		<tr>
+									   <td>
+
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>"
+									   </td>
+								   </tr>
+							   </table> 
+						  <%else%>
+				 		  <% if notification.notification_type == "Winner" %>
+						  		<table>
+							   		<tr>
+									   <td>
+
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task
+									   </td>
+								   </tr>
+							   </table>  
+					      <%end%>					  
+						  <%end%>
+						  <%end%>
+					 </div>
+		   <%end%>
+	<%end%>
+	<%if @notifications_unread.blank?%>			
+		   	<% for notification in @notifications%>
+					 <div class="notification_unit small_bark_font_method">
+						  <%if notification.notification_type == "Point"%>
+							   <table>
+							   		<tr>
+									   <td>
+										   	<%if notification.status==1%>
+										   	<%=image_tag("tick.png")%>
+										   	<%end%>
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		You have <%=notification.notification_counter%> new Points
+									   </td>
+								</tr>
+							   </table>
+						  <%else%>
+						  <% if notification.notification_type == "Rank" %>
+						  		<table>
+							   		<tr>
+									   <td>
+										   	<%if notification.status==1%>
+										   	<%=image_tag("tick.png")%>
+										   	<%end%>
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>"
+									   </td>
+								   </tr>
+							   </table>  	
+						  <%else%>
+						  <% if notification.notification_type == "Winner" %>
+						  		<table>
+							   		<tr>
+									   <td>
+											<%if notification.status==1%>
+										   	<%=image_tag("tick.png")%>
+										   	<%end%>
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task
+									   </td>
+								   </tr>
+							    </table>  
+					      <%end%>					  
+						  <%end%>
+						  <%end%>
+					 </div>
+		   <%end%>
+	<%end%>
+</div>
+</div>

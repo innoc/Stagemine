@@ -1,0 +1,32 @@
+<%@feed_id = feed%>
+<div class="pin">
+    
+    <div class=" feed_content_v4 small_bark_font_method second_font_method">
+    	 <div class="task_feed_icon">
+	     <%=image_tag("rank_upgrade_large.png")%><br/><br/>
+	     Rank Upgrade
+	     </div>
+	     <div class="feed_comment">
+		     <div class="task_details_feed">
+					 		<div class="rank_description"><%=link_to feed.user.user_name,portfolio_path%> has been promoted to "<%=feed.rank.rankdetail.name%>" <br/><br/>
+	     			    	</div>
+	     			    	<span class="task_duration">
+					 		<div class="task_duration_header">
+							 <%unless @user.userimage.blank?%>
+							<%@image= @user.userimage%>
+							<%end%>
+					 		<div class="radi_rank_upgrade" style="border:4px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
+
+					 		</div>
+		
+					 		</span>
+			</div>
+					   <br/>
+		   <div class="task_entrolled_link">
+	       		<%=link_to "Say congrats"%><br/>
+	       </div>
+	   </div>
+   </div>
+
+</div>
+

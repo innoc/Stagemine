@@ -1,0 +1,84 @@
+<div class="facebox_header">
+	Task Status
+</div>
+<div class="task_sidebar1 color_header">
+		<%if @user.tasks.blank?%>
+		
+			<table align="center">
+				<tr>
+					<td>
+					<%=image_tag("task_sample.png")%>
+					</td>
+					
+					<td>
+						No Task
+					</td>
+								
+				</tr>
+				
+			</table>
+			
+		<%else%>
+		
+				<%if @user.tasks.last.status == "inactive" or @user.enrolls.last.status == 0%>
+					<table align="center">
+						<tr>
+							<td>
+							<%=image_tag("task_sample.png")%>
+						    </td>
+							
+							<td>
+								Task Ended
+							</td>
+		
+						</tr>
+					</table>
+					
+				<%else%>
+				
+					<div class="enrolled_task_display">
+							<table border="0" cellpadding="0">
+								<tr>
+									<td>
+										<%=image_tag("task_sample.png")%>
+ 	 								</td>
+									
+									<td width="83%">
+										<span class="task_timer">
+											<%@recent_enrolled_task = @user.tasks.last%>
+											<%=@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %><br/>
+										</span>
+										
+										<%if @duration > 1%>
+										
+											days remaining
+											
+										<%else%>
+										
+											day remaining
+											
+										<%end%>
+									 </td>
+								</tr>
+							</table>
+						
+							<div class="task_header_title">
+								
+								<table border="0" cellpadding="0">
+									<tr>
+										<td>
+										Enrolled task 	
+										</td>
+										<td>
+							 			 <%=image_tag("counter.gif")%>
+										</td>
+									</tr>
+								</table>
+							
+							</div>
+					</div>
+					
+				<%end%>
+		<%end%>
+</div>
+

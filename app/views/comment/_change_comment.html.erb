@@ -1,0 +1,63 @@
+	<script>
+	$(document).ready(function(){ 
+		
+		$(".<%="#{@feed_id.id}_add"%>").click(function(){
+			$(".<%="#{@feed_id.id}_form"%>").toggle();
+		});
+	})
+	</script>
+
+<%if @feed_id.comments.blank?%>
+			   <div class="blank_comment_link second_font_method"><span class="<%="#{@feed_id.id}_add"%>"><a>click here to add comment</a></span></div>
+				
+					<div class="<%="#{@feed_id.id}_form"%>" style="display: none;">
+						<%= form_tag(comment_path,remote: true) do %>
+
+							<div class="image_text_field">
+								    <%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+			 						<%= hidden_field_tag 'feed_id',@feed_id.id%>
+			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+	     					</div>
+						
+							<div id="form_btn">	
+							<%= submit_tag 'Click to Post',:class => 'classname'%>
+							</div>
+							<br/>
+				 		<%end%>
+		    	   </div>
+		   <%else%>
+		   	  	<% @comment = @feed_id.comments.last!%>
+		   	  	
+				<%unless @comment.user.userimage.blank?%>
+			    	<%@image = @comment.user.userimage%>
+	   			<%end%>
+				<div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
+
+			 
+				<div class="feed_comment_box small_bark_font_method second_font_method">
+					<p> 
+						<%=link_to @comment.user.user_name, portfolio_path%><br/>
+						<%=@comment.content%>
+					</p> 
+					
+					
+				<div class="comment_link"><span class="<%="#{@feed_id.id}_add"%>"><a>add comment</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "see all", all_comment_path(:feed_id=>@feed_id.id)%></div>
+				</div>
+				<div class="<%="#{@feed_id.id}_form"%>"style="display:none;">
+					<%= form_tag(comment_path,remote: true) do %>
+
+							<div class="image_text_field">
+								    <%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+			 						<%= hidden_field_tag 'feed_id',@feed_id.id%>
+			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+	     					</div>
+						
+							<div id="form_btn">	
+							<%= submit_tag 'Click to Post',:class => 'classname'%>
+							</div>
+							<br/>
+				 	<%end%>
+	
+				</div>
+<%end%>
+<%@image = nil%>

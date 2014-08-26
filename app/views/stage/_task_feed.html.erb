@@ -1,0 +1,64 @@
+<%@feed_id = feed%>
+<div class="pin">
+   <%if feed.task.winner.blank?%> 
+		   <div class=" feed_content_v4 small_bark_font_method second_font_method">
+		    	 <div class="task_feed_icon">
+			     <%=image_tag("task_medium.png")%><br/><br/>
+			     Task Alert
+			     <br/>
+			     </div>
+			     <div class="feed_comment">
+				     <div class="task_details_feed">
+			     			 		<span class="task_title"><%=feed.task.title%></span><br/>
+							 		<span class="task_description"><%=feed.task.description%>&nbsp;&nbsp;&nbsp;&nbsp;#<%=feed.task.label.interest.interest_name%></span><br/><br/>
+							 		<span class="task_duration">
+							 		<div class="task_duration_header">
+							 		Duration <br/>
+							 		&nbsp;<%=feed.task.start_date.strftime("%B %d, %Y")%>
+							 		&nbsp; - &nbsp; 	
+							 		&nbsp;<%=feed.task.end_date.strftime("%B %d, %Y")%>	
+							 		</div>
+				
+							 		</span>
+					</div>
+					<br/>
+					<br/>
+				   <div class="task_entrolled_link">
+			       		<%=link_to "Click if Interest?",task_path(:id=>feed.task.label.interest.interest_name)%> <br/>
+			       </div>
+			   </div>
+		   </div>
+	<%else%>
+	 
+	      <div class=" feed_content_v4 small_bark_font_method second_font_method">
+	    	 <div class="task_feed_icon">
+		     <%=image_tag("rank_upgrade_large.png")%><br/><br/>
+		     Task Winner
+		     </div>
+		     <div class="feed_comment">
+		     	
+					     <div class="task_details_feed">
+								 		<div class="rank_description"><%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%> has won the "<%=feed.task.title%>" task <br/><br/>
+				     			    	</div>
+				     			    	<span class="task_duration">
+								 		<div class="task_duration_header">
+										<%unless feed.task.winner.user.userimage.blank?%>
+										<%@image= feed.task.winner.user.userimage%>
+										<%end%>
+								 		<div class="radi_rank_upgrade" style="border:4px solid <%=feed.task.winner.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
+			
+								 		</div>
+					
+								 		</span>
+						</div>
+						
+						<br/>
+					   <div class="task_entrolled_link">
+				       		<%=link_to "Say congrats"%> <br/>
+				       </div>
+		       </div>
+	     </div>
+	     
+	<%end%>
+
+</div>

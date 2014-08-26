@@ -1,0 +1,27 @@
+
+<div class="facebox_header">
+	Share an idea
+</div>
+
+<%=form_tag({:controller=>'stage',:action=>'create_word',:id=>"1"}) do%>
+		<div class="all_center">
+		<div class="small_bark_font_method">Select the appropriate category</div>
+		<select name="label_interest_id">
+			<%for user_interest in @user_interest%>
+			<option value="<%=user_interest.id%>"><%=user_interest.interest_name%></option>
+			<%end%>
+			<%=hidden_field_tag(:vid_label) %>
+		</select>
+		</div>
+
+		<div class="image_text_field">
+			    <%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Talk about dance",:title=>"Talk about dance")%>
+		</div>
+	
+		<div id="form_btn">	
+		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		</div>
+		<br/>
+			
+	
+<%end%>

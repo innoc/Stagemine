@@ -1,0 +1,32 @@
+
+	<%= form_tag(all_comment_path,remote: true) do %>
+
+		<div class="image_text_field">
+			    <%=text_area_tag(:content,nil,:class=>"comment_text_field_v2",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+				<%= hidden_field_tag 'feed_id',@feed_id.id%>
+				<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+		</div>
+	
+		<div id="form_btn">	
+		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		</div>
+		<br/>
+	<%end%>
+<% for feed in @feed_id.comments.order(created_at: :desc)%>
+  	
+		<%unless feed.user.userimage.blank?%>
+			    <%@image= feed.user.userimage%>
+	   	<%end%>
+		<div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
+
+			 
+ 
+	<div class="feed_comment_box small_bark_font_method second_font_method">
+		<p> 
+			<a><%=feed.user.user_name%></a><br/>
+			<%=feed.content%>
+		</p> 
+	</div>
+	<%@image = nil%>
+<%end%>
+

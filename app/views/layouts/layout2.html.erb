@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giga</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+	
+	<style type="text/css">
+	body {
+	  font: 16px/15px tahoma, "Times New Roman", Times, serif;
+	  background-color: #eeeeee;
+	  margin: 0;
+	  padding: 0;
+	  color: #000;
+	  height:100%;
+	  background-image:url(<%=image_path("noise2.png")%>);
+	 }
+	</style>
+</head>
+<body>
+<%= yield %>
+</body>

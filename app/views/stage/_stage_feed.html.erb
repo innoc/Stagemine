@@ -1,0 +1,72 @@
+ <%if @feed.blank?%>
+ 	<div class="feed_icon">
+
+ 	</div>
+ <%else%>
+	 <%for feed in @feed%>
+	     	<%if feed.feed_name == "Video"%>
+		 	<%= render :partial=>"video_feed" , :locals=>{:feed=>feed}%>
+		 	<%else%>
+		 	<%if feed.feed_name=="Image"%>
+	 		<%= render :partial=>"image_feed" , :locals=>{:feed=>feed}%>
+		 	<%else%>
+		 	<%if feed.feed_name=="Word"%>
+	 		<%= render :partial=>"text_feed" , :locals=>{:feed=>feed}%>
+	 		<%else%>
+	 		<%if feed.feed_name=="Rank"%>
+	 		<%= render :partial=>"rank_feed" , :locals=>{:feed=>feed}%>
+	 		<%else%>
+	 		<%if feed.feed_name=="Task"%>
+	 		<%= render :partial=>"task_feed" , :locals=>{:feed=>feed}%>
+		 	<%end%>
+		 	<%end%>
+		 	<%end%>
+		 	<%end%>
+		 	<%end%>
+	  <%end%>
+  <%end%>
+  
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+if ($('.pagination').length) {
+ (function() {
+  var page = <%=@feed.current_page%>,
+  loading = false,
+  finish = false;
+
+  function nearBottomOfPage() {
+    return $(window).scrollTop() > $(document).height() - $(window).height() - 200;
+  }
+  function finish() {
+    finish = true;
+  }
+
+  $(window).scroll(function(){
+    if (loading) {
+      return;
+    }
+
+
+    if(nearBottomOfPage() && page < <%=@feed.num_pages%>) {
+      loading=true;
+      $('.paginate_loader').show();
+      page+=1;
+      $.ajax({
+        url: '/stage?page=' + page,
+        type: 'get',
+        dataType: 'script',
+         success: function() {
+         $('.paginate_loader').hide();
+         loading=false;
+        }
+        
+      });
+ $(window).unbind('scroll');
+    }
+  });
+
+}());
+}
+});
+</script>

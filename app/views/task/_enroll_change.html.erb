@@ -1,0 +1,15 @@
+<%if @current_user.enrolls.where("status=?",1).blank?%>
+	<%=link_to "enroll",enroll_path(:id=>@user_task[0].id),remote:true%> <br/>
+
+<%else%>
+
+<%=link_to "disenroll",disenroll_path(:id=>@user_task[0].id),remote:true%> <br/>
+<br/>
+	<%if @user_task[0].task_type == "image"%>
+		<%= link_to "Add an image",pictures_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block" %>
+	<%else%>
+		<%if @user_task[0].task_type == "video"%>
+		<%= link_to "Add a video",create_vid_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block" %>
+		<%end%>
+	<%end%>
+<%end%>
