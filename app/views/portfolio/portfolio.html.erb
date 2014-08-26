@@ -130,16 +130,16 @@
  	<div class="portfolio_column second_font_method">
  		<div class="portfolio_small_column">
  			<div class="portfolio_fan ">
- 				<%=image_tag "history.png"%><br/>
- 				<span class="cheers_count">	<%=link_to"User History"%> </span>
+ 				<%=image_tag "history.png"%>
+ 				<div class="cheers_count">	<%=link_to"User History"%> </div>
  			</div>
  			<div class="portfolio_column_color portfolio_fanned">		
 				<div class="portfolio_cheer_number light_bold_font">
 			  		<%=@user_cheers%>
-			  	</div>				
+			  	</div>
+			  	<br/><br/><br/>
  				<div class="cheers_dark_icon third_font_method">
-		  			&nbsp;<%image_tag "cheers_dark_icon_small.png"%>
-			  		<%if @user_cheers > 1%>People cheered you <%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered you<%end%><%end%>
+		  			&nbsp;<%if @user_cheers > 1%>People cheered you <%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered you<%end%><%end%>
 		  		</div> <!--end of cheers_dark-->
 
  			</div>
@@ -161,7 +161,7 @@
  			  <div class="portfolio_list">
 	 			<%for interest in @user_interest%>
 		 			<div class="interest_padding">
-				 			<%unless interest.interest_name == "Random"%>
+				 			<%unless interest.interest_name == "Random" or interest.leagues.last.blank?%>
 				 				<% @league_position = Season.league_table(interest.leagues.last.id,@user.id)%>
 				 			<%else%>
 				 				<%@league_position = 0%>
