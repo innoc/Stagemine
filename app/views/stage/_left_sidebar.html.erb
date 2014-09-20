@@ -43,6 +43,19 @@
 				    <%end%>
 			   <%end%>
 			   
+			    <% if notification.notification_type == "Message" %>
+				   	<%= link_to(notification_path) do %>
+					    <div class="notification">
+					    	<div class="notification_icon">
+					    	<%=image_tag("message_icon.png")%>
+					    	</div>
+					    	<div class="notification_content">
+					    		New message from <%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%>
+					    	</div>
+					    </div>
+				    <%end%>
+			   <%end%>
+			   
 		   	  <%if notification.notification_type == "Rank" %>
 				   	<%= link_to(notification_path) do %>
 					     <div class="notification">
@@ -63,11 +76,11 @@
 			        <div class="notification">
 				    	<div class="notification_icon">
 				    	<div class="task_notification_count">
-				    	<%=@user_task.count%>
+				    	<%=image_tag("task_small.png")%>
 				    	</div>
 				    	</div>
 				    	<div class="notification_content">
-				    		Task Alert
+				    		<%=pluralize(@user_task.count,'Task Alert')%>
 				    	</div>
 				    </div>
 	   <%end%>

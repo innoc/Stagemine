@@ -1,31 +1,24 @@
- <%if @feed.blank?%>
- 	<div class="feed_icon">
-
- 	</div>
- <%else%>
 	 <%for feed in @feed%>
 	     	<%if feed.feed_name == "Video"%>
-		 	<%= render :partial=>"video_feed" , :locals=>{:feed=>feed}%>
+	     	<%= render :partial=>"stage/video_feed" , :locals=>{:feed=>feed}%>
 		 	<%else%>
 		 	<%if feed.feed_name=="Image"%>
-	 		<%= render :partial=>"image_feed" , :locals=>{:feed=>feed}%>
+	 		<%= render :partial=>"stage/image_feed" , :locals=>{:feed=>feed}%>
 		 	<%else%>
 		 	<%if feed.feed_name=="Word"%>
-	 		<%= render :partial=>"text_feed" , :locals=>{:feed=>feed}%>
+	 		<%= render :partial=>"stage/text_feed" , :locals=>{:feed=>feed}%>
 	 		<%else%>
 	 		<%if feed.feed_name=="Rank"%>
-	 		<%= render :partial=>"rank_feed" , :locals=>{:feed=>feed}%>
+	 		<%= render :partial=>"stage/rank_feed" , :locals=>{:feed=>feed}%>
 	 		<%else%>
 	 		<%if feed.feed_name=="Task"%>
-	 		<%= render :partial=>"task_feed" , :locals=>{:feed=>feed}%>
+	 		<%= render :partial=>"stage/task_feed" , :locals=>{:feed=>feed}%>
 		 	<%end%>
 		 	<%end%>
 		 	<%end%>
 		 	<%end%>
 		 	<%end%>
 	  <%end%>
-  <%end%>
-  
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {

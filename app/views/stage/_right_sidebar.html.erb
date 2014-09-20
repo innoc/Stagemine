@@ -8,26 +8,23 @@
 				<%if @user.tasks.last.status == "inactive" or @user.enrolls.last.status == 0%>
 						<%=image_tag("task_sample.png")%><br/>
 						Task Ended
-    			<%else%>
-				
+    			<%else%>				
 					<div class="enrolled_task_display">
+								<%@recent_enrolled_task = @user.tasks.last%>								
+								<%if ((@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i) < 1%>
+									<%=image_tag("task_sample.png")%><br/>
+									Task Ended									
+								<%else%>
 										<div class="task_timer">
-											<%@recent_enrolled_task = @user.tasks.last%>
-											<%=@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %><br/>
-										</div>
-										
-										<%if @duration > 1%>
-			
-											days remaining for task
-											
-										<%else%>
-					
-											day remaining for task
-											
+												<%=@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %><br/>
+										</div>																			
+										<%if @duration > 1%>			
+											days remaining for task											
+										<%else%>					
+											day remaining for task											
 										<%end%>
-
-					</div>
-					
+								<%end%>	
+					</div>					
 				<%end%>
 		<%end%>
 </div>

@@ -37,7 +37,7 @@ function callPlayer(frame_id, func, args) {
 	    <%end%>
 		<div class="radi" style="border:3px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
 		
-		<div class="user_name second_font_method third_font_method">
+		<div class="user_name second_font_method_alternate third_font_method">
 			<%=link_to @user.user_name, portfolio_path(:id=>@user.id)%>
 			<div class="rank_name">
 			<%=@user.rank.rankdetail.name%>
@@ -45,9 +45,11 @@ function callPlayer(frame_id, func, args) {
 		</div>
 
 	<div class="feed_icons"> 
+		<%unless @vid_id.feed.user_id == @user.id%>
 		<%@post = @vid_id%>
 		<%@feed_id = @vid_id.feed%>
 		<%=render :partial=>"point_allocation/cheers_added"%> 
+		<%end%>
 	</div>
 
 

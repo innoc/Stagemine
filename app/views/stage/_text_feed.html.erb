@@ -7,13 +7,16 @@
 		    	<%=feed.word.content%>
 		    </div>
 	    <%end%>
-	    
 		<div class="interest_tag second_font_method small_bark_font_method">				   
 			<div class="time_spent third_font_method">
 				<%= distance_of_time_in_words_to_now(feed.created_at)%> ago
 			</div>
 			<%unless feed.word.label.blank?%>
+				<%if @link_type == 1%>	
+				&nbsp;&nbsp;<%= link_to "##{feed.word.label.interest.interest_name}",portfolio_path(:id=>@user.id,:interest=>feed.word.label.interest.id)%>				    	
+				<%else%>
 				&nbsp;&nbsp;<%= link_to "##{feed.word.label.interest.interest_name}",stage_path(:id=>feed.word.label.interest.id)%>				    	
+				<%end%>
 			<%end%>
 		</div>
 	    
@@ -23,15 +26,23 @@
 	    
 		<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
 		
-		<div class="user_name second_font_method third_font_method">
+		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
+		<div  class="delete_link second_font_method">
+		<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"w")%>
+		</div>
+		<%end%>
+		
+		<div class="user_name second_font_method_alternate third_font_method">
 			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%>
 			<div class="rank_name">
 			<%=feed.user.rank.rankdetail.name%>
 			</div>
 		</div>
 		
-		<div class="feed_icons">    
-			<%=render :partial=>"point_allocation/cheers_added"%> 
+		<div class="feed_icons"> 
+			<%unless feed.user_id == @user.id%>   
+				<%=render :partial=>"point_allocation/cheers_added"%> 
+			<%end%>
 		</div>
 		
 			   
