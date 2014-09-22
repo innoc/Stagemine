@@ -149,11 +149,8 @@ float:right;
 background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 }
-
-
-
 
 .portfolio_navigation{
 float:left;
@@ -1084,7 +1081,7 @@ border-radius:5px;
 background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 }
 
 
@@ -1119,7 +1116,7 @@ padding-bottom:5px;
 background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */	
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */	
 }
 
 .cheer_float a{ 
@@ -1140,7 +1137,7 @@ border: 1px solid #ddd;
 background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 margin-top:5px;
 margin-right:39px;
 }
@@ -1396,7 +1393,7 @@ margin-top:12px;
 	background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+	background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 	transition: background .4s;
 	-o-transition: background .4s;
 	-ms-transition: background .4s;
@@ -1489,7 +1486,7 @@ border: 1px solid #ddd;
 background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
 background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 }
 
 /* ~~ The header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo. ~~ */
