@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20240616020372) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "auditions", force: true do |t|
     t.integer  "user_id"
     t.integer  "season_id"
@@ -26,13 +29,14 @@ ActiveRecord::Schema.define(version: 20240616020372) do
   create_table "badge_allocations", force: true do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
+    t.integer  "task_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "badges", force: true do |t|
     t.string   "name"
-    t.integer  "priotity"
+    t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -179,9 +183,9 @@ ActiveRecord::Schema.define(version: 20240616020372) do
 
   create_table "pointdata", force: true do |t|
     t.integer  "point_number"
-    t.decimal  "picture_divider", precision: 10, scale: 0
+    t.decimal  "picture_divider"
     t.integer  "word_divider"
-    t.decimal  "vote_adder",      precision: 10, scale: 0
+    t.decimal  "vote_adder"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -200,8 +204,8 @@ ActiveRecord::Schema.define(version: 20240616020372) do
     t.integer  "user_id"
     t.integer  "user_interest_id"
     t.integer  "status"
-    t.decimal  "previous_point",   precision: 10, scale: 0
-    t.decimal  "point",            precision: 10, scale: 0
+    t.decimal  "previous_point"
+    t.decimal  "point"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -253,8 +257,8 @@ ActiveRecord::Schema.define(version: 20240616020372) do
 
   create_table "task_points", force: true do |t|
     t.integer  "user_id"
-    t.decimal  "previous_point", precision: 10, scale: 0
-    t.decimal  "point",          precision: 10, scale: 0
+    t.decimal  "previous_point"
+    t.decimal  "point"
     t.integer  "task_id"
     t.integer  "status"
     t.datetime "created_at"
