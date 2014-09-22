@@ -3,17 +3,26 @@
 
 
 <div class="cheer_icon">
-	<%=link_to image_tag("Cheers.png") ,{:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post"%>
+	<%=link_to image_tag("Cheers.png") ,{:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post",:remote=>"true"%>
 	
 </div>
 <div class="cheer_status">
     <%unless @post.class.name=="Video"%>
-		<%=pluralize(@post.cheers.count, 'cheer')%>
+		<%=pluralize(@post.cheers.count, 'cheer')%> 
 	<%else%>
 		<%unless @post.task.blank?%>
 			<%=pluralize(@post.cheers.count, 'vote')%>
 		<%else%>
-		   <%=pluralize(@post.cheers.count, 'cheer')%>
+		   <%=pluralize(@post.cheers.count, 'cheer')%> 
+		   <span class="third_font_method">
+			   <%if @post.audition%>
+				   <%if @post.audition.league.cheers_to_qualify - @post.cheers.count == 0%>
+				   		&nbsp;&nbsp;Qualified!!!
+				   <%else%>
+				   		&nbsp;&nbsp;<%=pluralize(@post.audition.league.cheers_to_qualify - @post.cheers.count, 'cheer')%> to qualify 		   
+				   <%end%>
+			   <%end%>
+		   </span>
 		<%end%>
 	<%end%>
 </div>
@@ -33,6 +42,13 @@
 		<%="#{@post.cheers.count} voted"%>
 	<%else%>
 	    <%="#{@post.cheers.count} cheered"%>
+	     <%if @post.audition%>
+				   <%if @post.audition.league.cheers_to_qualify - @post.cheers.count == 0%>
+				   		&nbsp;&nbsp;Qualified!!!
+				   <%else%>
+				   		&nbsp;&nbsp;<%=pluralize(@post.audition.league.cheers_to_qualify - @post.cheers.count, 'cheer')%> to qualify 		   
+				   <%end%>
+		<%end%>
 	<%end%>
 	<%end%>
 </div>

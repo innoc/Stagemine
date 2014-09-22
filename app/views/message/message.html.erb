@@ -1,0 +1,26 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header small_bark_font_method second_font_method_alternate">
+		<%=image_tag "message_icon.png"%><br/>
+		<%=link_to pluralize(@message.count, 'Message'), message_path%>
+	</div>
+	 <%unless @message.blank?%>		
+	 	<%for message in @message%>
+			<div class="message_container">		   
+				   	<div class="notification_image">
+						<%sender = User.find(message.sender_id)%>
+						<%unless sender.userimage.blank?%>
+							<%@user_image = fan.userimage%>
+						<%end%>
+					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+				   	</div>
+				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
+				   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>&nbsp;&nbsp;<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span><br/>
+				   		<%= message.content%>
+				   	</div>
+			</div>
+			<%@user_image = nil%>
+		<%end%>
+	<%end%>
+</div>
+</div>

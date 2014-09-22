@@ -40,7 +40,19 @@ Rails.application.routes.draw do
   match '/add_interest'=>"interest#add_interest",:as=>'add_interest', via: :all
   match '/destroy'=>"sessions#destroy", :as=>'destroy', via: :all
   match '/disconnect'=>"friendship#disconnect", :as=>'disconnect', via: :all
+  match '/delete_feed'=>"stage#delete_feed", :as=>'delete_feed', via: :all
+  match '/create_message'=>"message#create_message", :as=>'create_message', via: :all
+  match '/message'=>"message#message", :as=>"message", via: :all
+  match '/display_cheer'=>"point_allocation#display_cheer", :as=>"display_cheer", via: :all
+  match '/league_detail'=>"season#league_detail", :as=>"league_detail", via: :all
+  match '/start_season'=>"admin#start_season", :as=>"start_season", via: :all
+  match '/audition_checker'=>"season#audition_checker", :as=>"audition_checker", via: :all
+  match '/see_all_friendship'=>"friendship#see_all_friendship", :as=>"see_all_friendship", via: :all
+  match '/search_suggestions'=>"users#search_suggestions", :as=>"search_suggestions", via: :all
+  match '/view_search'=>"users#view_search", :as=>"view_search", via: :all
+  match '/badge'=>"badge#badge", :as=>"badge", via: :all
   
+
   resources :users
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

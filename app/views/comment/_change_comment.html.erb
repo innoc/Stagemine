@@ -1,6 +1,5 @@
 	<script>
-	$(document).ready(function(){ 
-		
+	$(document).ready(function(){ 		
 		$(".<%="#{@feed_id.id}_add"%>").click(function(){
 			$(".<%="#{@feed_id.id}_form"%>").toggle();
 		});
@@ -36,7 +35,7 @@
 			 
 				<div class="feed_comment_box small_bark_font_method second_font_method">
 					<p> 
-						<%=link_to @comment.user.user_name, portfolio_path%><br/>
+						<span class="second_font_method_alternate"><%=link_to @comment.user.user_name, portfolio_path%></span><br/>
 						<%=@comment.content%>
 					</p> 
 					

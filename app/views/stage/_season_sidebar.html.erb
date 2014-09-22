@@ -65,7 +65,7 @@
 						  <div class="season_duration third_font_method">
 							<!--display the duration of the season-->
 								<%unless @season_status.blank?%>
-								<%if ((@season_status[0].end_date.to_date - DateTime.now.to_date).to_i) < 1%>
+								<%if (@season_status[0].end_date.to_date - DateTime.now.to_date).to_i < 1%>
 									
 								<%else%>
 									<%=pluralize((@season_status[0].end_date.to_date - DateTime.now.to_date).to_i, 'day')%> remaining

@@ -10,8 +10,7 @@ class SeasonController < ApplicationController
         end
         respond_to do |format|
             format.html{redirect_to stage_path}
-        end
-        
+        end       
   end
   
   def view_league
@@ -19,6 +18,9 @@ class SeasonController < ApplicationController
     @user = current_user
   end
   
+  def league_detail 
+    @league = League.find(params[:league_id])
+  end 
   
   def season_checker
       for league in League.where(:status => "active")
@@ -29,9 +31,7 @@ class SeasonController < ApplicationController
            point = point + 1
         end
                 league.update_attributes(:status=>"inactive")
-
-      end
-     
+      end     
       @season = Season.last 
       if @season.status == "active"
         @season.update_attributes(:status=>"inactive")
@@ -39,6 +39,14 @@ class SeasonController < ApplicationController
       end
   end
   
+  def audition_checker
+      @audition = Audition.where(:status=>"active") 
+      for audition in @audition
+          if audition.video.cheers.count > (audition.league.cheers_to_qualify - 1)
+             audition.update_attributes(:status=>"inactive", :qualified=>"Yes")
+          end
+      end     
+  end
   
   def disenroll_league
        league = LeagueEnrollment.where(["user_id = ? and league_id= ?",current_user.id,params[:id]])
@@ -55,7 +63,7 @@ class SeasonController < ApplicationController
   
   def resolve_layout
     case action_name
-    when 'view_league' 
+    when 'view_league', 'league_detail'
       false
     else
       'application'

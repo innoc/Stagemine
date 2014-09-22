@@ -36,5 +36,15 @@ class FriendshipController < ApplicationController
           format.js
         end 
     end
-  
+    
+    def see_all_friendship
+        @type = params[:type]
+        @user = User.find(params[:id])
+        if @type == "fan"
+          @friends = Friendship.where("friend_id=?",@user.id)
+        else
+          @friends = @user.friends
+        end          
+    end
+ 
 end

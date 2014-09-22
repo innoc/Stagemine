@@ -1,7 +1,8 @@
 <div class="container">
 <div class="middle_cover">
-	<div class="middle_cover_header small_bark_font_method">
-		Notification list
+	<div class="middle_cover_header second_font_method_alternate">
+		<%=image_tag("notification.png")%><br/>
+		<%=link_to "Notifications", notification_path%>
 	</div>
 	 <%unless @notifications_unread.blank?%>		
 			<% for notification in @notifications_unread%>
@@ -46,10 +47,27 @@
 									   	
 									   </td>
 									   <td>
-									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%>
 									   </td>
 								   </tr>
-							   </table>  
+							   </table> 
+						  <%else%>	
+						   <% if notification.notification_type == "Message" %>						  		
+								<div class="notification_container">		   
+									   	<div class="notification_image">
+											<%sender = User.find(notification.secondary_user)%>
+											<%unless sender.userimage.blank?%>
+												<%@winner_user_image = fan.userimage%>
+											<%end%>
+			   							    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+									   	</div>
+									   	<div class="notification_body_message second_font_method_alternate">
+									   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%><br/>
+									   		<%=Message.find(notification.notification_type_id).content%>
+									   	</div>
+								</div>
+		
+						  <%end%>
 					      <%end%>					  
 						  <%end%>
 						  <%end%>
@@ -76,7 +94,7 @@
 								</tr>
 							   </table>
 						  <%else%>
-						  <% if notification.notification_type == "Rank" %>
+						  <%if notification.notification_type == "Rank" %>
 						  		<table>
 							   		<tr>
 									   <td>
@@ -105,10 +123,35 @@
 									   	
 									   </td>
 									   <td>
-									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%> 
 									   </td>
 								   </tr>
 							    </table>  
+						 <%else%>
+						 
+						 <% if notification.notification_type == "Message" %>
+						  		
+								<div class="notification_container">		   
+									    <div class="notification_tick">
+									    	<%if notification.status==1%>
+										   		 <%=image_tag("tick.png")%>
+										   	<%end%>
+										</div>
+						
+									   	<div class="notification_image">
+											<%sender = User.find(notification.secondary_user)%>
+											<%unless sender.userimage.blank?%>
+												<%@winner_user_image = fan.userimage%>
+											<%end%>
+			   							    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+									   	</div>
+									   	<div class="notification_body_message second_font_method_alternate">
+									   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%><br/>
+									   		<%=Message.find(notification.notification_type_id).content%>
+									   	</div>
+								</div>
+		
+						  <%end%>
 					      <%end%>					  
 						  <%end%>
 						  <%end%>

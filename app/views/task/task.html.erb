@@ -14,12 +14,18 @@ $(document).ready(function(){
 
 <div class="task_body">
 	<%if @params == "welcome"%>
-		Welcome
+		<div class="task_container third_font_method">
+				<span style="font-size:20px;">Welcome to Task</span><br/><br/><br/>
+				<%=image_tag("task_big_icon.png")%><br/><br/>
+				Browse for new tasks at the top left menu.
+		</div>
 	<%else%>
 		
 		<% if @user_task.blank?%>
-			
-			No Task at the moment
+			<div class="task_container third_font_method">
+				<%=image_tag("task_big_icon.png")%><br/><br/>
+				No Task at the moment
+			</div>
 		
 		<%else%>
 			<div class="task_body_info">

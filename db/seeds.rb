@@ -13,6 +13,12 @@ Rankdetail.create([{ name: "Green Stage", rank_max_point: 299, rank_min_point: 0
                     { name: "Red Stage", rank_max_point: 999 , rank_min_point: 600, rank_color: "red"},
                     { name: "Black Stage", rank_max_point: 1000, rank_min_point: 1000, rank_color: "black"}])
 
+Badge.create([{ name: "Bronze", priority:1},
+                    { name: "Ruby", priority:2},
+                    { name: "Sapphire", priority:3},
+                    { name: "Silver", priority:4},
+                    { name: "Gold", priority:5}
+                    ])
 
 Pointdata.create([{point_number: 5, picture_divider:3, word_divider:5, vote_adder:5}])
 

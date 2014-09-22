@@ -4,4 +4,5 @@ class League < ActiveRecord::Base
   has_many :users, :through=> :league_enrollments
   belongs_to :interest
   has_many :leaguewinners
+  has_many :auditions
 end

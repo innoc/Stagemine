@@ -1,21 +1,44 @@
 class UsersController < ApplicationController
   
-   def create
-    @user = User.new()
-    if request.post?
-      @user= User.new(user_params)
-      @user.activated = "No"
-      @user.usertype = "normal"
-      @user.build_rank(user_id: @user.id, rankdetail_id:1)
-      @user.user_interests.build(user_id: @user.id, interest_id:1)
-      if @user.save
-         session[:user_id] = @user.id
-         redirect_to create_interest_path
-      else
-        flash[:notice] = "Ensure that you inserted the right data"
-      end
+ def create
+  @user = User.new()
+  if request.post?
+    @user= User.new(user_params)
+    @user.activated = "No"
+    @user.usertype = "normal"
+    @user.build_rank(user_id: @user.id, rankdetail_id:1)
+    @user.user_interests.build(user_id: @user.id, interest_id:1)
+    if @user.save
+       session[:user_id] = @user.id
+       redirect_to create_interest_path
+    else
+      flash[:notice] = "Ensure that you inserted the right data"
     end
-    
+  end    
+ end
+ 
+  
+  def search_suggestions
+     @suggestion = User.searchsuggestion(params[:term])
+     @data = []
+     for  user in @suggestion
+      unless user.usertype == "admin"
+       if user.userimage.blank?
+          @image = view_context.asset_path("Default_tiny.png")
+       else
+          @image = view_context.asset_path(user.userimage.image.url(:tiny))
+       end
+       @data << {:first => "#{user.first_name}", :value => "#{user.first_name} #{user.last_name}", :last => "#{user.last_name}",:img => "#{(@image)}",:id => "#{user.id}",:username => "#{user.user_name}"}
+      end
+     end
+     @data.to_json
+     render json: @data
+  end
+  
+  def view_search
+     unless params[:search].blank?
+      @suggestion = User.searchsuggestion(params[:search])
+     end
   end
   
   def update

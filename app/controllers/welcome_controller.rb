@@ -9,9 +9,7 @@ class WelcomeController < ApplicationController
     
   end
   
-
-
-    def register
+   def register
     @user = User.new()
     if request.post?
       @user= User.new(user_params)

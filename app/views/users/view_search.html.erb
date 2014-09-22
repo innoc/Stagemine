@@ -1,0 +1,45 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header third_font_method">
+		<%=image_tag "search_dark.png"%><br/>
+		Search Results
+	</div>	
+	
+	 <%unless @suggestion.blank?%>	
+	  	<%for suggestion in @suggestion%>
+	  	  <%unless suggestion.usertype=="admin"%>
+			<div class="message_container">
+					<%if @type=="fan"%>	
+			   			<%suggestion = User.find(suggestion.user_id)%>	
+			   		<%end%>				
+					<div class="league_rank_color_alternative" style="background-color:<%=suggestion.rank.rankdetail.rank_color%>"></div>
+				   	<div class="notification_image">
+						<%unless suggestion.userimage.blank?%>
+							<%@user_image = suggestion.userimage%>
+						<%end%>
+					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+				   	</div>
+				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
+	   					<%= link_to "#{suggestion.first_name} #{suggestion.last_name}", portfolio_path(:id=>suggestion.id) %><br/>
+				   		<div class="third_font_method">
+				   			<%=suggestion.user_name%>
+				   		</div>			   		
+				   	</div>
+			</div>
+			<%@user_image = nil%>
+			<%end%>
+		<%end%>
+	<%else%>
+	<div class="no_season small_bark_font_method">
+						<div class="default_season">
+							
+						</div>
+						<div class="season_text third_font_method">
+							No record was found
+						</div>
+	</div>	
+
+	<%end%>
+</div>
+</div>
+

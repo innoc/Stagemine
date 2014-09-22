@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20240616020358) do
+ActiveRecord::Schema.define(version: 20240616020372) do
+
+  create_table "auditions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "season_id"
+    t.integer  "league_id"
+    t.string   "status",     default: "active"
+    t.string   "qualified",  default: "No"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "badge_allocations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "badge_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "badges", force: true do |t|
+    t.string   "name"
+    t.integer  "priotity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cheers", force: true do |t|
     t.integer  "user_id"
@@ -106,6 +130,8 @@ ActiveRecord::Schema.define(version: 20240616020358) do
     t.integer  "interest_id"
     t.integer  "season_id"
     t.string   "status"
+    t.integer  "enrollment_limit"
+    t.integer  "cheers_to_qualify"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -118,6 +144,15 @@ ActiveRecord::Schema.define(version: 20240616020358) do
     t.datetime "updated_at"
   end
 
+  create_table "messages", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "sender_id"
+    t.text     "content"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notifications", force: true do |t|
     t.integer  "cheer_storage"
     t.string   "notification_type"
@@ -125,6 +160,7 @@ ActiveRecord::Schema.define(version: 20240616020358) do
     t.integer  "user_id"
     t.integer  "status",               default: 0
     t.integer  "notification_counter"
+    t.integer  "secondary_user"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -170,6 +206,15 @@ ActiveRecord::Schema.define(version: 20240616020358) do
     t.datetime "updated_at"
   end
 
+  create_table "preseasons", force: true do |t|
+    t.integer  "season_id"
+    t.datetime "start_day"
+    t.datetime "end_day"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "rankdetails", force: true do |t|
     t.string   "name"
     t.integer  "rank_max_point"
@@ -189,6 +234,7 @@ ActiveRecord::Schema.define(version: 20240616020358) do
   create_table "seasons", force: true do |t|
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string   "incentive"
     t.string   "status"
     t.string   "name"
     t.datetime "created_at"
@@ -263,6 +309,7 @@ ActiveRecord::Schema.define(version: 20240616020358) do
     t.string   "vid"
     t.text     "description"
     t.integer  "task_id"
+    t.integer  "audition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,12 +2,13 @@ class Season < ActiveRecord::Base
   has_many :leagues
   has_many :historypendings, :dependent=>:destroy
   has_many :pointhistories
+  has_many :auditions, :dependent=>:destroy
+  has_one  :preseason, :dependent=>:destroy
   
    def self.league_top_three(league_id)
      @league = League.find(league_id)
      if @league.season.status == "active"
-        @interest_season=[] 
-        
+        @interest_season=[]        
         unless @league.blank?
                     @enrolled_users = League.find(league_id).users
                     @interest_season=[]
@@ -54,6 +55,7 @@ class Season < ActiveRecord::Base
    
    
    def self.league_table(league_id, user_id)
+          @user_contained = 0
          @league = League.find(league_id)
          if @league.season.status == "active"
               @enrolled_users = League.find(league_id).users
@@ -123,10 +125,12 @@ class Season < ActiveRecord::Base
                         return @interest_season
                    end #end of if statement
                else
-                 return 0
+                   return -1
                end #end of unless statement
          else
-          return 0
+           if @league.season.status == "complete" 
+              return 0
+           end
          end #end of if statement
      end
      

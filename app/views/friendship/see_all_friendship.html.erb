@@ -1,0 +1,48 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header small_bark_font_method second_font_method_alternate">
+		<%=image_tag "network.png"%><br/>
+		<%if @type == "fan"%>
+			<%=link_to pluralize(@friends.count, 'Fan'),see_all_friendship_path(:id=>@user.id, :type=>"fan")%>
+		<%else%>
+			<%=@friends.count%>&nbsp;&nbsp;<%=link_to 'Fanned',see_all_friendship_path(:id=>@user.id, :type=>"fan")%>
+		<%end%>
+	</div>
+
+	
+	
+	 <%unless @friends.blank?%>		
+	 	<%for friend in @friends%>
+			<div class="message_container">
+					<%if @type=="fan"%>	
+			   			<%friend = User.find(friend.user_id)%>	
+			   		<%end%>				
+					<div class="league_rank_color_alternative" style="background-color:<%=friend.rank.rankdetail.rank_color%>"></div>
+				   	<div class="notification_image">
+						<%unless friend.userimage.blank?%>
+							<%@user_image = friend.userimage%>
+						<%end%>
+					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+				   	</div>
+				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
+	   					<%= link_to "#{friend.first_name} #{friend.last_name}", portfolio_path(:id=>friend.id) %><br/>
+				   		<div class="third_font_method">
+				   			<%=friend.user_name%>
+				   		</div>			   		
+				   	</div>
+			</div>
+			<%@user_image = nil%>
+		<%end%>
+	<%else%>
+	<div class="no_season small_bark_font_method">
+						<div class="default_season">
+							<%=image_tag("network_eeeeee.png")%><br/>
+						</div>
+						<div class="season_text third_font_method">
+							This user currently has no fan or has not been fanned by anyone
+						</div>
+	</div>	
+
+	<%end%>
+</div>
+</div>

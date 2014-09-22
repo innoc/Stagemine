@@ -1,0 +1,24 @@
+<div class="facebox_header">
+	<%=@league.season.name%>
+</div>
+<br/>
+
+<div class=" league_details small_bark_font_method">
+<span class="font_method_alternative">Season name :</span> <%=@league.season.name%>
+<br/><br/>
+<span class="font_method_alternative">League name :</span> <%=@league.interest.interest_name%> dance league
+<br/><br/>
+<span class="font_method_alternative">Incentives  :</span> <%=@league.season.incentive%>
+<br/><br/>
+<span class="font_method_alternative">Maximum enrollment  :</span> <%=@league.enrollment_limit%> people
+<br/><br/>
+<span class="font_method_alternative">Qualification Criteria:</span> 
+<%if @league.cheers_to_qualify == 0 %> first come first served basis 
+<%else%>
+The first <%=@league.enrollment_limit%> people to get <%=@league.cheers_to_qualify%> cheers from an original video qualifies to enroll in this league. 
+<%end%> 
+</div>
+<br/>
+<div class="centralize">
+<%=image_tag('season_default.png')%><br/><br/>
+</div>

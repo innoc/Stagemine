@@ -4,7 +4,11 @@ Notes<br/><br/>
 1) Create a season first before any task or league<br/><br/>
 
 <% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
-
+<% unless Preseason.where(status: "active")[0].blank?%>
+<%unless ((Preseason.where(status: "active")[0].end_day.to_date - DateTime.now.to_date).to_i) == 0%>
+	<br/><%= link_to"Start Season",start_season_path(:id=>Preseason.where(status: "active")[0].id)%> <br/><br/>
+<%end%>
+<%end%>
 <%unless @point_pending.blank?%>
 	<br/><%= link_to" Create a new user history",create_history_path%> <br/><br/>
 <%else%>
@@ -18,20 +22,52 @@ Notes<br/><br/>
 </div>
 
 <%=form_tag(create_season_path) do%>
-				name:<%=text_field_tag(:name)%><br/><br/>
-				starttime<br/>
+				season name:<%=text_field_tag(:name)%><br/><br/>
+				season incentive:<%=text_field_tag(:incentive)%><br/><br/>
+				
+				preseason start time: <br/>
+				day 
+				<select name="pre_start_day">
+					<%@counter = 1%>
+					<%while @counter < 31%>
+					<option value=<%=@counter%>><%=@counter%></option>
+					<%@counter = @counter + 1%>
+					<%end%>				
+				</select>
+				<br/>
+				month
+				<select name="pre_start_month">
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="10">November</option>
+				</select>
+				<br/>
+				year
+				<select name="pre_start_year">
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+				</select>
+				<br/><br/>
+				Season start time<br/>
 				day
 				<select name="start_day">
-					<option value="1">1</option>
-					<option value="2">2</option>
+					<%@counter2 = 1%>
+					<%while @counter2 < 31%>
+					<option value=<%=@counter2%>><%=@counter2%></option>
+					<%@counter2 = @counter2 + 1%>
+					<%end%>				
 				</select>
-				
+				<br/>
 				month
 				<select name="start_month">
 					<option value="7">July</option>
 					<option value="8">August</option>
 					<option value="9">September</option>
+					<option value="10">October</option>
 				</select>
+				<br/>
 			    year
 				<select name="start_year">
 					<option value="2014">2014</option>
@@ -39,27 +75,29 @@ Notes<br/><br/>
 				</select>
 				<br/>
 				<br/>
-				end time<br/>
+				season end time<br/>
 				day
 				<select name="end_day">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				
+					<%@counter3 = 1%>
+					<%while @counter3 < 31%>
+					<option value=<%=@counter3%>><%=@counter3%></option>
+					<%@counter3 = @counter3 + 1%>
+					<%end%>				
 				</select>
-				
+				<br/>
 				month
 				<select name="end_month">
 				<option value="7">July</option>
 				<option value="8">August</option>
 				<option value="9">September</option>
+				<option value="10">October</option>
 				</select>
-				
+				<br/>
 				year
 				<select name="end_year">
 				<option value="2014">2014</option>
 				<option value="2015">2015</option>
-				</select>
-	
+				</select>	
 		<br/><br/>
 		<div id="form_btn">	
 		<%= submit_tag 'Click to Post',:class => 'classname'%>
@@ -98,6 +136,7 @@ Notes<br/><br/>
 					<option value="7">July</option>
 					<option value="8">August</option>
 					<option value="9">September</option>
+					<option value="10">October</option>
 				</select>
 			    year
 				<select name="start_year">
@@ -122,6 +161,7 @@ Notes<br/><br/>
 				<option value="7">July</option>
 				<option value="8">August</option>
 				<option value="9">September</option>
+				<option value="10">October</option>
 				</select>
 				
 				year

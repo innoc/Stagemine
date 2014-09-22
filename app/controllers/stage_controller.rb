@@ -6,7 +6,7 @@ def stage
     @feed = []
     @user_task = []
     user_check = [] # you need this to prevent duplicate feed
-    @user = current_user
+    @user = current_user   
     @user_cheers = current_user.cheers.count
     @task_list = Task.where("status=?","active")
     @filter_code = params[:id]
@@ -27,14 +27,16 @@ def stage
     for user_interest in @user_interest #Loop through the user interest
       unless user_interest == "Random"
         for interested_user in user_interest.users #Loop through the users that have similar interest
-            unless interested_user.id == current_user.id 
-              unless user_friends.include? interested_user 
-                  unless user_check.include? interested_user
-                       user_check << interested_user
-                       @friend_suggestion << interested_user 
-                  end
+          unless interested_user.usertype 
+              unless interested_user.id == current_user.id 
+                unless user_friends.include? interested_user 
+                    unless user_check.include? interested_user
+                         user_check << interested_user
+                         @friend_suggestion << interested_user 
+                    end
+                end
               end
-            end
+          end            
         end
       end 
     end
@@ -86,7 +88,17 @@ def stage
          end
       else
         if params[:id] == "task"
-        
+           unless Task.all.where(:status=>"active").blank?
+               for interest in current_user.interests
+                   for interest_feed in interest.feeds.where(:feed_name=="Video")
+                      unless interest_feed.video.task.blank?
+                             unless interest_feed.video.task.status == "inactive"
+                                    @feed << interest_feed
+                             end
+                      end 
+                   end
+               end
+           end
         else
             #filter feed based on interest 
             filtered_interest = Interest.find(params[:id])
@@ -131,6 +143,33 @@ def vid_display
     @user = current_user
     @vid_id = Video.find(params[:id])
 end
+
+def delete_feed
+   session[:return_to] ||= request.referer
+   feed = Feed.find(params[:id])
+     if params[:type] == "v"
+      post = feed.video
+     else
+       if params[:type] == "i"
+        post = feed.picture       
+       else
+        if params[:type] == "w"
+           post = feed.word   
+        end 
+       end
+     end
+   if feed.destroy and post.destroy              
+       respond_to do |format| 
+             flash[:notice]="Your post was deleted"
+             format.html{redirect_to session.delete(:return_to)}
+       end     
+   else     
+        respond_to do |format| 
+             flash[:notice]="An error occurred" 
+             format.html{redirect_to session.delete(:return_to)}
+       end     
+   end
+end
  
 def image_display
   @user = current_user
@@ -156,8 +195,9 @@ def create_image
             format.html{redirect_to stage_path}
             format.js
        end 
+  end
 end
-end
+
 
 def create_word
   @user_interest = current_user.interests
@@ -186,50 +226,68 @@ def hidden_task
 end
   
 def create_vid
+    session[:return_to] ||= request.referer
     @user_interest = current_user.interests
     unless params[:task_id].blank?
     @task_id = params[:task_id]
     end
+    unless params[:league].blank?
+    @league = League.find(params[:league])
+    end
     if request.post?
        if params[:vid] == ""
-          flash[:notice]="Please enter your video URL"
+          flash[:notice]= "Please enter your video URL"
        else
            @new_post = Video.new()
            @line1 = params[:vid]
                
-               if ( /v=/.match(@line1)  ) 
+               if ( /v=/.match(@line1)) 
                     @id = /v=/=~(@line1)
                     @updated_id = @id + 2 
                     @new_post.vid = @line1[@updated_id..-1]
+                    unless @league.blank?                            
+                      @new_post.build_audition(:user_id=>current_user.id,:season_id=>@league.season.id,:league_id=>@league.id)                      
+                    end
                     @new_post.user_id = current_user.id
                     @new_post.description = params[:description]
                     unless params[:task_id].blank? 
                       @new_post.task_id = params[:task_id]
                       @new_post.build_feed(feed_name: "Video",user_id: current_user.id, interest_id:Task.find(@task_id).label.interest.id)
                     else 
-                      @new_post.build_feed(feed_name: "Video",user_id: current_user.id, interest_id: params[:label_interest_id] )
+                    unless @league.blank?
+                      @new_post.build_feed(feed_name: "Video",user_id: current_user.id, interest_id:@league.interest.id)   
+                    else
+                      @new_post.build_feed(feed_name: "Video",user_id: current_user.id, interest_id: params[:label_interest_id])
                     end
-                     if @task_id.blank?
-        
+                    end
+                     if @task_id.blank? and @league.blank?      
                               @label_interest= Interest.find(params[:label_interest_id])
                               @new_post.build_label(interest_id: @label_interest.id, video_id: @new_post.id)
                      else
-                              @new_post.build_label(interest_id: Task.find(@task_id).label.interest.id, video_id: @new_post.id)
-                     end
-                         
-                   
-                     @new_post.save
-                     if params[:task_id].blank?
-                     flash[:notice]="Your video was successfully submitted"
-                     else
-                     flash[:notice]="Your task video was successfully submitted. Good Luck!!!"
+                       unless @league.blank?
+                           @new_post.build_label(interest_id: @league.interest.id, video_id: @new_post.id)
+                       else
+                           @new_post.build_label(interest_id: Task.find(@task_id).label.interest.id, video_id: @new_post.id)
+                       end
+                     end                  
+                     if @new_post.save
+                                    
+                       if params[:task_id].blank?
+                        if @league.blank?
+                           flash[:notice]="Your video was successfully submitted"
+                        else
+                           flash[:notice]="Your audition video was successfully submitted. Good Luck!!!"
+                        end
+                       else
+                        flash[:notice]="Your task video was successfully submitted. Good Luck!!!"
+                       end
                      end
                else 
                      flash[:notice]="Invalid video URL"
                end
         end 
         respond_to do |format|
-          format.html{redirect_to stage_path}
+          format.html{redirect_to session.delete(:return_to)}
           format.js
         end
     end

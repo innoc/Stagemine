@@ -1,14 +1,37 @@
-<br/>
-<br/>
-<div class="welcome_note">
-	<i>Welcome Luis Saffie</i>
+<div class="welcome_header">
+	 <div class="welcome_mid_header"> 
+	 		<div class="stagemine_welcome">
+	 					<%=image_tag("stagemine_welcome.png")%>	 				    
+	 		</div>
+	 		<table>
+	 			<tr>
+	 				<td>
+			 			<%=image_tag("welcome_stage_logo.png")%>	 				    
+	 				</td>
+	 			</tr>
+		 	</table>		 	
+	 </div >
 </div>
-<div class="sign_container">
-	<div class="welcome_box">
-		<%=link_to "Register", users_path%>
-	</div><br/>
-	<div class="welcome_box">
-		<%=link_to "Login", login_path%>
-	</div>
 
+<div class="welcome_container">
+	<div class="welcome_video_container">
+		What is StageMine?
+		<div class="welcome_video">
+			<div class="welcome_vid_click"> <div class='arrow-right'></div> </div>
+		</div>		
+	</div>
+	<div class="welcome_signin">
+		<div class="welcome_box">
+			<%=link_to "Sign up", users_path%>
+		</div><br/>
+		<div class="welcome_box">
+			<%=link_to "Sign in", login_path%>
+		</div>
+	</div>	
+	<div class="stagemine_text">
+	Build a reputation on a global stage through StageMine.	
+	</div>	
 </div>
+
+
+

@@ -1,3 +1,4 @@
+
 <div class="sidebar_left">
 <div class="season_header">
 	  <div class="season_title_default second_font_method">
@@ -20,9 +21,9 @@
 							<div class="unit_box">
 								
 							</div>
-							<div class="league_user_name second_font_method">
+							<div class="league_user_name second_font_method_alternate">
 								<%= link_to fan.user_name,portfolio_path(:id=>fan.id)%><br/>
-								<span class="third_font_method">
+								<span style="font-size:11px;" class="third_font_method">
 								<%=fan.rank.rankdetail.name%>
 								</span>								 
 							</div>
@@ -30,6 +31,13 @@
 					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
 				</div>
 		<%end%>
+		<br/>
+		
+		<div class="centralize second_font_method">
+			<%if @fan.count == 10 %>
+				<%= link_to 'See all', see_all_friendship_path(:id=>@user.id,:type=>"fan")%>
+			<%end%>
+		</div>
  <%end%>
 </div>
 
@@ -55,22 +63,27 @@
 							<div class="unit_box">
 								
 							</div>
-							<div class="league_user_name second_font_method">
+							<div class="league_user_name second_font_method_alternate">
 								<%= link_to fanned.user_name,portfolio_path(:id=>fanned.id)%><br/>
-								<span class="third_font_method">
-								<%=fanned.rank.rankdetail.name%>
+								<span style="font-size:11px;" class="third_font_method">
+									<%=fanned.rank.rankdetail.name%>
 								</span>
 							</div>
 					    </div>
 					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
 				</div>
 		<%end%>
+		<div class="centralize second_font_method">
+			<%if @fanned.count == 10 %>
+				<%= link_to 'See all', see_all_friendship_path(:id=>@user.id,:type=>"fanned")%>
+			<%end%>
+		</div>
     <%end%>
 </div>  
 
 <div class="container_portfolio">
- 
  <div class="content">
+    <% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
  	<div class="portfolio_top second_font_method">
  			
  			<div class="portfolio_notification">	 			
@@ -78,15 +91,15 @@
 	 				<table border="0" width="100%" style="font-size: 0.8em;">
 	 						<tr>
 								<td>
-	 								<%if @fan.count == 1 %><%=link_to "Fan"%><%else%><%=link_to "Fans"%><%end%><br/><%=@fan.count%>
+	 								<%if @fan.count == 1 %><%=link_to "Fan", see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%else%><%=link_to "Fans"%><%end%><br/><%=@fan.count%>
 	 							</td>
 	 							<td>
 	 							</td>
 	 							<td>
-	 								<%=link_to "Fanned"%> <br/><%=@fanned.count%>&nbsp;&nbsp;
+	 								<%=link_to "Fanned", see_all_friendship_path(:id=>@user.id,:type=>"fanned")%> <br/><%=@fanned.count%>&nbsp;&nbsp;
 	 							</td>
 	 							<td>
-	 								<%=link_to "Post"%> <br/><%=@user.words.count + @user.videos.count + @user.pictures.count%>
+	 								<%=link_to "Post",portfolio_path(:id=>@user.id)%> <br/><%=@user.words.count + @user.videos.count + @user.pictures.count%>
 				
 	 							</td>
 	 						</tr>
@@ -94,19 +107,22 @@
  				</div>
 	 			
 	 			<div class="portfolio_page first_font_method">
-	 		    	<div class="dropdown_portfolio">
-	 		    	<!-- put edit for the same user-->
-	 		    	<%if @fan_check.blank?%>
-					&nbsp;&nbsp; <%=link_to "Fan",add_performer_path(:id=>@user.id)%> &nbsp;&nbsp;
-					<%else%>
-					&nbsp;&nbsp; <%=link_to "Unfan", disconnect_path(:fan_id=>@fan_check[0].id,:id=>@user.id)%> &nbsp;&nbsp;
-					<%end%>
-					</div> 			
-	 		    	&nbsp;&nbsp;<%=link_to "Message"%>&nbsp;&nbsp;
+		 			 <%unless @portfolio_restriction == "allow"%>
+		 		    	<div class="dropdown_portfolio">
+			 		    	<!-- put edit for the same user-->
+			 		    	<%if @fan_check.blank?%>
+								&nbsp;&nbsp; <%=link_to "Fan",add_performer_path(:id=>@user.id)%> &nbsp;&nbsp;
+							<%else%>
+								&nbsp;&nbsp; <%=link_to "Unfan", disconnect_path(:fan_id=>@fan_check[0].id,:id=>@user.id)%> &nbsp;&nbsp;
+							<%end%>
+						</div> 			
+		 		    	&nbsp;&nbsp;<%=link_to "Message",create_message_path(:id=>@user.id),:rel=>"block" %>&nbsp;&nbsp;
+		 		     <%else%>
+	   	 		    	&nbsp;&nbsp;<%=link_to "Edit",alter_path%>&nbsp;&nbsp;
+		 		     <%end%>
 	 		    </div>
-
 			</div> 
- 			<div class="portfolio_username">
+ 			<div class="portfolio_username second_font_method_alternate ">
 			<%= link_to "#{@user.first_name} #{@user.last_name}", portfolio_path(:id=>@user.id) %><br/>
 			<span class="third_font_method"><%=@user.user_name%><br/><%=@user.rank.rankdetail.name%></span><br/>
 			</div>
@@ -116,13 +132,15 @@
 				<%@season_user = @user.userimage%>
 			<%end%>	
 			    <div class="portfolio_user_image_smaller_container" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @season_user.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@season_user.image.url(:thumb))%><%end%>) no-repeat;" >
-					<div id="mybutton">
-						<%=form_for :userimage,:url=>{:controller=>"edit",:action=>"user_avatar"},:html=>{:multipart=>true,:id=>"new_image"} do |f|%>
-							<%= f.file_field :image, :id=>"myfile"%>
-							Update
-							<br/>
-						<%end%>
-					</div> 
+					<%if @portfolio_restriction == "allow"%>
+						<div id="mybutton">
+							<%=form_for :userimage,:url=>{:controller=>"edit",:action=>"user_avatar"},:html=>{:multipart=>true,:id=>"new_image"} do |f|%>
+								<%= f.file_field :image, :id=>"myfile"%>
+								Update
+								<br/>
+							<%end%>
+						</div> 
+					<%end%>
 			    </div>
 			</div>	
 
@@ -133,21 +151,33 @@
  				<%=image_tag "history.png"%>
  				<div class="cheers_count">	<%=link_to"User History"%> </div>
  			</div>
- 			<div class="portfolio_column_color portfolio_fanned">		
-				<div class="portfolio_cheer_number light_bold_font">
-			  		<%=@user_cheers%>
-			  	</div>
-			  	<br/><br/><br/>
- 				<div class="cheers_dark_icon third_font_method">
-		  			&nbsp;<%if @user_cheers > 1%>People cheered you <%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered you<%end%><%end%>
-		  		</div> <!--end of cheers_dark-->
-
+ 			<div class="portfolio_column_color portfolio_fanned second_font_method_alternate">
+ 				<%if @portfolio_restriction == "allow"%>
+ 				<%= link_to(display_cheer_path) do %>			
+					<div class="portfolio_cheer_number light_bold_font">
+				  		<%=@user_cheers%>
+				  	</div>
+				  	<br/><br/><br/>
+	 				<div class="cheers_dark_icon">
+			  			&nbsp;<%if @user_cheers > 1%>People cheered<%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered<%end%><%end%>
+			  		</div><!--end of cheers_dark-->
+				<%end%>
+				<%else%>
+					<div class="portfolio_cheer_number light_bold_font">
+				  		<%=@user_cheers%>
+				  	</div>
+				  	<br/><br/><br/>
+	 				<div class="cheers_dark_icon third_font_method">
+			  			&nbsp;<%if @user_cheers > 1%>People cheered<%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered<%end%><%end%>
+			  		</div><!--end of cheers_dark-->
+				<%end%>
  			</div>
  		</div>
  		<div class="portfolio_small_column second_font_method">
  			<div class="badge_icon">
- 			<%=image_tag "badge.png"%><br/><br/>
- 			<%=link_to "Badges and Awards"%>
+ 			<%=image_tag "badge.png"%><br/>
+ 			<%= link_to @badge_count, badge_path(:id=>@user.id)%><br/>
+ 			<%=link_to "Badges and Awards",badge_path(:id=>@user.id)%>
  			</div>
  		</div>
  		<div class="portfolio_small_column small_bark_font_method">
@@ -185,62 +215,81 @@
  	</div>
  	<div class="portfolio_interest second_font_method">
  		&bull;<br/>
+ 		<div class="interest_filter">
  		<%if @interest == 0%>
- 			All Feeds<br/>
+ 			<span style="color:#2b6cc2;">All Feeds</span>
  		<%else%>
  			<%=link_to @interest.interest_name,portfolio_path(:id=>@user.id,:interest=>@interest.id)%><br/>
  		<%end%>
+ 		</div><br/>
  		&bull;<br/>
  	</div>
- 	<div class="portfolio_content">
- 		<%if @feed.blank?%>
- 			<div class="feed_icon">
- 				<%= image_tag "feed.png"%><br/><br/>
- 				No Feed
- 			</div>
- 		<%else%>
-	 		<%for feed in @feed%>
-	 			feed
-	 		<%end%>
- 		<%end%>
-		
- 	<div class="paginate_loader">
-	<%= image_tag("loading.gif")%>
-	</div>	
-    <span style="display;"><%=paginate @feed%></span>
- 	</div>
  	
-
-
-	 <div id="columns">
-	 	   <div class="stage_content">		 	   
-				<script>
-				  jQuery(document).ready(function($) {
-				    $('a[rel*=facebox]').live("mousedown", function() { 
-					    $(this).unbind('click'); //everytime you click unbind the past event handled.
-					    $(this).facebox();
-					});
-					$('a[rel*=imagepop]').live("mousedown", function() { 
-					    $(this).unbind('click'); //everytime you click unbind the past event handled.
-					    $(this).imagepop();
-					});
-				  });
-				</script>
-				
-	  	   </div>
-	 </div>
-	</div>	
-   <!-- end .content -->
-
-	<div class="paginate_loader">
-	<%= image_tag("loading.gif")%>
-	</div>	
-
-  
-  <div class="footer small_bark_font_method">
-    <p>www.stagemine.com &copy; 2014</p> 
-    <!-- end .footer --></div>
-  <!-- end .container --></div>
+	<%if @feed.blank?%>
+		<div class="feed_icon">
+			<%=image_tag("feed.png")%><br/>
+			No feed
+		</div>
+	<%else%>	
+ 	<div id="columns">
+		 	   <div class="stage_content">		 	   
+					<!--THIS JQUERY CODE HANDLES THE FACEBOK EFFECT-->
+					<script>
+					  jQuery(document).ready(function($) {
+					    $('a[rel*=facebox]').live("mousedown", function() { 
+						    $(this).unbind('click'); //everytime you click unbind the past event handled.
+						    $(this).facebox();
+						});
+						$('a[rel*=imagepop]').live("mousedown", function() { 
+						    $(this).unbind('click'); //everytime you click unbind the past event handled.
+						    $(this).imagepop();
+						});
+					  });
+					</script>
+					
+					<%unless @friend_suggestion.blank?%>
+						<div class="pin">
+							<div class="suggested_header bold_header">
+							Find new performers
+							</div> <!--end of suggested_header-->
+							<%for suggested_friend  in @friend_suggestion %>						
+								<div class="suggested_friend_area">									
+										<%unless suggested_friend.userimage.blank?%>
+											<%@suggested_image = suggested_friend.userimage%>
+										<%end%>
+										<div class="add_friend light_bold_font">
+											<%=link_to "Fan", add_performer_path(:id=> suggested_friend.id)%>
+										</div> <!--end of add_friend-->
+										<div class="suggested_user_name second_font_method third_font_method">					
+											<%=link_to suggested_friend.user_name,portfolio_path(:id=>suggested_friend.id)%>
+											<div class="rank_name">
+											<%=suggested_friend.rank.rankdetail.name%>
+											</div> <!--end of rank_name-->
+										</div>
+										<div class="suggested_friend_radi" style="border:2px solid <%=suggested_friend.rank.rankdetail.rank_color%>;background: url(<%if @suggested_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@suggested_image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
+					     				<%=@suggested_image = nil %>				  
+								</div><!--end of suggested_friend_area-->						
+							<%end%>
+							<div class="network_image">
+								<%=image_tag("network_small.png")%>
+							</div>
+						</div><!--end of pin-->
+					<%end%>								  				
+				<%= render :partial=>"stage/stage_feed"%>	 <!--The news feed is located in this partial-->
+		  	   </div>
+		   </div> <!-- end of content_stage -->
+ 	  </div> <!--end of columns-->
+ 	  <%end%>
+	  <div class="paginate_loader">
+			<%=image_tag("loading.gif")%>
+	  </div>	
+      <span style="display;"><%=paginate @feed%></span>  
+	  <div class="footer small_bark_font_method">
+	    <p>www.stagemine.com &copy; 2014</p> 
+	  </div><!-- end .footer -->
+ 	
+  <!-- end .content -->
+  </div>
   
  <script>
 $(document).ready(function(){ 

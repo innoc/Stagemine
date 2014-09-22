@@ -1,0 +1,51 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header small_bark_font_method second_font_method_alternate">
+		<%=image_tag "badge_small.png"%><br/>
+		<%=link_to pluralize(@badge_list.count,'Badge and Award'),badge_path(:id=>@user.id)%>
+	</div>	
+	<%unless @badge_list.blank?%>		
+	 	<%for badge in @badge_list%>
+			<div class="message_container">								
+				   	<div class="notification_image">
+						&nbsp; 
+						<%if badge.badge.priority == 1%>
+							<%=image_tag("badge_small_bronze.png")%>
+						<%else%>
+						<%if badge.badge.priority == 2%>
+							<%=image_tag("badge_small_ruby.png")%>
+						<%else%>
+						<%if badge.badge.priority == 3%>
+							<%=image_tag("badge_small_sapphire.png")%>
+						<%else%>
+						<%if badge.badge.priority == 4%>
+							<%=image_tag("badge_small_silver.png")%>
+						<%else%>
+						<%if badge.badge.priority == 5%>
+							<%=image_tag("badge_small_gold.png")%>
+						<%end%>
+						<%end%>
+						<%end%>
+						<%end%>
+						<%end%>
+				   	</div>
+				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method">
+						 <%=badge.badge.name%> Badge<br/>
+						 <span class="third_font_method">Winner of the "<%=badge.task_name%>" task</small>	
+				   	</div>
+			</div>
+		<%end%>
+	<%else%>
+	<div class="no_season small_bark_font_method">
+						<div class="default_season">
+							<%=image_tag("badge.png")%><br/>
+						</div>
+						<div class="season_text third_font_method">
+							No badges available
+						</div>
+	</div>	
+
+	<%end%>	
+	 
+</div>
+</div>

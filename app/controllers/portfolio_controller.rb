@@ -3,10 +3,15 @@ class PortfolioController < ApplicationController
   def portfolio
    @user = User.find(params[:id]) 
    @feed = []
+   @link_type = 1
+   @badge_count = @user.badge_allocations.count
    @user_cheers = @user.cheers.count
    @user_interest = @user.interests
-   @fan = Friendship.where("friend_id=?",@user.id)
-   @fanned = @user.friends
+   @fan = Friendship.where("friend_id=?",@user.id).order('created_at DESC').limit(10)
+   @fanned = @user.friends.order('created_at DESC').limit(10)
+   if @user.id == current_user.id
+   @portfolio_restriction = "allow"
+   end
    @fan_check = Friendship.where("user_id=? and friend_id=?",current_user.id,@user.id)
      
    if params[:interest].blank? 

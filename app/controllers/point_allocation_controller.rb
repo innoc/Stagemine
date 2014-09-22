@@ -102,5 +102,9 @@ def create_cheer
 end #end of method 
   
   
+def display_cheer
+     @cheers = current_user.cheers.order(created_at: :desc)
+end
+  
   
 end

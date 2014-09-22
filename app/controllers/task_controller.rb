@@ -73,6 +73,15 @@ class TaskController < ApplicationController
                   
                   unless @winner == 0 # This will help in a situation whereby there is no winner due to no vote
                           @winner_instance = Winner.create(:user_id=>@winner, :task_id=>task.id)
+                          @badges = Badge.all                          
+                          for badge in @badges
+                              if @user.winners.count == badge.priority
+                                  BadgeAllocation.create(:user_id=>@winner, :badge_id=>badge.id, :task_name=>task.title)
+                              end
+                          end
+                          if @user.winners.count > 5
+                             BadgeAllocation.create(:user_id=>@winner,:badge_id=>Badge.where(:priority=> 5)[0].id,:task_name=>task.title)
+                          end 
                           #need optimization
                           #_seasonFeed.find(task.feed.id).update_attributes(:created_at=>@winner_instance.created_at)
                           Notification.create(:notification_type=>"Winner",:notification_type_id=>@winner_instance.id,:user_id=>@winner)

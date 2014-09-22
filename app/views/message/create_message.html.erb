@@ -1,0 +1,16 @@
+<div class="facebox_header">
+	Send a message
+</div>
+
+<%=form_tag({:controller=>'message',:action=>'create_message',:id=>@user.id}) do%>
+		<div class="image_text_field">
+			    <%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>
+		</div>
+	
+		<div id="form_btn">	
+		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		</div>
+		<br/>
+			
+	
+<%end%>

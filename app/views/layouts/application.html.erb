@@ -4,8 +4,22 @@
   <title>Giga</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>  
+  <%= javascript_include_tag 'search'%>  
   <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Crimson+Text:700' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
+  <style type="text/css">
+	body {
+	  font-family: 'Oxygen', sans-serif;
+	  background-image:url(noise2.png);
+	  background-color: rgb(235,235,235);
+	  margin: 0;
+	  padding: 0;
+	  color: #000;
+	  height:100%;
+	}
+
+	</style>
 </head>
 <body>
 <% unless current_user.blank?%>
@@ -13,21 +27,21 @@
 		<div class="stagemine_name">
 		<%= link_to image_tag("stagemine.png"), stage_path%>
 		</div>
-		 <div class="mid_header"> 
-		 	    
-			 	<div class="header_icon">
-			 		
-			 		<%unless current_user.notifications.where("status=?",0).blank?%>
-			 		<div class="notification_top_icon"><%=current_user.notifications.where("status=?",0).count%></div>
-					<%end%>
+		 <div class="mid_header">		 	    
+			 	<div class="header_icon">						
 					<% unless current_user.blank?%>
 						<%unless current_user.userimage.blank?%>
 						<%@userimage = current_user.userimage%>
 						<%end%>
-				 		<div class="header_user_detail">							
-							<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%>					 	
-			 	       </div>
 			 	    <%end%>
+			 	    <div class="search_bar_sample">
+			    	<%=form_tag(view_search_path) do%>
+			    			<div class="search_icon">
+			    			<%= image_submit_tag("search-icon.png") %>
+			    			</div>			    	
+					    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
+			       	<%end%>
+			       	</div>
 			 	</div> 
 			 	
 			 	<div class="search_bar">					
@@ -38,10 +52,17 @@
 			    </div>
 			    
 			    <div class="brand_icon">
-			    	<div class="search_bar_sample">
-			    		
-			    	</div>
-				<%=image_tag("rsz_stagemie1.png")%>
+			    	
+			    	<%unless current_user.notifications.where("status=?",0).blank?%>
+			 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
+					<%end%>	
+					
+			    	<% unless current_user.blank?%>
+				 		<div class="header_user_detail">							
+							<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%> | 
+			 	        </div>
+			 	    <%end%>
+			 	  	<%=image_tag("rsz_stagemie1.png")%>
 			    </div>
 		 </div >
 		 <!-- end .header -->

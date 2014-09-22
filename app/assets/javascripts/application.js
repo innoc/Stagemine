@@ -17,6 +17,7 @@
 //= require jquery.ddslick.min
 //= require block
 //= require rails
+//= require jquery-ui.min
 //= require imagepop
 
 

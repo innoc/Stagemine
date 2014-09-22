@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="middle_cover">
+		<div class="middle_cover_header small_bark_font_method second_font_method_alternate">	
+			<%=image_tag "cheers_dark_icon.png"%><br/>
+			<%=link_to pluralize(@cheers.count, 'Cheer'), display_cheer_path%>
+		</div>
+		 <%unless @cheers.blank?%>		
+		 	<%for cheer in @cheers%>
+				<div class="message_container">		   
+					   	<div class="notification_image">
+							<%cheerer = User.find(cheer.cheerer_id)%>
+							<%unless cheerer.userimage.blank?%>
+								<% @user_image = cheerer.userimage%>
+							<%end%>
+						    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+					   	</div>
+					   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
+					   		<%= link_to cheerer.user_name, portfolio_path(:id=>cheerer.id)%> <span class="third_font_method">cheered you</span><br/>
+					   		<span class="third_font_method"><%= distance_of_time_in_words_to_now(cheer.created_at)%> ago</span><br/>
+					   	</div>
+				</div>
+				<%@user_image = nil%>
+			<%end%>
+		<%end%>
+	</div>
+</div>
