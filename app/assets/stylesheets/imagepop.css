@@ -19,8 +19,8 @@
 
 #imagepop .popcontent {
   display:table;
-  width:400px
-  height:390px
+  width:400px;
+  height:390px;
   background: transparent;
   -webkit-border-radius:4px;
   -moz-border-radius:4px;
