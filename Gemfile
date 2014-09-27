@@ -42,8 +42,4 @@ gem 'kaminari',  '~> 0.14.0'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
-group :production do
-  gem 'rails_12factor'
-  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
-  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
-end
+gem 'rails_12factor', group: :production
