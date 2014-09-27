@@ -44,4 +44,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 group :production do
   gem 'rails_12factor'
+  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
+  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end
