@@ -13,7 +13,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'paperclip-meta'
@@ -42,3 +41,7 @@ gem 'kaminari',  '~> 0.14.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
+group :production do
+  gem 'rails_12factor'
+end
