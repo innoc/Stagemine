@@ -37,7 +37,7 @@ def self.authenticate(user_name, password)
 end
 
 def self.searchsuggestion(prefix)
-  suggestions = User.where("user_name like ? || first_name like ? || last_name like ?", "#{prefix}%","#{prefix}%","#{prefix}%")
+  suggestions = User.where("user_name ILIKE ? OR first_name ILIKE ? OR last_name ILIKE ?", "#{prefix}%","#{prefix}%","#{prefix}%")
   return suggestions.limit(10)
 end
 
