@@ -5,9 +5,11 @@ gem 'activerecord-session_store'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-#gem 'sprockets_better_errors'
+gem 'sass-rails', '4.0.2' 
+gem 'sprockets', '2.11.0'
+gem 'sprockets_better_errors'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+#gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
