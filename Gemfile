@@ -5,6 +5,8 @@ gem 'activerecord-session_store'
 gem 'rails', '4.1.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
+
+gem 'sprockets_better_errors'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
