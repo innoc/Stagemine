@@ -13,12 +13,15 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
+//= require_tree .
 //= require facebox
 //= require jquery.ddslick.min
 //= require block
 //= require rails
 //= require jquery-ui.min
 //= require imagepop
+
 
 
 $.ajaxSetup({ dataType: 'script' });

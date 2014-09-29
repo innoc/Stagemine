@@ -2,20 +2,5 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-  $(document).ready(function() {
-    $('#myfile').change(function(evt) {
-       $('#new_image').submit();
-    });
-    
-  $( ".portfolio_image_container" ).hover(
-    function() {
-      $("#mybutton").show();
-    }, function() {
-       $("#mybutton").hide();
-    }
-  );  
-
-});
-
 
 
