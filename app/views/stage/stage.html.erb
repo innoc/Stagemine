@@ -2,6 +2,11 @@
 THE PURPOSE OF THIS PAGE IS TO SUPPORT MAJOR ACTIVITIES PERFORMED BY THE USER.
 IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE	
 -->
+<script>
+$(document).ready(function(){ 
+	alert("innocent");
+})
+</script>
 <div class="sidebar1">
 	<div class="right_sidebar_ajax">
 	<%= render :partial=>"right_sidebar"%>
@@ -310,7 +315,40 @@ The javascript below handles the following
 
 <script>
 $(document).ready(function(){ 
-	 <%unless Season.all.blank? %>
+	  $('a[rel*=block]').block();
+	  if($(window).width() < 1035)
+	  { 
+		$('.sidebar1').hide();
+	 	$('.sidebar2').hide(); 
+	 	$('.task_cover').show(); 	 	
+	  }	  
+	  else if($(window).width() > 1035)
+	  { 
+		$('.sidebar1').show();
+	    $('.sidebar2').show();
+	    $('.task_cover').hide(); 
+	  }	  
+	$(window).resize(function() {
+	  // This will execute whenever the window is resized	 
+	  if($(window).width() < 1035)
+	  { 
+		$('.sidebar1').hide();
+		$('.sidebar2').hide();
+		$('.task_cover').show(); 
+	  }
+	  else if($(window).width() > 1035)
+	  { 
+		$('.sidebar1').show();
+		$('.sidebar2').show();
+		$('.task_cover').hide(); 	
+	  }	
+	});
+	});	
+	$( ".task_header_title" ).fadeOut( "slow" );
+	$( ".task_header_title" ).fadeIn( "slow" );
+	$('.delete_link').hide(); 
+	
+		 <%unless Season.all.blank? %>
 			  <%@season_duration = Season.last%>
 			  <%if @season_duration.status == "active" and (@season_duration.end_date.to_date - DateTime.now.to_date).to_i < 1%>
 					  window.setTimeout(function(){
@@ -346,41 +384,6 @@ $(document).ready(function(){
 		  }, 30000);
 		<%end%>
 	 <%end%>
-	 
-	 
-	 	  
-	  $('a[rel*=block]').block();
-	  if($(window).width() < 1035)
-	  { 
-		$('.sidebar1').hide();
-	 	$('.sidebar2').hide(); 
-	 	$('.task_cover').show(); 	 	
-	  }	  
-	  else if($(window).width() > 1035)
-	  { 
-		$('.sidebar1').show();
-	    $('.sidebar2').show();
-	    $('.task_cover').hide(); 
-	  }	  
-	$(window).resize(function() {
-	  // This will execute whenever the window is resized	 
-	  if($(window).width() < 1035)
-	  { 
-		$('.sidebar1').hide();
-		$('.sidebar2').hide();
-		$('.task_cover').show(); 
-	  }
-	  else if($(window).width() > 1035)
-	  { 
-		$('.sidebar1').show();
-		$('.sidebar2').show();
-		$('.task_cover').hide(); 	
-	  }	
-	});
-	});	
-	$( ".task_header_title" ).fadeOut( "slow" );
-	$( ".task_header_title" ).fadeIn( "slow" );
-	$('.delete_link').hide(); 
 </script>
 
 
