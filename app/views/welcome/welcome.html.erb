@@ -6,7 +6,8 @@
 	 		<table>
 	 			<tr>
 	 				<td>
-			 			<%=image_tag("welcome_stage_logo.png")%>	 				    
+			 			<%=image_tag("welcome_stage_logo.png")%>	
+			 		 				    
 	 				</td>
 	 			</tr>
 		 	</table>		 	
@@ -14,23 +15,41 @@
 </div>
 
 <div class="welcome_container">
-	<div class="welcome_video_container">
-		What is StageMine?
-		<div class="welcome_video">
-			<div class="welcome_vid_click"> <div class='arrow-right'></div> </div>
-		</div>		
+	
+	<div class="welcome_top_box">
+		<div class="welcome_top_left_box">
+			<div class="welcome_text">Build a Reputation</div>
+			<div class="welcome_text">on a Global Stage</div><br/>
+			<div class="second_font_method"><%=link_to "Learn more"%></div>
+		</div>
+		<div class="welcome_top_right_box">
+		</div>
+
 	</div>
-	<div class="welcome_signin">
-		<div class="welcome_box">
-			<%=link_to "Sign up", users_path%>
-		</div><br/>
-		<div class="welcome_box">
-			<%=link_to "Sign in", login_path%>
+
+	<div class="welcome_box_container">			
+		<div class="welcome_box_one">
+			<%=image_tag("Join-us.png")%>
+		</div>	
+		<div class="welcome_box_two">
+			<%=image_tag("login_icon.png")%>
+		</div>
+		<div class="welcome_box_three">
+			<div class="welcome_vid_click"> <div class='arrow-right'></div> </div>
+		</div>
+		<div class="welcome_box_bottom">
+				<div class="welcome_box_one_label third_font_method">
+					Register for free
+				</div>
+				<div class="welcome_box_two_label third_font_method">
+					Sign in
+				</div>
+				<div class="welcome_box_three_label third_font_method">
+					Learn More!!
+				</div>
 		</div>
 	</div>	
-	<div class="stagemine_text">
-	Build a reputation on a global stage through StageMine.	
-	</div>	
+	
 </div>
 
 

@@ -1518,9 +1518,8 @@ background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) *
  background-color:white;
 }
 .welcome_container{ 
-background-image:url(stagelight1.png);	
 width:960px;
-height:600px;
+height:550px;
 margin:auto;
 margin-top:10px;	
 background-repeat: no-repeat;
@@ -1532,15 +1531,64 @@ height:100px;
 margin:auto;	
 margin-top:10%;
 }
-
-.welcome_video_container{ 
-float:left;	
-width:350px;
-margin-top:180px;
-height:300px;
-color:white;
-font-size:12px;
-text-align:center;
+.welcome_box_container{ 
+	margin-top:5%;
+	margin-left:150px;
+	margin-right:150px;
+	width: auto;
+}
+.welcome_text{ 
+	font-family: 'Poiret One', cursive;
+	font-size:40px;	
+}
+.welcome_top_box{ 
+	height:200px;
+	margin-left:150px;
+	margin-right:150px;
+	width:auto;
+	margin-top:10%;
+	background-color:white;
+	padding:2%;
+	border:1px solid lightblue;
+}
+.welcome_top_left_box{ 
+	float:left;
+	width: 300px;
+}
+.welcome_top_right_box{ 
+	float:left;
+	margin-left:50px;
+	width: 300px;
+}
+.welcome_box_one{ 
+	border:1px solid lightblue; 
+	width:150px;
+	height:150px;
+	margin-left:30px;
+	background-color:lightgreen;
+	float:left;
+	border-radius: 5px;	
+}
+.welcome_box_two{ 
+	border:1px solid lightblue; 
+	width:150px;
+	padding-top:35px; 
+	height:115px;
+	background-color:lightblue; 
+	float:left;
+	margin-left:65px;
+	border-radius: 5px;
+	text-align: center;
+}
+.welcome_box_three{ 
+	border:1px solid lightblue; 
+	width:150px;
+	height:150px;
+	background-color:rgb(100,100,115);
+	float:left;
+    background-image:url(noisecolor2.png);
+	margin-left:65px;
+	border-radius: 5px;
 }
 .stagemine_text{ 
 clear:both;
@@ -1971,7 +2019,6 @@ left:138px;
 .welcome_vid_click{ 
 border-radius:100%;
 border:1px solid white;
-background-color:black;
 width:50px;
 height:50px; 
 opacity:0.8;
@@ -1979,10 +2026,28 @@ z-index:50;
 filter:alpha(opacity=40); 
 margin-left:2px;
 position:relative;
-top:100px;
-left:150px;
+top:50px;
+left:45px;
+}
+.welcome_box_bottom{ 
+clear: both;	
 }
 
+.welcome_box_one_label{ 
+float:left;
+margin-left:77px;
+margin-top:5px;
+}
+.welcome_box_two_label{ 
+float:left;
+margin-left:130px;
+margin-top:5px;
+}
+.welcome_box_three_label{ 
+float:left;
+margin-left:150px;
+margin-top:5px;
+}
 .arrow-up {
   width: 0; 
   height: 0; 
@@ -1991,10 +2056,10 @@ left:150px;
   border-bottom: 10px solid white; /* bottom, add background         color here */
   font-size: 0;
   line-height: 0;
-    margin:0px auto;
-    position:relative;
-    top:158px;
-    right:90px;
+  margin:0px auto;
+  position:relative;
+  top:158px;
+  right:90px;
 }
 .task-arrow-up{ 
   width: 0; 
@@ -2004,10 +2069,10 @@ left:150px;
   border-bottom: 10px solid #eeeeee; /* bottom, add background         color here */
   font-size: 0;
   line-height: 0;
-    margin:0px auto;
-    position:relative;
-    top:158px;
-    right:90px;	
+  margin:0px auto;
+  position:relative;
+  top:158px;
+  right:90px;	
 
 }
 .arrow-up-image {
