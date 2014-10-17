@@ -584,8 +584,6 @@ text-align:center;
 .second_font_method_alternate a{ 
   font-size:12px;
   color:rgb(100,100,115);
-  /*color:#2b6cc2;
-  Standard: FF gt 1.5, Opera, Safari */
   font-weight:bold; 
 }
 .style ul{ 
@@ -596,8 +594,6 @@ text-align:center;
 .font_method_alternative{ 
   font-size:12px;
   color:rgb(100,100,115);
-  /*color:#2b6cc2;
-  Standard: FF gt 1.5, Opera, Safari */
   font-weight:bold; 
 }
 .league_details{ 
@@ -619,7 +615,7 @@ height:50px;
 }
 .small_bark_font_method{ 
   color:#333;
-  font-size: .8em;
+  font-size:0.8em;
 }
 .mid_bark_font_method{ 
   font-weight:bold;
@@ -752,7 +748,7 @@ padding-top:25px;
 }
 
 .header_youtube_link{ 
- color:#333;
+  color:#333;
   font-weight: bold;
   font-size: 13px;
   margin-top:5px;
@@ -2126,7 +2122,6 @@ font-family: 'Oxygen', sans-serif;
 .box_list{ 
 margin-top:20px;
 text-align:left;
-color:	
 }
 .block3{ 
 float:left;
