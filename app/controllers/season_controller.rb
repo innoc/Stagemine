@@ -22,19 +22,10 @@ class SeasonController < ApplicationController
     @league = League.find(params[:league_id])
   end 
   
-  def season_checker
-      for league in League.where(:status => "active")
-        top_three = Season.league_top_three(league.id).to(3)
-        point = 1
-        for top_three_id in top_three
-           Leaguewinner.create(:user_id=>top_three_id, :league_id=> league.id, :position=> point )
-           point = point + 1
-        end
-                league.update_attributes(:status=>"inactive")
-      end     
+  def season_checker       
       @season = Season.last 
       if @season.status == "active"
-        @season.update_attributes(:status=>"inactive")
+        @season.update_attributes(:status=>"complete")
         Historypending.create(:season_id=> @season.id, :historypending=>"true")
       end
   end

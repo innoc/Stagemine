@@ -29,11 +29,12 @@
 						<div class="season_user_container">
 								<div class="season_user_position_radi third_font_method"> 
 										 <%unless @season_table.last == "blank"%>
-											<!--%=@line1[@season_table.last..1]%-->
-					           				<%@position = @season_table.last[1..-1].to_i%>
-					          				Position: <%=@position.ordinalize%><br/><br/>
+					 						<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.blank?%>
+												<!--%=@line1[@season_table.last..1]%-->
+						           				<%@position = @season_table.last[1..-1].to_i%>
+						          				Position: <%=@position.ordinalize%><br/><br/>
+						          			<%end%>
 										 <%end%>
-										
 										 <%unless @user.leagues.where(:id=>@interest_id.leagues.last.id)[0].blank?%> <!--This is used in case the user is not enrolled in the league-->
 											 <%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.blank?%>
 											 	Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.point%><br/>
@@ -86,8 +87,10 @@
 								
 										<div class="brief_league_user_detail">
 											<div class="unit_box">
+     				 						<%unless UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_id.id])[0].point.blank?%>
 												<%position = hash[@above_user.id] + 1%>
 												<%= position.ordinalize%>
+											<%end%>
 											</div>
 											<div class="league_user_name second_font_method">
 												<%= link_to @above_user.user_name,portfolio_path(:id=>@above_user.id)%><br/>
@@ -115,8 +118,10 @@
 									
 											<div class="brief_league_user_detail">
 												<div class="unit_box">
+												<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.blank?%>
 													<%position = hash[@user.id] + 1%>
 													<%= position.ordinalize%>
+												<%end%>
 												</div>
 												<div class="league_user_name second_font_method">
 													<%= link_to @user.user_name,portfolio_path(:id=>@user.id)%><br/>
@@ -144,8 +149,10 @@
 										
 												<div class="brief_league_user_detail">
 													<div class="unit_box">
+													<%unless UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_id.id])[0].point.blank?%>
 														<%position = hash[@below_user.id] + 1%>
 														<%= position.ordinalize%>
+													<%end%>
 													</div>
 													<div class="league_user_name second_font_method">
 														<%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%><br/>
@@ -182,8 +189,10 @@
 															
 														</div>
 														<div class="unit_box">
+			     				 						<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_id.id])[0].point.blank?%>
 															<%=@place.ordinalize%>
 															<%@place = @place + 1%>
+														<%end%>
 														</div>
 														<div class="season_league_user_name second_font_method">
 															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>

@@ -91,7 +91,7 @@ def stage
            unless Task.all.where(:status=>"active").blank?
                for interest in current_user.interests
                    for interest_feed in interest.feeds.where(:feed_name=="Video")
-                      unless interest_feed.video.task.blank?
+                      unless interest_feed.video.try(:task).blank?
                              unless interest_feed.video.task.status == "inactive"
                                     @feed << interest_feed
                              end

@@ -371,12 +371,14 @@ padding-right:10px;
 	width:283px;	
 	height: 100px;
 	padding: 5px;
-	font-size: 0.8em;
 	resize: none;
 	border:none;
 	border-bottom:1px solid lightblue;
-	resize:none;
 }
+#task_video{ 
+text-align: center;
+} 
+
 
 .feed_content_focus{ 
 background-color:transparent;
@@ -619,7 +621,19 @@ height:50px;
   color:#333;
   font-size: .8em;
 }
-.first_font_method  a{ 
+.mid_bark_font_method{ 
+  font-weight:bold;
+  font-size: small;	
+}
+.admin_league_field{ 
+ width:300px;
+ height:30px;	
+}
+.admin_league_area{ 
+ width:300px;
+ height:100px;	
+}
+.first_font_method  a{  
   color:#333;
   font-weight: bold;
   font-size: .8em;
@@ -948,7 +962,7 @@ width:116px;
 .season_league_user_name{ 
 margin-top:5px;
 margin-left: 2px;
-width:55px;	
+width:200px;	
 }
 
 .task_cover{ 
@@ -967,7 +981,7 @@ border-right:1px solid lightblue;
 }
 
 .hidden_season_box{ 
-width:100px;
+min-width:100px;
 margin-right:15px;
 float:right;
 text-align:center;
@@ -1519,7 +1533,7 @@ background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) *
 }
 .welcome_container{ 
 width:960px;
-height:550px;
+height:700px;
 margin:auto;
 margin-top:10px;	
 background-repeat: no-repeat;
@@ -1532,7 +1546,7 @@ margin:auto;
 margin-top:10%;
 }
 .welcome_box_container{ 
-	margin-top:5%;
+	margin-top:0%;
 	margin-left:150px;
 	margin-right:150px;
 	width: auto;
@@ -1540,6 +1554,16 @@ margin-top:10%;
 .welcome_text{ 
 	font-family: 'Poiret One', cursive;
 	font-size:40px;	
+}
+.welcome_mid_box{ 
+	margin-left:150px;
+	margin-right:150px;
+	width: auto;
+	height:60px;
+	padding-top:10px;
+	padding-bottom:10px;	
+	color:#2b6cc2; 
+	text-align: center;
 }
 .welcome_top_box{ 
 	height:200px;
@@ -1557,37 +1581,57 @@ margin-top:10%;
 }
 .welcome_top_right_box{ 
 	float:left;
-	margin-left:50px;
-	width: 300px;
+	width: 280px;
+	height:185px;
+	border-left: 1px solid lightblue;
+	margin-left:10px;
+	padding-top:15px;
+	padding-left:5px;
 }
+.register_link{ 
+ float:right;
+ margin-top:-7px;
+ margin-right:30px;
+ background-color: rgb(121,88,159);
+ color:white;
+ width:70px;
+ padding:2px;
+ font-size:12px;
+ border-radius:5px;
+ text-align:center;
+ border:1px solid lightblue;
+ padding-top:6px;
+ padding-bottom:6px;
+ cursor:pointer;
+}
+
 .welcome_box_one{ 
 	border:1px solid lightblue; 
-	width:150px;
-	height:150px;
-	margin-left:30px;
-	background-color:lightgreen;
+	width:655px;
+	height:250px;
+	margin-left:0px;
+	background-color:white;	
 	float:left;
-	border-radius: 5px;	
+	border-radius: 5px;		
 }
 .welcome_box_two{ 
 	border:1px solid lightblue; 
-	width:150px;
-	padding-top:35px; 
-	height:115px;
-	background-color:lightblue; 
+	width:212px;
+	height:250px;
+	background-color:white; 
 	float:left;
-	margin-left:65px;
+	margin-left:8px;
 	border-radius: 5px;
 	text-align: center;
 }
 .welcome_box_three{ 
 	border:1px solid lightblue; 
-	width:150px;
+	width:212px;
 	height:150px;
 	background-color:rgb(100,100,115);
 	float:left;
+	margin-left:8px;
     background-image:url(noisecolor2.png);
-	margin-left:65px;
 	border-radius: 5px;
 }
 .stagemine_text{ 
@@ -1617,7 +1661,40 @@ font-size: 12px;
 width:400px;
 height:400px;
 margin:auto;	
-margin-top:3%;	
+margin-top:10%;	
+}
+.admin_dashboard{ 
+border:1px solid lightblue;
+width: 710px;
+padding-left: 5px;
+padding-right: 5px;
+padding-top:50px;
+background-color:white;
+padding-bottom:50px;
+text-align: center;
+}
+
+.season_container{ 
+display:none;
+margin-top:20px;	
+text-align:center;
+font-size:small;
+}
+.league_container{ 
+display:none;
+margin-top:20px;
+font-size:small;	
+}
+
+.season_link{ 
+  font-size:small;
+  color:#2b6cc2; 
+  cursor: pointer;	
+}
+.league_link{ 
+  font-size:small;
+  color:#2b6cc2; 
+  cursor: pointer;	
 }
 .interest_container{ 
 width:400px;
@@ -1793,11 +1870,10 @@ text-align:center;
 }
 
 .error_container{ 
-margin-top:-30px;
-padding-top:10px;
 text-align:center;
-padding-bottom:10px;
 color:red;
+font-size:12px;
+height:20px;
 }
 
 .all_center{ 
@@ -2002,6 +2078,7 @@ border-radius:5px;
     top:15px;
     left:18px;
 }
+
 .vid_click { 
 border-radius:100%;
 border:1px solid white;
@@ -2016,38 +2093,55 @@ position:relative;
 top:100px;
 left:138px;
 }
-.welcome_vid_click{ 
-border-radius:100%;
-border:1px solid white;
-width:50px;
-height:50px; 
-opacity:0.8;
-z-index:50;
-filter:alpha(opacity=40); 
-margin-left:2px;
-position:relative;
-top:50px;
-left:45px;
+.block1{ 
+float:left;
+width:205px;
+height:150px;
+border-right:1px dotted white;
+margin-top: 40px;
+margin-bottom: 5px;
+padding:5px;
+padding-top:35px;
+text-align: center;
+}
+.block2{ 
+float:left;
+border-right:1px dotted white;
+width:205px;
+height:150px;
+margin-top: 40px;
+margin-bottom: 5px;
+padding:5px;
+padding-top:35px;
+text-align: center;
+}
+.small_white{ 
+font-size:12px;	
+color:rgb(170,170,170);
+margin-left:5px;
+margin-right:5px;
+weight:auto;
+font-family: 'Oxygen', sans-serif;
+}
+.box_list{ 
+margin-top:20px;
+text-align:left;
+color:	
+}
+.block3{ 
+float:left;
+width:205px;
+height:150px;
+margin-top: 40px;
+margin-bottom: 5px;
+padding:5px;
+padding-top:35px;
+text-align: center;
 }
 .welcome_box_bottom{ 
 clear: both;	
 }
 
-.welcome_box_one_label{ 
-float:left;
-margin-left:77px;
-margin-top:5px;
-}
-.welcome_box_two_label{ 
-float:left;
-margin-left:130px;
-margin-top:5px;
-}
-.welcome_box_three_label{ 
-float:left;
-margin-left:150px;
-margin-top:5px;
-}
 .arrow-up {
   width: 0; 
   height: 0; 

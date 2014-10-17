@@ -4,6 +4,12 @@ class UsersController < ApplicationController
   @user = User.new()
   if request.post?
     @user= User.new(user_params)
+    user_params[:first_name][0] = user_params[:first_name][0].capitalize
+    user_params[:last_name][0] = user_params[:last_name][0].capitalize
+    user_params[:user_name][0] = user_params[:user_name][0].downcase
+    @user.first_name = user_params[:first_name]
+    @user.last_name = user_params[:last_name]
+    @user.user_name = user_params[:user_name]    
     @user.activated = "No"
     @user.usertype = "normal"
     @user.build_rank(user_id: @user.id, rankdetail_id:1)
@@ -12,7 +18,7 @@ class UsersController < ApplicationController
        session[:user_id] = @user.id
        redirect_to create_interest_path
     else
-      flash[:notice] = "Ensure that you inserted the right data"
+      flash[:notice] = "You entered an incorrect value or your user name/email already exist"
     end
   end    
  end
@@ -26,7 +32,7 @@ class UsersController < ApplicationController
        if user.userimage.blank?
           @image = view_context.asset_path("Default_tiny.png")
        else
-          @image = view_context.asset_path(user.userimage.image.url(:tiny))
+          @image = user.userimage.image.url(:tiny)
        end
        @data << {:first => "#{user.first_name}", :value => "#{user.first_name} #{user.last_name}", :last => "#{user.last_name}",:img => "#{(@image)}",:id => "#{user.id}",:username => "#{user.user_name}"}
       end

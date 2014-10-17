@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     def create
       #user = User.from_omniauth(env["omniauth.auth"])
       if user = User.authenticate(params[:user_name], params[:password])
-          if user.usertype=="admin"
+          if user.usertype =="admin"
             session[:user_id] = user.id
             flash[:notice] = "Hello #{user.user_name}"
             redirect_to admin_path
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
           end
       else
         flash[:notice] = "Invalid login/password combination"
-        redirect_to login_path
+        redirect_to root_path
       end
     end
   

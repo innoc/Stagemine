@@ -2,15 +2,10 @@
 THE PURPOSE OF THIS PAGE IS TO SUPPORT MAJOR ACTIVITIES PERFORMED BY THE USER.
 IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE	
 -->
-<script>
-	alert("innocent");
-</script>
-
 <div class="sidebar1">
 	<div class="right_sidebar_ajax">
 	<%= render :partial=>"right_sidebar"%>
-	</div>
-	
+	</div>	
 	<%= render :partial=>"season_sidebar"%>
 </div><!-- end of sidebar1 -->
 
@@ -39,6 +34,9 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 								<li>
 									<%=link_to "Log Out", destroy_path%>
 								</li>
+								<li>
+									<%=link_to "message", message_path%>
+								</li>
 							</ul>	
 						</ul>		 								 	
 		 		</div><!-- end of menu_unit -->
@@ -48,11 +46,11 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		 		</div><!-- end of menu_unit -->	
 		 		 		
 		 		<div class="menu_unit first_font_method">
-		 			<%=link_to "task", task_path(:id=>"welcome")%>
+		 			<%=link_to "Task", task_path(:id=>"welcome")%>
 		 		</div><!-- end of menu_unit -->	 
 		 				
 		 		<div class="last_unit first_font_method">
-		 			<%=link_to "message", message_path%>
+		 			<%=link_to "Help"%>
 		 		</div><!-- end of last_unit -->	
 		 		 		
 		 	</div><!--last_mini_menu-->
@@ -83,9 +81,9 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 				       		<%for interest in @user.interests%>
 			            		<li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
 				       		<%end%>
-				       		<li><%= link_to "all feed",stage_path(:id=>"all")%></li>
-			            	<li><%= link_to "fan's feed",stage_path(:id=>"fan")%></li>
-			            	<li><%= link_to "fanned feed",stage_path(:id=>"fanned")%></li>
+				       		<li><%= link_to "All feed",stage_path(:id=>"all")%></li>
+			            	<li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
+			            	<li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
 			            	<li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
 				        </ul>	
 					</li>
@@ -104,9 +102,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 			 </div>
 			 			 
 			 <div class="hidden_season_box second_font_method third_font_method">
-			 	<span class="task_cover">
-			 		
-			 		
+			 	<span class="task_cover">	 		
 			 		
 			 		
 			 	<%if (@preseason=Preseason.where(status: "active")).blank?%>
@@ -117,7 +113,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 				 			<%else%>
 				 			<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
 												<%unless @user.leagues.include?(@interest_season.leagues.last)%>
-													<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+													<%=link_to "Join #{@interest_season.interest_name} League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
 												<%else%>
 													<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
 												<%end%>
@@ -356,7 +352,7 @@ $(document).ready(function(){
 					        url: '/season_checker',
 					        type: 'get'
 					     });
-					  }, 300000); //5 mins
+					  }, 30000); //3 mins
 			  <%end%>
 
 					   <%if Audition.where(:status=>"active") and @season_duration.status=="active" %>		  
@@ -369,7 +365,7 @@ $(document).ready(function(){
 						     });
 						  }, 1800000); //30 mins
 						<%end%>
-	 <%end%>
+	   <%end%>
 	 	
 	 <%unless @user.tasks.blank?%>
 	   <%if @user.tasks.last.status == "active" and (@user.tasks.last.end_date.to_date - DateTime.now.to_date).to_i < 1 %>		  
@@ -380,7 +376,7 @@ $(document).ready(function(){
 		        url: '/task_checker',
 		        type: 'get'
 		     });
-		  }, 30000);
+		  }, 3000);
 		<%end%>
 	 <%end%>
 </script>

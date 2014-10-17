@@ -52,7 +52,7 @@
 
 		
 		<div class="feed_icons"> 
-			<%unless feed.user_id == @user.id%>   
+			<%unless feed.user_id == current_user.id%>   
 				<%=render :partial=>"point_allocation/cheers_added"%> 
 			<%end%>
 		</div>

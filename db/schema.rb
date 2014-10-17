@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20240616020372) do
+ActiveRecord::Schema.define(version: 20240616020373) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20240616020372) do
   create_table "badge_allocations", force: true do |t|
     t.integer  "user_id"
     t.integer  "badge_id"
-    t.integer  "task_name"
+    t.string   "task_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

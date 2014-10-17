@@ -128,11 +128,11 @@
 									    -->
 										<%for league_user in @season_table.to(3)%>
 										  <%unless hash[league_user] == hash[@season_table.last]%>
-										        <%if @user.id == league_user%>
+ 										        <%league_user = User.find(league_user)%>
+										        <%if @user.id == league_user.id%>
 										       		<%@user_contains = 0%>
 										       		<%@position = @place%> <!--IMPORTANT FOR THE USER POSITION WHEN SIDEBAR IS HIDDEN-->
 										        <%end%>
-										        <%league_user = User.find(league_user)%>
 												<div class="league_user">
 													<%unless league_user.userimage.blank?%>
 														<%@league_user_image = league_user.userimage%>
@@ -143,8 +143,10 @@
 												
 													</div>
 														<div class="unit_box">
-															<%=@place.ordinalize%>
-															<%@place = @place + 1%>
+															<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.blank?%>
+																<%=@place.ordinalize%>
+																<%@place = @place + 1%>
+															<%end%>
 														</div>
 														<div class="league_user_name second_font_method">
 															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>
@@ -158,14 +160,14 @@
 														</div>
 													</div>
 												    <div class=""><%if @league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@league_user_image.image.url(:smallest))%><%end%></div>
-												  	<%@league_user_image = nil%>
-												  </div>
+												  		<%@league_user_image = nil%>
+												    </div>
 										  <%end%>
 									 <%end%><!--end of loop-->
-										<%unless @user_contains = 0%>
+										<%unless @user_contains == 0%>
 							   				<div class="user_position_domain small_bark_font_method">
 									 				<div class="brief_league_header">
-									 				Your current position is
+									 				&bull;&bull;&bull;
 													</div>	
 													<%if hash[@user.id] == 0 %>
 												 			<!--do nothing-->
@@ -184,8 +186,10 @@
 																				<div class="league_user_detail">
 																						<div class="league_rank_color" style="background-color:<%=@above_user.rank.rankdetail.rank_color%>"></div>
 																						<div class="unit_box">
+																						<%unless UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.blank?%>
 																								<%position = hash[@above_user.id] + 1%>
 																								<%= position.ordinalize%>
+																						<%end%>
 																						</div>
 																						
 																						<div class="league_user_name second_font_method">
@@ -211,8 +215,10 @@
 																		<div class="league_user_detail">
 																				<div class="league_rank_color" style="background-color:<%=@user.rank.rankdetail.rank_color%>"></div>
 																				<div class="unit_box">
-																					<%@position = hash[@user.id] + 1%>
-																					<%=@position.ordinalize%>
+																				<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.blank?%>
+																						<%@position = hash[@user.id] + 1%>
+																						<%=@position.ordinalize%>
+																				<%end%>
 																				</div>
 																				<div class="league_user_name second_font_method">
 																					<%= link_to @user.user_name,portfolio_path(:id=>@user.id)%><br/>
@@ -238,8 +244,10 @@
 																	<div class="league_user_detail">
 																		<div class="league_rank_color" style="background-color:<%=@below_user.rank.rankdetail.rank_color%>"></div>
 																		<div class="unit_box">
-																			<%position = hash[@below_user.id] + 1%>
-																			<%= position.ordinalize%>
+																			<%unless UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.blank?%>
+																				<%position = hash[@below_user.id] + 1%>
+																				<%= position.ordinalize%>
+																			<%end%>
 																		</div>
 																		<div class="league_user_name second_font_method">
 																			<%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%><br/>
@@ -301,14 +309,13 @@
 				   				<%end%> <!--end of "if not user enrolled in a season"-->							   			
 					   <%end%> <!--end of "if season has ended"-->				    
 				<%end%> <!--end of unless random"-->	
-			<%else%>
-				
+			<%else%>				
 				<div class="preseason_central">
 					<div class="preseason_header third_font_method">
 					The season is coming<!-- Are you ready or not? -->	
 					</div>
 					<br/><br/>
-					<span style="font-size: 50px;" class="largest_font">
+					<span style="font-size: 50px;" class="largest_font">
 						<%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%><br/>
 					</span>
 					<%=image_tag("banner.png")%><br/>

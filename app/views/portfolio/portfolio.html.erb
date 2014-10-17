@@ -30,6 +30,7 @@
 					    </div>
 					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
 				</div>
+				<%@winner_user_image = nil%>
 		<%end%>
 		<br/>
 		
@@ -71,6 +72,7 @@
 							</div>
 					    </div>
 					    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+						<%@winner_user_image = nil%>
 				</div>
 		<%end%>
 		<div class="centralize second_font_method">

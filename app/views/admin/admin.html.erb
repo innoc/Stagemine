@@ -1,104 +1,201 @@
 <div class="container_large">
-Notes<br/><br/>
+<div class="admin_dashboard">
+	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span><br/>
+</div>
 
-1) Create a season first before any task or league<br/><br/>
+<div class="small_bark_font_method">
+	<% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>
+		<%unless Preseason.where(status: "active")[0].blank?%>
+			<%if ((Preseason.where(status: "active")[0].end_day.to_date - DateTime.now.to_date).to_i) == 0%>
+				<br/><%= link_to"Start Season",start_season_path(:id=>Preseason.where(status: "active")[0].id)%> <br/><br/>
+			<%end%>
+		<%end%>
+		<%if @create_winner == "Yes"%>  				
+			<br/><%= link_to "Create Season Winners",league_winner_path%> <br/><br/>
+		<%else%>
+			<%unless @point_pending.blank?%>			
+				<br/><%= link_to" Create a new user history",create_history_path%> <br/><br/>
+			<%else%>
+				<%unless Historypending.last.blank?%>	  
+				<br/>The last user history was <%=Historypending.last.updated_at.strftime("created on %m/%d/%Y")%> <br/><br/>
+				<%end%>
+			<%end%>
+		<%end%>
+</div>
 
-<% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
-<% unless Preseason.where(status: "active")[0].blank?%>
-<%unless ((Preseason.where(status: "active")[0].end_day.to_date - DateTime.now.to_date).to_i) == 0%>
-	<br/><%= link_to"Start Season",start_season_path(:id=>Preseason.where(status: "active")[0].id)%> <br/><br/>
-<%end%>
-<%end%>
-<%unless @point_pending.blank?%>
-	<br/><%= link_to" Create a new user history",create_history_path%> <br/><br/>
-<%else%>
- <%unless Historypending.last.blank? or%>
-  	<br/>The last user history was created on <%=Historypending.last.updated_at.strftime("Printed on %m/%d/%Y")%> <br/><br/>
- <%end%>
-<%end%>
 
+<div class="season_container">
 <div class="facebox_header">
 	Create a season
 </div>
 
 <%=form_tag(create_season_path) do%>
-				season name:<%=text_field_tag(:name)%><br/><br/>
-				season incentive:<%=text_field_tag(:incentive)%><br/><br/>
+				<table align="center">
+					<tr>
+						<td>
+							Season Name<br/>
+							<%=text_field_tag(:name)%>
+						</td>
+						<td>
+						</td>
+						<td>
+							Season Incentive<br/>
+							<%=text_field_tag(:incentive)%>
+						</td>
+					</tr>
+				</table><br/><br/>
 				
-				preseason start time: <br/>
-				day 
-				<select name="pre_start_day">
-					<%@counter = 1%>
-					<%while @counter < 31%>
-					<option value=<%=@counter%>><%=@counter%></option>
-					<%@counter = @counter + 1%>
-					<%end%>				
-				</select>
+				<table align="center">
+					<tr>
+						<td colspan="2">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="mid_bark_font_method">Preseason start time</span> <br/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Day<br/> 
+									<select name="pre_start_day">
+									<%@counter = 1%>
+									<%while @counter < 31%>
+									<option value=<%=@counter%>><%=@counter%></option>
+									<%@counter = @counter + 1%>
+									<%end%>				
+									</select>
+						</td>
+						<td>
+						   Month<br/>
+									<select name="pre_start_month">
+										<option value="1">January</option>
+										<option value="2">Febuary</option>
+										<option value="3">March</option>									
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>									
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+						</td>
+						<td>
+						   Year<br/>
+									<select name="pre_start_year">
+									<option value="2014">2014</option>
+									<option value="2015">2015</option>
+									<option value="2014">2016</option>
+									<option value="2015">2017</option>
+									<option value="2014">2018</option>
+									<option value="2015">2019</option>
+									</select>
+						</td>
+					</tr>
+				</table>
+
 				<br/>
-				month
-				<select name="pre_start_month">
-					<option value="7">July</option>
-					<option value="8">August</option>
-					<option value="9">September</option>
-					<option value="10">October</option>
-					<option value="10">November</option>
-				</select>
 				<br/>
-				year
-				<select name="pre_start_year">
-					<option value="2014">2014</option>
-					<option value="2015">2015</option>
-				</select>
-				<br/><br/>
-				Season start time<br/>
-				day
-				<select name="start_day">
-					<%@counter2 = 1%>
-					<%while @counter2 < 31%>
-					<option value=<%=@counter2%>><%=@counter2%></option>
-					<%@counter2 = @counter2 + 1%>
-					<%end%>				
-				</select>
+				<table align="center">
+					<tr>
+						<td colspan="2">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="mid_bark_font_method">Season start time</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Day<br/>
+									<select name="start_day">
+										<%@counter2 = 1%>
+										<%while @counter2 < 31%>
+										<option value=<%=@counter2%>><%=@counter2%></option>
+										<%@counter2 = @counter2 + 1%>
+										<%end%>				
+									</select>
+						</td>
+						<td>
+						   Month<br/>
+									<select name="start_month">
+										<option value="1">January</option>
+										<option value="2">Febuary</option>
+										<option value="3">March</option>									
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>									
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+						</td>
+						<td>
+						   Year<br/>
+									<select name="start_year">
+										<option value="2014">2014</option>
+										<option value="2015">2015</option>
+										<option value="2014">2016</option>
+										<option value="2015">2017</option>
+										<option value="2014">2018</option>
+										<option value="2015">2019</option>
+									</select>
+						</td>
+					</tr>
+				</table>
 				<br/>
-				month
-				<select name="start_month">
-					<option value="7">July</option>
-					<option value="8">August</option>
-					<option value="9">September</option>
-					<option value="10">October</option>
-				</select>
 				<br/>
-			    year
-				<select name="start_year">
-					<option value="2014">2014</option>
-					<option value="2015">2015</option>
-				</select>
-				<br/>
-				<br/>
-				season end time<br/>
-				day
-				<select name="end_day">
-					<%@counter3 = 1%>
-					<%while @counter3 < 31%>
-					<option value=<%=@counter3%>><%=@counter3%></option>
-					<%@counter3 = @counter3 + 1%>
-					<%end%>				
-				</select>
-				<br/>
-				month
-				<select name="end_month">
-				<option value="7">July</option>
-				<option value="8">August</option>
-				<option value="9">September</option>
-				<option value="10">October</option>
-				</select>
-				<br/>
-				year
-				<select name="end_year">
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				</select>	
-		<br/><br/>
+				
+				<table align="center">
+					<tr height="10%">
+						<td colspan="2">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="mid_bark_font_method">Season end time</span><br/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Day<br/>
+									<select name="end_day">
+										<%@counter3 = 1%>
+										<%while @counter3 < 31%>
+										<option value=<%=@counter3%>><%=@counter3%></option>
+										<%@counter3 = @counter3 + 1%>
+										<%end%>				
+									</select>
+						</td>
+						<td>
+							Month<br/>
+									<select name="end_month">
+										<option value="1">January</option>
+										<option value="2">Febuary</option>
+										<option value="3">March</option>									
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>									
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>							
+						</td>
+						<td>
+							Year<br/>
+									<select name="end_year">
+										<option value="2014">2014</option>
+										<option value="2015">2015</option>
+										<option value="2014">2016</option>
+										<option value="2015">2017</option>
+										<option value="2014">2018</option>
+										<option value="2015">2019</option>
+									</select>	
+						</td>
+					</tr>
+				</table><br/>			
+				
 		<div id="form_btn">	
 		<%= submit_tag 'Click to Post',:class => 'classname'%>
 		</div>
@@ -107,85 +204,184 @@ Notes<br/><br/>
 
 <br/>
 <br/>
+</div>
+<div class="league_container">
 <div class="facebox_header">
 	Create a task
 </div>
 
 <%=form_tag(task_path) do%>
-				title: <%=text_field_tag(:title)%><br/><br/>
-				Task type: 
-				<select name="task_type">
-					<option value="video">video</option>
-					<option value="image">image</option>
-				</select><br/><br/>
-				
-				description: <%=text_area_tag(:description)%><br/><br/>
-				video url:<%=text_field_tag(:video_url)%><br/><br/>
-				starttime<br/>
-				day
-				<select name="start_day">
-				 <%@counter = 1%>
-				 <%while @counter < 32%>
-					<option value=<%=@counter%>><%=@counter%></option>
-					<%@counter = @counter + 1%>
-				 <%end%>
-				</select>
-				
-				month
-				<select name="start_month">
-					<option value="7">July</option>
-					<option value="8">August</option>
-					<option value="9">September</option>
-					<option value="10">October</option>
-				</select>
-			    year
-				<select name="start_year">
-					<option value="2014">2014</option>
-					<option value="2015">2015</option>
-				</select>
-				<br/>
-				<br/>
 
-				end time<br/>
-				day
-				<select name="end_day">
-				<%@counter2 = 1%>
-				<%while @counter2 < 32%>
-					<option value=<%=@counter2%>><%=@counter2%></option>
-					<%@counter2 = @counter2 + 1%>
-				 <%end%>
-				</select>
+				<table>
+					<tr>
+						<td>
+							<span class="mid_bark_font_method">Title</span><br/>
+						    <%=text_field_tag(:title,nil,:class=>"admin_league_field")%>						    
+						</td>
+						<td></td><td></td>
+						<td>						
+							<span class="mid_bark_font_method">Task type</span><br/>
+							<select name="task_type">
+								<option value="video">video</option>
+								<option value="image">image</option>
+							</select><br/><br/>
+						</td>
+					</tr>
+				</table>
 				
-				month
-				<select name="end_month">
-				<option value="7">July</option>
-				<option value="8">August</option>
-				<option value="9">September</option>
-				<option value="10">October</option>
-				</select>
+				<table>
+					<tr>
+						<td>
+							<span class="mid_bark_font_method">Description</span><br/>
+						    <%=text_area_tag(:description,nil,:class=>"admin_league_area")%><br/><br/>								    
+						</td>
+						<td></td><td></td>
+						<td>						
+							<span class="mid_bark_font_method">Video url</span><br/>
+							<%=text_field_tag(:video_url)%><br/><br/>
+						</td>
+						
+					</tr>
+				</table>
+								
 				
-				year
-				<select name="end_year">
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				</select>
-				<br/>
-				<br/>
+				<table>
+					<tr>
+						<td colspan="2">
+							<span class="mid_bark_font_method">Start Time</span><br/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Day
+								<select name="start_day">
+									 <%@counter = 1%>
+									 <%while @counter < 32%>
+										<option value=<%=@counter%>><%=@counter%></option>
+									 	<%@counter = @counter + 1%>
+									 <%end%>
+								</select>						    
+						</td>
+						
+						<td>						
+							Month
+									<select name="start_month">
+										<option value="1">January</option>
+										<option value="2">Febuary</option>
+										<option value="3">March</option>									
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>									
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+						</td>
+						<td>
+							Year
+									<select name="start_year">
+										<option value="2014">2014</option>
+										<option value="2015">2015</option>
+										<option value="2014">2016</option>
+										<option value="2015">2017</option>
+										<option value="2014">2018</option>
+										<option value="2015">2019</option>
+									</select>
+						</td>
+						
+					</tr>
+				</table>
 				
-				<select id="custom_select" name="interest_id">
-					<option value="0">random</option>
-					<%for interest in Interest.all%>
-					<option value="<%=interest.id%>"><%=interest.interest_name%></option>
-					<%end%>
-				</select>
 				
+								
+				<table>
+					<tr>
+						<td colspan="2">
+							<span class="mid_bark_font_method">End Time</span><br/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Day
+											<select name="end_day">
+											<%@counter2 = 1%>
+											<%while @counter2 < 32%>
+												<option value=<%=@counter2%>><%=@counter2%></option>
+												<%@counter2 = @counter2 + 1%>
+											 <%end%>
+											</select>										    
+						</td>
+						
+						<td>						
+							Month
+									<select name="end_month">
+										<option value="1">January</option>
+										<option value="2">Febuary</option>
+										<option value="3">March</option>									
+										<option value="4">April</option>
+										<option value="5">May</option>
+										<option value="6">June</option>									
+										<option value="7">July</option>
+										<option value="8">August</option>
+										<option value="9">September</option>
+										<option value="10">October</option>
+										<option value="11">November</option>
+										<option value="12">December</option>
+									</select>
+						</td>
+						<td>
+							Year
+									<select name="end_year">
+										<option value="2014">2014</option>
+										<option value="2015">2015</option>
+										<option value="2014">2016</option>
+										<option value="2015">2017</option>
+										<option value="2014">2018</option>
+										<option value="2015">2019</option>
+									</select>
+						</td>
+						
+					</tr>
+				</table>
+				<br/>				
 				
+				<table>
+					<tr>
+						<td colspan="2">
+							<span class="mid_bark_font_method">Category</span><br/>
+								<select id="custom_select" name="interest_id">
+								<%for interest in Interest.all%>
+								<%unless interest.interest_name=="Random"%>
+								<option value="<%=interest.id%>"><%=interest.interest_name%></option>
+								<%end%>
+								<%end%>
+								</select>
+						</td>
+					</tr>
+				</table>				
 		<br/><br/>
 		<div id="form_btn">	
 		<%= submit_tag 'Click to Post',:class => 'classname'%>
 		</div>
 		<br/>
 <%end%>
-
-
 </div>
+</div>
+
+<script>
+$(document).ready(function(){  
+	
+	$(".season_link").click(function(){	
+		$(".season_container ").toggle();
+		$(".league_container").hide();
+		
+	});
+	$(".league_link").click(function(){	
+		$(".league_container").toggle();
+		$(".season_container ").hide();
+
+	});
+})

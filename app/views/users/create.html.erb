@@ -4,7 +4,7 @@
 </div>
 <div class="register_box small_bark_font_method">
 	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
-    <%=form_for @user, :validate=>true do |f|%>
+    <%=form_for @user, :validate=>true,:html => {:id => "form"} do |f|%>
 			         <table border="0" width=90%, align=center >
 						<tr>
 							<td><label>First name<br/><%=f.text_field(:first_name,:class=>"logininput")%></lable></td> 
@@ -40,3 +40,39 @@
 	</div>
 </div>
 </div>
+<form id="formname">
+			<table>
+				<tr>
+					<td>
+						Title
+					</td>
+					<td>
+						<input type="text" value="blank" name="title"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Name
+					</td>
+					<td>
+						<input type="name" value="Blank Name" name="name"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Color
+					</td>
+					<td>
+						<input type="color" value="#000FFF" name="color"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						TextArea
+					</td>
+					<td>
+						<textarea type="month" value="" name="text"></textarea>
+					</td>
+				</tr>
+			</table>
+		</form>

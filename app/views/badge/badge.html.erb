@@ -9,19 +9,19 @@
 			<div class="message_container">								
 				   	<div class="notification_image">
 						&nbsp; 
-						<%if badge.badge.priority == 1%>
+						<%if badge.badge.priority == 0%>
 							<%=image_tag("badge_small_bronze.png")%>
 						<%else%>
-						<%if badge.badge.priority == 2%>
+						<%if badge.badge.priority == 1%>
 							<%=image_tag("badge_small_ruby.png")%>
 						<%else%>
-						<%if badge.badge.priority == 3%>
+						<%if badge.badge.priority == 2%>
 							<%=image_tag("badge_small_sapphire.png")%>
 						<%else%>
-						<%if badge.badge.priority == 4%>
+						<%if badge.badge.priority == 3%>
 							<%=image_tag("badge_small_silver.png")%>
 						<%else%>
-						<%if badge.badge.priority == 5%>
+						<%if badge.badge.priority == 4%>
 							<%=image_tag("badge_small_gold.png")%>
 						<%end%>
 						<%end%>

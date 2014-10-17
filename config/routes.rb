@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   match '/see_all'=>"season#see_all", :as=>'see_all', via: :all
   match '/season_checker'=>"season#season_checker", :as=>'season_checker', via: :all
   match '/create_history'=>"admin#create_history", :as=>'create_history', via: :all
+  match '/league_winner'=>"admin#league_winner", :as=>'league_winner', via: :all
   match '/login'=>"welcome#login",:as=>'login', via: :all
   match '/create'=>"users#create",:as=>'users', via: :all
   match '/alter'=>"edit#alter",:as=>'alter', via: :all
