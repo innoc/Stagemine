@@ -71,7 +71,6 @@ GEM
       mime-types
     paperclip-meta (1.1.0)
       paperclip (>= 3.0.2, < 5.0)
-    pg (0.17.1)
     pg (0.17.1-x86-mingw32)
     polyglot (0.3.5)
     rack (1.5.2)
@@ -154,7 +153,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   sprockets (= 2.11.0)
   sprockets_better_errors
-  therubyracer
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)
