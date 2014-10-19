@@ -22,52 +22,6 @@
 </head>
 
 <body>
-<% unless current_user.blank?%>
-	<div class="header"> 
-		<div class="stagemine_name">
-		<%= link_to image_tag("stagemine.png"), stage_path%>
-		</div>
-		 <div class="mid_header">		 	    
-			 	<div class="header_icon">						
-					<% unless current_user.blank?%>
-						<%unless current_user.userimage.blank?%>
-						<%@userimage = current_user.userimage%>
-						<%end%>
-			 	    <%end%>
-			 	    <div class="search_bar_sample">
-			    	<%=form_tag(view_search_path) do%>
-			    			<div class="search_icon">
-			    			<%= image_submit_tag("search-icon.png") %>
-			    			</div>			    	
-					    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
-			       	<%end%>
-			       	</div>
-			 	</div> 
-			 	
-			 	<div class="search_bar">					
-					<%unless current_user.usertype=="admin"%>
-						<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
-					<%end%>
-					<div class="header_user_name"><%= link_to current_user.user_name, portfolio_path(:id=>current_user.id)%></div>
-			    </div>
-			    
-			    <div class="brand_icon">
-			    	
-			    	<%unless current_user.notifications.where("status=?",0).blank?%>
-			 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
-					<%end%>	
-					
-			    	<% unless current_user.blank? or current_user.usertype == "admin"%>
-				 		<div class="header_user_detail">							
-							<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%> | 
-			 	        </div>
-			 	    <%end%>
-			 	  	<%=image_tag("rsz_stagemie1.png")%>
-			    </div>
-		 </div >
-		 <!-- end .header -->
-	</div>
-<%end%>
 	<script>
 		$(document).ready(function(){ 
 			alert("working application");		
