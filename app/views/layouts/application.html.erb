@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Giga</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>  
-  <%= javascript_include_tag 'search'%>  
-  <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Crimson+Text:700' rel='stylesheet' type='text/css'>
-  <%= csrf_meta_tags %>
-  <style type="text/css">
+    <title>Giga</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>	<style type="text/css">
 	body {
-	  font-family: 'Oxygen', sans-serif;
-	  background-image:url(noise2.png);
-	  background-color: rgb(235,235,235);
-	  margin: 0;
-	  padding: 0;
-	  color: #000;
-	  height:100%;
-	}
-	</style>	
+		  font-family: 'Oxygen', sans-serif;
+		  margin: 0;
+		  padding: 0;
+		  color: #000;
+		  height:100%;
+		  background-color:rgb(229,229,229);
+	
+      } 
+	</style>
 </head>
-
 <body>
-	<%= yield %>
+	<script>
+		$(document).ready(function(){ 
+			alert("working application");		
+		})
+	</script>
+<%= yield %>
 </body>
-</html>
