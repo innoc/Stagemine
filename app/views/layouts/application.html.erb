@@ -24,6 +24,41 @@
 		alert("working app");		
 	})
 </script>
-<%= yield %>	
+
+<%= yield %>
+
+	<script>
+	 $(document).ready(function(){  
+	  if($(window).width() < 1035)
+	  { 
+		$('.notification_top_icon').show();
+		$('.stagemine_name').hide();
+		
+	  }
+	  else if($(window).width() > 1035)
+	  { 
+		$('.notification_top_icon').hide();
+		$('.stagemine_name').show();
+	
+	
+	  }
+	  
+	$(window).resize(function() {
+	  // This will execute whenever the window is resized
+	 
+	  if($(window).width() < 1035)
+	  { 
+	    $('.notification_top_icon').show();
+	    $('.stagemine_name').hide();
+	  }
+	  else if($(window).width() > 1035)
+	  { 
+		$('.notification_top_icon').hide();
+		$('.stagemine_name').show();
+	  }
+	
+	});
+	});
+	</script>	
 </body>
 </html>
