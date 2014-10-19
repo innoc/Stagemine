@@ -244,6 +244,19 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		 <div id="columns">
 		 	   <div class="stage_content">		 	   
 					<!--THIS JQUERY CODE HANDLES THE FACEBOK EFFECT-->
+					<script>
+					  jQuery(document).ready(function($) {
+					    $('a[rel*=facebox]').live("mousedown", function() { 
+						    $(this).unbind('click'); //everytime you click unbind the past event handled.
+						    $(this).facebox();
+						});
+						$('a[rel*=imagepop]').live("mousedown", function() { 
+						    $(this).unbind('click'); //everytime you click unbind the past event handled.
+						    $(this).imagepop();
+						});
+					  });
+					</script>
+					
 					<%unless @friend_suggestion.blank?%>
 						<div class="pin">
 							<div class="suggested_header bold_header">
@@ -294,7 +307,5 @@ The javascript below handles the following
 2) Task timings
 3) Sideber Responsiveness 
 -->
-
-
 
 
