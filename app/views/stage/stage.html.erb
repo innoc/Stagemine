@@ -309,6 +309,7 @@ The javascript below handles the following
 -->
 
 <script>
+$(document).ready(function(){ 
 	  $('a[rel*=block]').block();
 	  if($(window).width() < 1035)
 	  { 
@@ -337,7 +338,7 @@ The javascript below handles the following
 		$('.task_cover').hide(); 	
 	  }	
 	});
-
+	});	
 	$( ".task_header_title" ).fadeOut( "slow" );
 	$( ".task_header_title" ).fadeIn( "slow" );
 	$('.delete_link').hide(); 
