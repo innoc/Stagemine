@@ -1,102 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Giga</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>	<style type="text/css">
+  <title>Giga</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>  
+  <%= javascript_include_tag 'search'%>  
+  <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Crimson+Text:700' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+  <style type="text/css">
 	body {
-		  font-family: 'Oxygen', sans-serif;
-		  margin: 0;
-		  padding: 0;
-		  color: #000;
-		  height:100%;
-		  background-color:rgb(229,229,229);
-	
-      } 
-	</style>
+	  font-family: 'Oxygen', sans-serif;
+	  background-image:url(noise2.png);
+	  background-color: rgb(235,235,235);
+	  margin: 0;
+	  padding: 0;
+	  color: #000;
+	  height:100%;
+	}
+
+ </style>
 </head>
 <body>
+<script>
+	$(document).ready(function(){ 
+		alert("working app");		
+	})
+</script>
+<% unless current_user.blank?%>
+	<div class="header"> 
+		<div class="stagemine_name">
+		<%= link_to image_tag("stagemine.png"), stage_path%>
+		</div>
+		 <div class="mid_header">		 	    
+			 	<div class="header_icon">						
+					<% unless current_user.blank?%>
+						<%unless current_user.userimage.blank?%>
+						<%@userimage = current_user.userimage%>
+						<%end%>
+			 	    <%end%>
+			 	    <div class="search_bar_sample">
+			    	<%=form_tag(view_search_path) do%>
+			    			<div class="search_icon">
+			    			<%= image_submit_tag("search-icon.png") %>
+			    			</div>			    	
+					    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
+			       	<%end%>
+			       	</div>
+			 	</div> 
+			 	
+			 	<div class="search_bar">					
+					<%unless current_user.usertype=="admin"%>
+						<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
+					<%end%>
+					<div class="header_user_name"><%= link_to current_user.user_name, portfolio_path(:id=>current_user.id)%></div>
+			    </div>
+			    
+			    <div class="brand_icon">
+			    	
+			    	<%unless current_user.notifications.where("status=?",0).blank?%>
+			 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
+					<%end%>	
+					
+			    	<% unless current_user.blank? or current_user.usertype == "admin"%>
+				 		<div class="header_user_detail">							
+							<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%> | 
+			 	        </div>
+			 	    <%end%>
+			 	  	<%=image_tag("rsz_stagemie1.png")%>
+			    </div>
+		 </div >
+		 <!-- end .header -->
+	</div>
+<%end%>
+	<%= yield %>
+
 	<script>
-		$(document).ready(function(){ 
-			alert("working application");		
-		})
-	</script>
-	
-	<script>
-$(document).ready(function(){ 
-	  $('a[rel*=block]').block();
+	 $(document).ready(function(){  
 	  if($(window).width() < 1035)
 	  { 
-		$('.sidebar1').hide();
-	 	$('.sidebar2').hide(); 
-	 	$('.task_cover').show(); 	 	
-	  }	  
-	  else if($(window).width() > 1035)
-	  { 
-		$('.sidebar1').show();
-	    $('.sidebar2').show();
-	    $('.task_cover').hide(); 
-	  }	  
-	$(window).resize(function() {
-	  // This will execute whenever the window is resized	 
-	  if($(window).width() < 1035)
-	  { 
-		$('.sidebar1').hide();
-		$('.sidebar2').hide();
-		$('.task_cover').show(); 
+		$('.notification_top_icon').show();
+		$('.stagemine_name').hide();
+		
 	  }
 	  else if($(window).width() > 1035)
 	  { 
-		$('.sidebar1').show();
-		$('.sidebar2').show();
-		$('.task_cover').hide(); 	
-	  }	
+		$('.notification_top_icon').hide();
+		$('.stagemine_name').show();
+	
+	
+	  }
+	  
+	$(window).resize(function() {
+	  // This will execute whenever the window is resized
+	 
+	  if($(window).width() < 1035)
+	  { 
+	    $('.notification_top_icon').show();
+	    $('.stagemine_name').hide();
+	  }
+	  else if($(window).width() > 1035)
+	  { 
+		$('.notification_top_icon').hide();
+		$('.stagemine_name').show();
+	  }
+	
 	});
-	});	
-	$( ".task_header_title" ).fadeOut( "slow" );
-	$( ".task_header_title" ).fadeIn( "slow" );
-	$('.delete_link').hide(); 
-	
-		 <%unless Season.all.blank? %>
-			  <%@season_duration = Season.last%>
-			  <%if @season_duration.status == "active" and (@season_duration.end_date.to_date - DateTime.now.to_date).to_i < 1%>
-					  window.setTimeout(function(){
-					  /// call your function here
-					  	 $.ajax({
-					        url: '/season_checker',
-					        type: 'get'
-					     });
-					  }, 30000); //3 mins
-			  <%end%>
-
-					   <%if Audition.where(:status=>"active") and @season_duration.status=="active" %>		  
-						//window.setInterval(function(){
-						  window.setTimeout(function(){	
-						  /// call your function here
-						  	 $.ajax({
-						        url: '/audition_checker',
-						        type: 'get'
-						     });
-						  }, 1800000); //30 mins
-						<%end%>
-	   <%end%>
-	 	
-	 <%unless @user.tasks.blank?%>
-	   <%if @user.tasks.last.status == "active" and (@user.tasks.last.end_date.to_date - DateTime.now.to_date).to_i < 1 %>		  
-		//window.setInterval(function(){
-		  window.setTimeout(function(){	
-		  /// call your function here
-		  	 $.ajax({
-		        url: '/task_checker',
-		        type: 'get'
-		     });
-		  }, 3000);
-		<%end%>
-	 <%end%>
-</script>
-
-	
-<%= yield %>
+	});
+	</script>
 </body>
+</html>
