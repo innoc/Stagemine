@@ -57,8 +57,10 @@ Rails.application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
-    config.assets.precompile += %w( *.css *.js )
+  config.assets.precompile += %w(search)
+  config.assets.precompile += %w(jquery) 
+  config.assets.precompile += %w(jquery_ujs)
+  config.assets.precompile += %w( *.css *.js )
 
 
   # Ignore bad email addresses and do not raise email delivery errors.
