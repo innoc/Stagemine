@@ -34,8 +34,8 @@ function callPlayer(frame_id, func, args) {
 	   <% unless @feed_id.video.blank?%>
 	   <div id="yid"><iframe width="300" height="250" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@feed_id.video.vid%>?enablejsapi=1" "></iframe></div>
 	   <%else%>
-	   <% unless @feed_id.text.blank?%>
-	   <%=@feed_id.text.content%>
+	   <% unless @feed_id.word.blank?%>
+	   <%=@feed_id.word.content%>
 	   <%end%>
 	   <%end%>
 	   <%end%>
