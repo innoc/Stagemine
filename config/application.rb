@@ -10,18 +10,7 @@ module Giga
   class Application < Rails::Application
     config.assets.initialize_on_precompile = false
     config.serve_static_assets = true
-    config.assets.precompile += %w( *.css *.js )
-    config.assets.precompile += %w(search)
-    config.assets.precompile += %w(jquery) 
-    config.assets.precompile += %w(jquery_ujs)
-    config.assets.precompile += %w(rails) 
-    config.assets.precompile += %w(turbolinks) 
-    config.assets.precompile += %w(block) 
-    config.assets.precompile += %w(facebox) 
-    config.assets.precompile += %w(imagepop) 
-    config.assets.precompile += %w(jquery-ui.min) 
-    config.assets.precompile += %w(jquery.ddslick.min) 
-    
+    config.assets.precompile += %w( *.css *.js )    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
