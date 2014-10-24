@@ -135,7 +135,7 @@ def stage
    end
      #end of all
     @sorted_feed = @feed.sort! { |a,b| b[:created_at] <=> a[:created_at] }
-    @feed = Kaminari.paginate_array(@sorted_feed).page(params[:page]).per(20)
+    @feed = Kaminari.paginate_array(@sorted_feed).page(params[:page]).per(1)
     #end of default feed
 end
   
