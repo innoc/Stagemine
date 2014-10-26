@@ -15,4 +15,4 @@
 //= require jquery_ujs
 //= require_tree .
 
-$.ajaxSetup({ dataType: 'script' });
+//$.ajaxSetup({ dataType: 'script' });
