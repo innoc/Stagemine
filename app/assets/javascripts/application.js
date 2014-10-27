@@ -17,13 +17,10 @@
 //= require facebox
 //= require jquery.ddslick.min
 //= require block
-//= require rails
 //= require jquery-ui.min
 //= require imagepop
 //= require search
 //= require imagepop
-
-
 
 
 $.ajaxSetup({ dataType: 'script' });
