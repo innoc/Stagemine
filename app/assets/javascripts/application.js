@@ -15,4 +15,3 @@
 //= require jquery_ujs
 //= require turbolinks
 
-$.ajaxSetup({ dataType: 'script' });
