@@ -14,6 +14,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require rails
 
 $.ajaxSetup({ dataType: 'script' });
