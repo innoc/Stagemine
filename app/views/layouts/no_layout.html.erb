@@ -2,9 +2,18 @@
 <html>
 <head>
     <title>StageMine</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>   
+  	<%= javascript_include_tag 'turbolinks'%>
+  	<%= javascript_include_tag 'block'%>
+  	<%= javascript_include_tag 'facebox'%>
+  	<%= javascript_include_tag 'imagepop'%>
+  	<%= javascript_include_tag 'jquery-ui.min'%>
+  	<%= javascript_include_tag 'jquery.ddslick.min'%>
+  	<%= javascript_include_tag 'rails'%>
+  	<%= javascript_include_tag 'search'%> 
     <%= csrf_meta_tags %>
+    
 	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 	body {
