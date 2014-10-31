@@ -80,7 +80,7 @@ class TaskController < ApplicationController
                           @winner_instance = Winner.create(:user_id=>@winner, :task_id=>task.id)
                           @badges = Badge.all                          
                           for badge in @badges
-                              if @user.winners.count == badge.priority 
+                              if @winner_instance.user.winners.count == badge.priority 
                                   BadgeAllocation.create(:user_id=>@winner, :badge_id=>badge.id, :task_name=>task.title)
                               end
                           end
@@ -106,15 +106,23 @@ class TaskController < ApplicationController
       @user_task = []
       @user_task << Task.find(params[:id])
       @task = Task.find(params[:id])
-      if current_user.enrolls.blank?
-      Enroll.create(:user_id=> current_user.id , :task_id=>params[:id])
+      if current_user.enrolls.blank?          
+          if Enroll.create(:user_id=> current_user.id , :task_id=>params[:id])
+             flash[:notice]="You succesfully enrolled "
+          else
+             flash[:notice]="Oops something went wrong"
+          end      
       else
-      current_user.enrolls.last.update_attributes(:task_id=>params[:id],:status=>1)
+          if current_user.enrolls.last.update_attributes(:task_id=>params[:id],:status=>1)
+             flash[:notice]="You succesfully enrolled. Good Luck!!!"
+          else
+             flash[:notice]="Oops something went wrong"
+          end    
       end
-        respond_to do |format|
-          format.html{redirect_to task_path(:id=>@task.label.interest.interest_name)}
-          format.js
-        end
+      respond_to do |format|
+        format.html{redirect_to task_path(:id=>@task.label.interest.interest_name)}
+        format.js
+      end
   end
   
   def task_disenroll

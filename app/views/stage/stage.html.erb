@@ -345,30 +345,30 @@ $(document).ready(function(){
 	
 		 <%unless Season.all.blank? %>
 			  <%@season_duration = Season.last%>
-			  <%if @season_duration.status == "active" and (@season_duration.end_date.to_date - DateTime.now.to_date).to_i < 1%>
+			  <%if @season_duration.status == "active" and (@season_duration.end_date.to_date - DateTime.now.to_date).to_i < 2%>
 					  window.setTimeout(function(){
 					  /// call your function here
 					  	 $.ajax({
 					        url: '/season_checker',
 					        type: 'get'
 					     });
-					  }, 30000); //3 mins
+					  }, 900000); //15 mins
 			  <%end%>
 
-					   <%if Audition.where(:status=>"active") and @season_duration.status=="active" %>		  
-						//window.setInterval(function(){
-						  window.setTimeout(function(){	
-						  /// call your function here
-						  	 $.ajax({
-						        url: '/audition_checker',
-						        type: 'get'
-						     });
-						  }, 1800000); //30 mins
-						<%end%>
-	   <%end%>
+			   <%if Audition.where(:status=>"active") and @season_duration.status=="active" %>		  
+				//window.setInterval(function(){
+				  window.setTimeout(function(){	
+				  /// call your function here
+				  	 $.ajax({
+				        url: '/audition_checker',
+				        type: 'get'
+				     });
+				  }, 1800000); //30 mins
+				<%end%>
+	    <%end%>
 	 	
 	 <%unless @user.tasks.blank?%>
-	   <%if @user.tasks.last.status == "active" and (@user.tasks.last.end_date.to_date - DateTime.now.to_date).to_i < 1 %>		  
+	   <%if @user.tasks.last.status == "active" and (@user.tasks.last.end_date.to_date - DateTime.now.to_date).to_i < 2 %>		  
 		//window.setInterval(function(){
 		  window.setTimeout(function(){	
 		  /// call your function here
@@ -376,7 +376,7 @@ $(document).ready(function(){
 		        url: '/task_checker',
 		        type: 'get'
 		     });
-		  }, 3000);
+		  }, 900000); //15 mins
 		<%end%>
 	 <%end%>
 </script>
