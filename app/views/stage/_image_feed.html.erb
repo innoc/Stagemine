@@ -1,8 +1,6 @@
 	<%@feed_id = feed%>
 	<% @post = Picture.find(feed.picture_id)%>
-	<div class="pin" style="border:1px solid <%=feed.user.rank.rankdetail.rank_color%>;">
-
-
+	<div class="<%="#{feed.id}_feed"%> pin">
 		<%= link_to(picture_display_path(:id=>feed.picture.id),:rel=>"imagepop") do %>
 				<div class="image_container" style="background: url() no-repeat; ">
 				<%if feed.picture.blank?%>
@@ -10,9 +8,9 @@
 				<%else%>
 					<%=image_tag(feed.picture.image.url(:medium))%>
 				<%end%>
-			    </div>
-	
+			    </div>	
 		<%end%>
+		
 	    <% unless feed.picture.description.blank?%>
 			    <div class=" feed_content small_bark_font_method">
 			    <%=feed.picture.description%> 
@@ -39,13 +37,23 @@
 				<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
 		
 		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
-		<div  class="delete_link second_font_method">
-		<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"i")%>
+		<div  class="<%="#{feed.id}_hover"%> delete_link second_font_method">
+			<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"i")%>
 		</div>
+		<script>
+		$(document).ready(function(){
+		    $(".<%="#{feed.id}_hover"%>").hide();
+		$(".<%="#{feed.id}_feed"%>").hover(function(){
+		  $(".<%="#{feed.id}_hover"%>").show();
+		  },function(){
+		  $(".<%="#{feed.id}_hover"%>").hide();
+			});
+		})
+		</script> 
 		<%end%>
 		<div class="user_name second_font_method_alternate third_font_method">
 			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%>
-			<div class="rank_name">
+			<div class="third_font_method">
 			<%=feed.user.rank.rankdetail.name%>
 			</div>
 		</div>
@@ -56,11 +64,22 @@
 				<%=render :partial=>"point_allocation/cheers_added"%> 
 			<%end%>
 		</div>
-	
-		
-		   
+				   
 		<div class="feed_comment">	
 		  <%=render :partial=>"comment/add_comment", :locals=>{:feed=>feed}%> 
-	    </div>
-			
+	    </div>			
 	</div>
+	<script>
+		$(document).ready(function(){
+			$(".<%="#{feed.id}_feed"%>").hover(function(){
+				$(this).css({
+				  "box-shadow": "0 0 2px #888888"
+				});
+			  },function(){
+			  	$(this).css({
+				  "box-shadow": "none"
+				});
+			});
+		})
+	</script> 
+

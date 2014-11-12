@@ -1,15 +1,6 @@
 <div class="container_large">
-<div class="admin_dashboard">
-	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span><br/>
-</div>
-
 <div class="small_bark_font_method">
-	<% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>
-		<%unless Preseason.where(status: "active")[0].blank?%>
-			<%if ((Preseason.where(status: "active")[0].end_day.to_date - DateTime.now.to_date).to_i) == 0%>
-				<br/><%= link_to"Start Season",start_season_path(:id=>Preseason.where(status: "active")[0].id)%> <br/><br/>
-			<%end%>
-		<%end%>
+	<% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>		
 		<%if @create_winner == "Yes"%>  				
 			<br/><%= link_to "Create Season Winners",league_winner_path%> <br/><br/>
 		<%else%>
@@ -23,6 +14,103 @@
 		<%end%>
 </div>
 
+<div class="admin_dashboard">
+	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span><br/>
+</div>
+<%unless @task.blank?%>
+	<div class="admin_lower_dashboard">
+	<div class="admin_header small_bark_font_method">
+	List of active tasks
+	</div>
+		<%for task in @task%>
+		<div class="task_display">
+			<table id="cssTable">
+			<tr><td>
+				<span style="font-size:11px;" class="small_bark_font_method">
+					<%=task.label.interest.interest_name%>
+				</span>
+			</td></tr> 
+			<tr><td>
+				<span class="task_timer">
+			   		<%=@duration = (task.end_date.to_date - DateTime.now.to_date).to_i%>
+			   	</span>
+			</td></tr>
+		 	<tr><td>
+			   	<span style="font-size:11px;" class="third_font_method">
+					<%if @duration > 1%>days left<%else%>day left<%end%>	
+				</span>
+			</td></tr> 
+			<tr><td>
+				<span style="font-size:11px;" class="second_font_method">
+					<%=link_to "end task",admin_task_checker_path(:id=>task.id)%>
+				</span>
+			</td></tr> 
+			</table> 
+		</div>	  
+		<%end%>
+	</div>
+<%end%>
+
+<%unless @preseason.blank? and @season.blank?%>
+	<div class="admin_lower_dashboard">
+		<div class="admin_header small_bark_font_method">
+			Season Info
+		</div>
+		<%unless @preseason.blank?%>			   	
+			<div class="task_display">
+				<table id="cssTable">
+					<tr><td>
+						<span style="font-size:11px;" class="small_bark_font_method">
+							Preseason  Status
+						</span>
+					</td></tr> 
+					<tr><td>
+						<span class="task_timer">
+				   			<%=@duration_preseason = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%>
+					   	</span>
+					</td></tr>
+				 	<tr><td>
+					   	<span style="font-size:11px;" class="third_font_method">
+							<%if @duration_preseason > 1%>days left to<%else%>day left to<%end%>	
+						</span>
+					</td></tr> 
+					<tr><td>
+						<span style="font-size:11px;" class="second_font_method">
+							<%= link_to"Start season",start_season_path(:id=>@preseason[0].id)%> <br/><br/>
+						</span>
+					</td></tr> 
+				</table> 
+			</div>		   	
+		<%end%>
+		
+		<%unless @season.blank?%>			
+		   <div class="task_display">
+				<table id="cssTable">
+					<tr><td>
+						<span style="font-size:11px;" class="small_bark_font_method">
+							Season Status
+						</span>
+					</td></tr> 
+					<tr><td>
+						<span class="task_timer">
+				   			<%=@duration_season = (@season[0].end_date.to_date - DateTime.now.to_date).to_i%>
+					   	</span>
+					</td></tr>
+				 	<tr><td>
+					   	<span style="font-size:11px;" class="third_font_method">
+							<%if @duration_season > 1%>days left to<%else%>day left to<%end%>	
+						</span>
+					</td></tr> 
+					<tr><td>
+						<span style="font-size:11px;" class="second_font_method">
+							<%= link_to"End Season",season_checker_path(:id=>@season[0].id)%> <br/><br/>
+						</span>
+					</td></tr> 
+				</table> 
+			</div>			
+		<%end%>  
+	</div>
+<%end%>
 
 <div class="season_container">
 <div class="facebox_header">

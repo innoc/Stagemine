@@ -1,8 +1,7 @@
 <div class="task_sidebar1 small_bark_font_method">
 		<%if @user.tasks.blank?%>
 						<%=image_tag("task_sample.png")%><br/>
-						No Task
-			
+						No Task			
 		<%else%>
 		
 				<%if @user.tasks.last.status == "inactive" or @user.enrolls.last.status == 0%>
@@ -16,12 +15,18 @@
 									Task Ended									
 								<%else%>
 										<div class="task_timer">
-												<%=@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %><br/>
-										</div>																			
+										<%@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %>
+										<%@position = Task.task_table(12,@user.id)%>
+										<%if @position == "blank"%>
+										<!--no contest-->
+										<%else%>
+											<%=@position.ordinalize%>
+										<%end%>
+										</div>													
 										<%if @duration > 1%>			
-											days remaining for task											
+											<%=@duration%> days remaining for task											
 										<%else%>					
-											day remaining for task											
+											<%=@duration%> day remaining for task											
 										<%end%>
 								<%end%>	
 					</div>					

@@ -584,7 +584,8 @@ text-align:center;
 .second_font_method_alternate a{ 
   font-size:12px;
   color:rgb(100,100,115);
-  font-weight:bold; 
+  font-weight:bold;
+   
 }
 .style ul{ 
    display: table-cell;
@@ -615,7 +616,7 @@ height:50px;
 }
 .small_bark_font_method{ 
   color:#333;
-  font-size:0.8em;
+  font-size:0.8em;  
 }
 .mid_bark_font_method{ 
   font-weight:bold;
@@ -665,10 +666,9 @@ text-align: center;
 
 .header_image_float{ 
 float:right;
-border:1px solid #eeeeee;
 width:80px;
-height:50px;
-margin-top:10px;	
+padding-top:5px;
+padding-bottom:5px;
 }
 .header_youtube_vid { 
   color:#333;
@@ -692,6 +692,7 @@ height:100vh;
 width:160px;
 }
 
+
 .task_body{ 
 margin-left:165px;
 border-left:1px solid lightblue;
@@ -707,7 +708,7 @@ padding-left:5px;
  font-size: 0.8em;
 }
 .task_timer{ 
-font-size:25px;
+font-size:18px;
 padding-top:11px;
 text-align:center;
 font-weight:normal;
@@ -1152,6 +1153,22 @@ margin-top:5px;
 margin-right:39px;
 }
 
+.settings_box{ 
+float:right;
+width:100px;
+height:24px;
+padding-top:2px;
+text-align:center;
+border-radius:5px;  
+border: 1px solid #ddd;
+background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
+background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
+margin-top:5px;
+margin-right:39px;
+}
+
 
 
 .stagemine_name{ 
@@ -1306,6 +1323,7 @@ margin-top:12px;
 .post_it li {
 	display: inline-block;
 	margin-top:1px;
+	text-align:left;
 }
 
 
@@ -1327,7 +1345,7 @@ margin-top:12px;
 .filter_drop ul {
 	display: none;
 	position: absolute;
-	width:200px;
+	width:210px;
 	background: rgb(251,251,251);
 	top: -10px;
 	left: -5px;
@@ -1346,7 +1364,7 @@ margin-top:12px;
 }
 
 .filter_drop li {
-	width: 190px;
+	width: 199px;
 	margin-right: 0px;
 	border-radius: 0px;
 	border-top: none;
@@ -1471,18 +1489,20 @@ margin-top:12px;
 .menu_unit{
 border-left:1px solid #ddd; 
 float:right;
-text-align:center;
-width:60px;
+padding-left:12px;
+padding-right:12px;
 height:23px;
 margin-top:0px;
-padding-top:2px;
+padding-top:3px;
 margin-right:2.5px;
 }
+
 .last_unit{
 float:right;
 text-align:center;
-width:70px;
-margin-top:2px;
+padding-left:10px;
+padding-right:10px;
+margin-top:3px;
 margin-right:2.5px;
 }
 .left_mini_menu{ 
@@ -1669,7 +1689,31 @@ background-color:white;
 padding-bottom:50px;
 text-align: center;
 }
-
+.task_display{
+float:left;
+width:140px;
+text-align:center
+}
+.admin_lower_dashboard{ 
+border:1px solid lightblue;
+width: 710px;
+padding-bottom:5px;
+margin-top:5%;
+background-color:white;
+height:130px;
+}
+#cssTable{ 
+text-align: center;
+width:150px;
+}
+.admin_header{ 
+background-color:#EEEEEE;
+width:707px;
+border-bottom:1px solid lightblue;
+padding-top:3px;
+padding-left:3px;
+padding-bottom:3px;
+}
 .season_container{ 
 display:none;
 margin-top:20px;	
@@ -1722,7 +1766,8 @@ min-height:300px;
 
 .interest_list{
 	text-align: left;
-	width:300px;
+	width:390px;
+	margin-left:6px;
 } 
 
 .interest_box{ 
@@ -1739,6 +1784,11 @@ background-color:white;
 float:right;
 margin-right:55px;	
 margin-top:5px;
+}
+.interest_button{  
+float:left;
+margin-left:150px;	
+margin-top:20px;
 }
 .register_button{ 
 float:right;
@@ -1785,18 +1835,15 @@ padding:15px 0px 10px 10px;
 
 .cheer_icon{ 
 float:left;
-margin-left:20px;
+margin-left:23px;
 margin-top:10px;
 }
-
 .cheer_status{ 
 width :240px;
-margin-left:50px;
-padding: 13px 0px 15px 0px;
+margin-left:55px;
+padding: 14px 0px 15px 0px;
 text-align:left;
 }
-
-
 
 .feed_content_v2{ 
 padding:15px 5px 10px 5px;
@@ -1831,7 +1878,7 @@ padding:15px 0px 10px 10px;
 .cheer_style{ 
   color:#333;
   font-weight: bold;
-  font-size: 0.9em;
+  font-size: 0.9em;  
 }
 
 .task_feed_icon{ 
@@ -1863,6 +1910,7 @@ margin-top:15px;
 float:right;
 width:140px;
 text-align:center;
+margin-top:2px;
 }
 
 .error_container{ 
@@ -1878,7 +1926,11 @@ border-bottom:1px solid lightblue;
 padding-top:10px;
 padding-bottom:10px;
 }
-
+.all_center_image{ 
+text-align:center;
+padding-top:10px;
+padding-bottom:10px;
+}
 .addvid_form{ 
  border:1px solid black;
  display:none;
@@ -1896,6 +1948,13 @@ resize: none;
 width:100%;
 text-align:center;
 margin-top:3px; 
+}
+
+#form_btn_comment{ 
+width:40px;
+text-align:center;
+margin-top:3px; 
+margin-left:50px;	
 }
 #decription{ 
 width:300px;
@@ -1993,6 +2052,52 @@ border-radius:5px;
   margin-top: -16px;
 }
 
+.add_comment_field{ 
+padding-top:5px;
+padding-bottom:5px;
+background-color:white;
+text-align:center;
+width:190px;
+cursor:pointer;
+border:1px solid lightblue;	
+}
+.add_comment_field_alternative{ 
+	padding-top:5px;
+	padding-bottom:5px;
+	background-color:white;
+	text-align:center;
+	width:190px;
+	cursor:pointer;	
+	font-size:11px;
+	margin-left:65px;
+	margin-top:5px;
+	border:1px solid lightblue;
+}
+.see_all_comment{ 
+float:right;
+padding-top:5px;
+border-radius:2px;
+padding-bottom:5px;
+background-color:white;
+text-align:center;
+width:50px;
+margin-left:10px;
+border:1px solid lightblue;	
+}
+.cancel_comment{ 
+float:right;
+padding-top:4px;
+border-radius:2px;
+padding-bottom:4px;
+background-color:white;
+text-align:center;
+width:50px;
+font-size:11px;
+cursor:pointer;
+margin-right:14px;
+margin-top:4px;
+border:1px solid lightblue;	
+}
 .pin {
   display: inline-block;
   background: #FEFEFE;
@@ -2061,6 +2166,7 @@ border-radius:5px;
 	background-position: center; 
 }
 
+
 .arrow-right { 
     border-left: 18px solid white;
     border-top: 10px solid transparent;
@@ -2077,7 +2183,7 @@ border-radius:5px;
 
 .vid_click { 
 border-radius:100%;
-border:1px solid white;
+border:3px solid white;
 background-color:black;
 width:50px;
 height:50px; 
@@ -2086,7 +2192,7 @@ z-index:50;
 filter:alpha(opacity=40); 
 margin-left:2px;
 position:relative;
-top:100px;
+top:80px;
 left:138px;
 }
 .block1{ 
@@ -2187,14 +2293,21 @@ padding-bottom:5px;
 font-size:13px;
 text-align:center;
 }
-
 .radi{ 
 border-radius:100%;
 width:55px;
-height:55px; 
-margin-top :5px;
-margin-left:2px;
+height:55px;
+margin-top :12px;
+margin-left:5px;
 float:left;
+}
+.comment_radi{ 
+border-radius:100%;
+width:40px;
+height:40px;
+margin-top :9px;
+margin-left:7px;
+float:left;	
 }
 .season_user_radi{ 
 border-radius:100%;
@@ -2261,7 +2374,7 @@ margin-top :10px;
 margin-left:105px;
 }
 .user_name{ 
-margin-top:15px;
+margin-top:21px;
 margin-left:70px;
 width:190px;
 }
@@ -2299,27 +2412,35 @@ float:left;
 }
 .feed_comment_box{
  min-height:40px;
- margin-left:35px;
- margin-top:2px;
+ margin-left:47px;
+ margin-top:15px;
  padding-right:2px;
-} 
-
+ width:270px; 
+}
+.setting_icon{ 
+float:left;
+width:25px;
+}
+.setting{ 
+float:right;	
+}
+.lower_comment_form{ 
+margin-top:10px;	
+}
 .comment_link{ 
 margin-left:15px;
-margin-top:5px;
+margin-top:20px;
 }
 .comment_link a{ 
-font-size:0.8em;
-cursor:pointer;	
+color:rgb(170,170,170);
+font-size:smaller;	
 } 
 .blank_comment_link { 
 text-align:center;
 cursor:pointer;
 padding-bottom:5px;
 }
-.blank_comment_link a{ 
-font-size:0.7em;
-}
+
 .image_display{ 
 min-height:200px;
 background-color:white;

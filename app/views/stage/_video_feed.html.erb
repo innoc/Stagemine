@@ -1,18 +1,18 @@
 	<%@feed_id = feed%>
 	<% @post = Video.find(feed.video_id)%>
-	<div class="pin" style="border:1px solid <%=feed.user.rank.rankdetail.rank_color%>;">
+	<div class="<%="#{feed.id}_feed"%>  pin">		
 	<%= link_to(video_path(:id=>feed.video), :rel=>"facebox") do %>
-		<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg); background-size:contain; background-repeat:no-repeat;">
+		<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg);background-size:330px 320px; background-repeat:no-repeat;">
 				<div class="vid_click"> <div class='arrow-right'></div> </div>
 	    </div>
 	<%end%>
 	<!--TASK INFO-->
 	
 	<%unless feed.video.task.blank?%> 
-		<div class=" task_feed_content small_bark_font_method">
+		<div class="task_feed_content small_bark_font_method">
 				<div class="task_title_header">
 					<%if feed.video.task.status == "active"%>
-				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>
+				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>&nbsp;&nbsp;&nbsp;<%unless feed.video.task.blank?%>&nbsp;#Task<%end%>
 				    <%end%>
 				</div>			    		    
 		</div>	
@@ -37,7 +37,7 @@
 				    	 	<%end%>			    	
 				    	 <%end%>
 				     <%else%>	
-				      &nbsp;&nbsp;<%="##{feed.video.task.label.interest.interest_name}"%>&nbsp;&nbsp;<%unless feed.video.task.blank?%>&nbsp;#Task<%end%>
+				      &nbsp;&nbsp;<%="##{feed.video.task.label.interest.interest_name}"%>
 			    	 <%end%>		     
 		 </div>
 
@@ -48,17 +48,24 @@
 		
 		
 		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
-			<div  class="delete_link second_font_method">
+			<div  class="<%="#{feed.id}_hover"%> delete_link second_font_method">
 			<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"v")%>
 			</div>
 		<%end%>
-		
-
-
+		<script>
+			$(document).ready(function(){
+   			    $(".<%="#{feed.id}_hover"%>").hide();
+				$(".<%="#{feed.id}_feed"%>").hover(function(){
+				  $(".<%="#{feed.id}_hover"%>").show();
+				  },function(){
+  				  $(".<%="#{feed.id}_hover"%>").hide();
+				});
+			})
+		</script> 
 		
 		<div class="user_name second_font_method_alternate third_font_method">
 			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%>
-			<div class="rank_name">
+			<div class="third_font_method">
 			<%=feed.user.rank.rankdetail.name%>
 			</div>
 		</div>
@@ -74,14 +81,22 @@
 	   		     	<%=render :partial=>"point_allocation/cheers_added"%> 
 			<%end%>
 		  <%end%>
-	 	</div>
-		
-		
-		   
+	 	</div>	   
 		   
 		<div class="feed_comment">	
 		  <%=render :partial=>"comment/add_comment", :locals=>{:feed=>feed}%> 
-	    </div>
-	 
-			
+	    </div>			
 	</div>
+	<script>
+		$(document).ready(function(){
+			$(".<%="#{feed.id}_feed"%>").hover(function(){
+				$(this).css({
+				  "box-shadow": "0 0 2px #888888"
+				});
+			  },function(){
+			  	$(this).css({
+				  "box-shadow": "none"
+				});
+			});
+		})
+	</script> 

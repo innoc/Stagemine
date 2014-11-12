@@ -22,6 +22,21 @@
 								</tr>
 							   </table>
 						  <%else%>
+						  <%if notification.notification_type == "Friendship"%>
+							   <table>
+							   		<tr>
+									   <td>
+		
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan
+									   </td>
+								</tr>
+							   </table>
+						  <%else%>
 						  <% if notification.notification_type == "Rank" %>
 						  		<table>
 							   		<tr>
@@ -71,6 +86,7 @@
 					      <%end%>					  
 						  <%end%>
 						  <%end%>
+						  <%end%>
 					 </div>
 		   <%end%>
 	<%end%>
@@ -90,6 +106,23 @@
 									   </td>
 									   <td>
 									   		You have <%=notification.notification_counter%> new Points
+									   </td>
+								</tr>
+							   </table>
+						  <%else%>
+						  <%if notification.notification_type == "Friendship"%>
+							   <table>
+							   		<tr>
+									   <td>
+											<%if notification.status==1%>
+												<%=image_tag("tick.png")%>
+											<%end%>
+									   </td>
+									   <td>
+									   	
+									   </td>
+									   <td>
+									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan
 									   </td>
 								</tr>
 							   </table>
@@ -153,6 +186,7 @@
 		
 						  <%end%>
 					      <%end%>					  
+						  <%end%>
 						  <%end%>
 						  <%end%>
 					 </div>

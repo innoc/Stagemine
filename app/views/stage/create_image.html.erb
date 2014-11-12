@@ -14,6 +14,15 @@
 		<div class="image_text_field">
 				<%= f.text_area :description ,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"describe your image(optional)",:title=>"Describe your image"%>
 		</div>
+			<div class="all_center_image">
+				<div class="small_bark_font_method">Select the appropriate video category</div>
+				<select id="custom_select" name="label_interest_id">
+					<%for user_interest in @user_interest%>
+						<option value="<%=user_interest.id%>"><%=user_interest.interest_name%></option>
+					<%end%>
+					<%=hidden_field_tag(:vid_label) %>
+				</select>
+			</div>	
 	
 		<div id="form_btn">	
 		<%= submit_tag 'Click to Post',:class => 'classname'%>

@@ -84,7 +84,7 @@ class TaskController < ApplicationController
                                   BadgeAllocation.create(:user_id=>@winner, :badge_id=>badge.id, :task_name=>task.title)
                               end
                           end
-                          if @user.winners.count > 5
+                          if @winner_instance.user.winners.count.count > 5
                              BadgeAllocation.create(:user_id=>@winner,:badge_id=>Badge.where(:priority=> 5)[0].id,:task_name=>task.title)
                           end 
                           #need optimization

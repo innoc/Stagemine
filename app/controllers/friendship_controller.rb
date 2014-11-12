@@ -6,6 +6,7 @@ class FriendshipController < ApplicationController
         @friend = User.find(params[:id])
         @friendship1 = Friendship.create(:user_id => @user.id, :friend_id => @friend.id) # 0 = friend_id is the performer
         #@friendship2 = Friendship.create(:user_id => @friend.id, :friend_id => @user.id, :status => 1) # 1 = friend_id is the fan
+        Notification.create(:notification_type=>"Friendship",:notification_type_id=>@friendship1.id,:user_id=>@friend.id,:secondary_user=>current_user.id)
         if @friendship1.save #&& @friendship2.save
         flash[:notice]= "You are now a fan of #{@friend.user_name}"
         else

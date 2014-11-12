@@ -5,13 +5,18 @@ class AdminController < ApplicationController
 
   def admin 
       @point_pending = Historypending.where(:historypending=> "true")
-      if Season.last.status == "complete"
-        if Season.last.leagues.where(:status=>"active").blank?
-           @create_winner = "No"
-        else
-           @create_winner = "Yes"
-        end
-      end
+      @preseason = Preseason.where(:status=>"active")
+      @season = Season.where(:status=>"active")
+      @task = Task.where(:status=>"active")
+      unless Season.count == 0
+        if Season.last.status == "complete"
+          if Season.last.leagues.where(:status=>"active").blank?
+             @create_winner = "No"
+          else
+             @create_winner = "Yes"
+          end
+        end  
+      end    
   end
   
   
@@ -132,6 +137,57 @@ class AdminController < ApplicationController
             format.js
      end 
   end
+  
+  
+    def admin_task_checker
+          #the purpose for this action is to update the tasks after the deadline has passed. 
+          # 1) The task status is updated from active to inactive.
+          # 2) All the Users are disenrolled from their enrolled task
+          # 3) The winner of each task is calculated and stored in a winner table 
+          # 4) A notification and news feed (directed to everyone on the site) is created 
+          @task = Task.find(params[:id])
+          if @task.update_attributes(:status=>"inactive") 
+             flash[:notice]="task deactivated"
+          else
+              flash[:notice]="Oops something went wrong"
+          end
+
+          unless @task.enrolls.blank?
+             for enroll in @task.enrolls
+              enroll.update_attributes(:status=>0)
+             end 
+          end
+          @enrolled_users = @task.users
+          @max_point = 0
+          @winner = 0
+          for task_point in @task.task_points
+             if task_point.point > @max_point
+                @winner = task_point.user_id
+             end
+             @max_point = task_point.point
+          end
+          
+          unless @winner == 0 # This will help in a situation whereby there is no winner due to no vote
+            @winner_instance = Winner.create(:user_id=>@winner, :task_id=>@task.id)
+            @badges = Badge.all                          
+            for badge in @badges
+                if @winner_instance.user.winners.count == badge.priority 
+                    BadgeAllocation.create(:user_id=>@winner, :badge_id=>badge.id, :task_name=>@task.title)
+                end
+            end
+            if @winner_instance.user.winners.count > 5
+               BadgeAllocation.create(:user_id=>@winner,:badge_id=>Badge.where(:priority=> 5)[0].id,:task_name=>@task.title)
+            end 
+            #need optimization
+            #_seasonFeed.find(task.feed.id).update_attributes(:created_at=>@winner_instance.created_at)
+            Notification.create(:notification_type=>"Winner",:notification_type_id=>@winner_instance.id,:user_id=>@winner)
+          end
+          respond_to do |format| 
+           format.html{redirect_to admin_path}
+           format.js
+          end
+    end
+  
   
    private 
       def admin_restriction        

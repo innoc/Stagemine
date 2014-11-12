@@ -23,7 +23,12 @@ class TaskPoint < ActiveRecord::Base
                                     new_counter = new_counter + last_notification[0].notification_counter 
                                     last_notification[0].update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=>new_counter)
                                 else
-                                    last_notification[0].update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=> point_update - last_notification[0].cheer_storage)
+                                    if last_notification[0].cheer_storage.blank?
+                                      cheer_storage = 0.0
+                                    else 
+                                      cheer_storage = last_notification[0].cheer_storage
+                                    end
+                                    last_notification[0].update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=> point_update - cheer_storage)
                                 end
                             end
                       else

@@ -4,7 +4,7 @@ class SeasonController < ApplicationController
         league = League.find(params[:id])
         if current_user.interests.include?(league.interest)
             LeagueEnrollment.create(league_id: params[:id], user_id: current_user.id)
-            flash[:notice] = "You have now joined a new league"
+            flash[:notice] = "You have now joined the #{league.interest.interest_name} league"
         else
             flash[:notice] = "An Error Occured"
         end
@@ -22,11 +22,17 @@ class SeasonController < ApplicationController
     @league = League.find(params[:league_id])
   end 
   
-  def season_checker       
+  def season_checker 
+      session[:return_to] ||= request.referer 
       @season = Season.last 
       if @season.status == "active"
         @season.update_attributes(:status=>"complete")
         Historypending.create(:season_id=> @season.id, :historypending=>"true")
+      end
+      session[:return_to] ||= request.referer
+      respond_to do |format|
+        format.html{redirect_to session.delete(:return_to)}
+        format.js
       end
   end
   

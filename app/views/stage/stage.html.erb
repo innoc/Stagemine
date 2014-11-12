@@ -27,18 +27,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		 <div class="top_mini_menu">	 	
 		 	<div class="left_mini_menu">	 		
 		 		<div class="menu_unit first_font_method">
-						<ul class="dashboard_more">
-							<li class="dashboard_dropdown first_font_method">
-							<a href="">&bull;&bull;&bull;</a>
-							<ul>
-								<li>
-									<%=link_to "Log Out", destroy_path%>
-								</li>
-								<li>
-									<%=link_to "message", message_path%>
-								</li>
-							</ul>	
-						</ul>		 								 	
+					 <%=link_to "Log Out", destroy_path%>     						 								 	
 		 		</div><!-- end of menu_unit -->
 		 		
 		 		<div class="menu_unit first_font_method">
@@ -58,37 +47,26 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		 	<div class="create_post first_font_method">
 		       <ul class="post_it">
 		       		<li class="dropdown">
-						<%=link_to "Edit",alter_path%>
+							<%=link_to "Message", message_path%>
 					</li>
-		       </ul>   
+		       </ul>    
 		 	</div> <!-- end of create_post-->
 			 		
 			 <div class="dance_type second_font_method">
-				<ul class="post_it">
-			       	<li class="filter_drop">
-						<table>
-							<tr>
-								<td>
-									<%=image_tag "filter.png"%>
-								</td>
-								<td></td> <!--needed to create an empty space between in the table-->
-								<td>
-									<a href="">Filter feed</a>
-								</td>
-							</tr>
-						</table>
-				       	<ul>
-				       		<%for interest in @user.interests%>
-			            		<li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
-				       		<%end%>
-				       		<li><%= link_to "All feed",stage_path(:id=>"all")%></li>
-			            	<li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
-			            	<li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
-			            	<li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
-				        </ul>	
-					</li>
-			    </ul>
-			 </div>	<!-- end of dance_type -->	
+				<div class="settings_box first_font_method">
+			       <ul class="post_it">
+			       		<li class="dropdown">
+							<div class="setting_icon">
+										<%=image_tag("settings.png")%>
+							</div>
+							<div class="setting">					
+										<%=link_to "Settings",alter_path%>
+							</div>
+
+						</li>
+			       </ul>   
+			 	</div>
+			</div>	<!-- end of dance_type -->	
 		 </div><!-- end of top_mini_menu-->
 	 
 		 <div class="bottom_container second_font_method_alternate">
@@ -96,7 +74,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 			 <div class="hidden_task_box second_font_method">
 				  <span class="task_cover">
 				 	<%unless @user.tasks.blank?%>
-				 		<%=link_to "task status",hidden_task_path,:rel=>"block"%>
+				 		<%=link_to "Task status",hidden_task_path,:rel=>"block"%>
 				 	<%end%>
 				  </span>
 			 </div>
@@ -214,25 +192,50 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		<div class="portfolio_interest second_font_method">
 	 		&bull;<br/>
 	 		<div class="interest_filter">
-	 		<%if @filter_code == "all" %>
-		 	<%=link_to "All feed",stage_path(:id=>"all")%>
-		    <%else%>
-		    <%if @filter_code == "fan" %>
-		    <%=link_to "Fan's feed",stage_path(:id=>"fan")%>
-		    <%else%>
-		    <%if @filter_code == "fanned"%>
-		    <%= link_to "Fanned feed",stage_path(:id=>"follow")%>
-		    <%else%>
-		    <%if @filter_code == "task"%>
-		    <%= link_to "Task",stage_path(:id=>"task")%>
-		    <%else%>		    
-		    <%= link_to @current_filter,stage_path(:id=>@filter_code)%>
-		    <%end%>
-		    <%end%>
-		    <%end%>
-		    <%end%>
+		    	<ul class="post_it">
+			       	<li class="filter_drop">
+						<table>
+							<tr>
+								<td width="12px">
+									<%=image_tag("pointer.png")%>
+								</td>
+								<td></td> <!--needed to create an empty space between in the table-->
+								<td>
+									<%if @filter_code == "all" %>
+									<%=link_to "All feed",stage_path(:id=>"all")%>
+									<%else%>
+									<%if @filter_code == "fan" %>
+									<%=link_to "Fan's feed",stage_path(:id=>"fan")%>
+									<%else%>
+									<%if @filter_code == "fanned"%>
+									<%= link_to "Fanned feed",stage_path(:id=>"follow")%>
+									<%else%>
+									<%if @filter_code == "task"%>
+									<%= link_to "Task",stage_path(:id=>"task")%>
+									<%else%>		    
+									<%= link_to @current_filter,stage_path(:id=>@filter_code)%>
+									<%end%>
+									<%end%>
+									<%end%>
+									<%end%>
+								</td>
+							</tr>
+						</table>
+				       	<ul>
+				       		<%for interest in @user.interests%>
+			            		<li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
+				       		<%end%>
+				       		<li><%= link_to "All feed",stage_path(:id=>"all")%></li>
+			            	<li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
+			            	<li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
+			            	<li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
+				        </ul>	
+					</li>
+			    </ul>
+		    
+		    
 		  </div><br/>
-	 		&bull;<br/>
+	 		&bull;<br/> 					
 	 	</div>
 	 	
 	 	<%if @feed.blank?%>

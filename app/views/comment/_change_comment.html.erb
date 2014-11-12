@@ -1,13 +1,25 @@
-	<script>
-	$(document).ready(function(){ 		
-		$(".<%="#{@feed_id.id}_add"%>").click(function(){
-			$(".<%="#{@feed_id.id}_form"%>").toggle();
-		});
-	})
-	</script>
+<script>
+$(document).ready(function(){ 		
+	$(".<%="#{@feed_id.id}_add"%>").click(function(){
+		$(".<%="#{@feed_id.id}_toggle"%>").toggle();
+		$(".<%="#{@feed_id.id}_form"%>").toggle();
+	});
+	$(".<%="#{@feed_id.id}_cancel"%>").click(function(){
+		$(".<%="#{@feed_id.id}_toggle"%>").toggle();
+		$(".<%="#{@feed_id.id}_form"%>").toggle();
+	});
+	
+})
+</script>
 
 <%if @feed_id.comments.blank?%>
-			   <div class="blank_comment_link second_font_method"><span class="<%="#{@feed_id.id}_add"%>"><a>click here to add comment</a></span></div>
+			   <div class="blank_comment_link second_font_method">
+			   	<span class="<%="#{@feed_id.id}_add"%>">
+			   	<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field_alternative third_font_method">
+								Add a comment
+				</div>
+			   	</span>
+			  </div>
 				
 					<div class="<%="#{@feed_id.id}_form"%>" style="display: none;">
 						<%= form_tag(comment_path,remote: true) do %>
@@ -16,11 +28,14 @@
 								    <%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
 			 						<%= hidden_field_tag 'feed_id',@feed_id.id%>
 			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-	     					</div>
-						
-							<div id="form_btn">	
-							<%= submit_tag 'Click to Post',:class => 'classname'%>
+	     					</div>						
+							<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
+								Close
+							</div>	
+							<div id="form_btn_comment">	
+							<%= submit_tag 'Click to Comment',:class => 'classname'%>
 							</div>
+							<br/>
 							<br/>
 				 		<%end%>
 		    	   </div>
@@ -30,19 +45,30 @@
 				<%unless @comment.user.userimage.blank?%>
 			    	<%@image = @comment.user.userimage%>
 	   			<%end%>
-				<div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
+		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
 
 			 
-				<div class="feed_comment_box small_bark_font_method second_font_method">
+				<div class="feed_comment_box small_bark_font_method">
 					<p> 
 						<span class="second_font_method_alternate"><%=link_to @comment.user.user_name, portfolio_path%></span><br/>
 						<%=@comment.content%>
-					</p> 
+					</p> 		
 					
-					
-				<div class="comment_link"><span class="<%="#{@feed_id.id}_add"%>"><a>add comment</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "see all", all_comment_path(:feed_id=>@feed_id.id)%></div>
+					<div class="comment_link">
+						<%= link_to(all_comment_path(:feed_id=>@feed_id.id)) do %>	
+							<div class="see_all_comment">
+								See all
+							</div>							
+						<%end%>	
+						<span class="<%="#{@feed_id.id}_add"%>">						
+							<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
+								Add a comment
+							</div>
+						</span>						
+					</div>
 				</div>
-				<div class="<%="#{@feed_id.id}_form"%>"style="display:none;">
+				<br/>
+				<div class="<%="#{@feed_id.id}_form"%> lower_comment_form"style="display:none;">
 					<%= form_tag(comment_path,remote: true) do %>
 
 							<div class="image_text_field">
@@ -51,8 +77,12 @@
 			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 	     					</div>
 						
-							<div id="form_btn">	
-							<%= submit_tag 'Click to Post',:class => 'classname'%>
+							
+							<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
+								Close
+							</div>	
+							<div id="form_btn_comment">	
+							<%= submit_tag 'Click to Comment',:class => 'classname'%>
 							</div>
 							<br/>
 				 	<%end%>

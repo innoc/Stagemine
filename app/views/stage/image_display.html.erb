@@ -22,9 +22,11 @@
 		</div>
 	
 	<div class="feed_icons"> 
+		<%unless @image.feed.user_id == @user.id%>
 		<%@post = @image%>
 		<%@feed_id = @image.feed%>
 		<%=render :partial=>"point_allocation/cheers_added"%> 
+		<%end%>
 	</div>
 		
 </div>

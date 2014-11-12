@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #protect_from_forgery with: :null_session
   before_action :authorize, except: [:create,:welcome,:login]
+  before_action :restriction, only:[:welcome]
 
   
   
@@ -13,6 +14,12 @@ class ApplicationController < ActionController::Base
   def authorize
     unless session[:user_id]
        redirect_to root_path
+    end
+  end
+  
+  def restriction
+    if session[:user_id]
+      redirect_to stage_path 
     end
   end
   

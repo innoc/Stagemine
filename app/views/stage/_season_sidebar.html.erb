@@ -46,7 +46,11 @@
 				</div>
 		<%else%>
 			<%if (@preseason=Preseason.where(status: "active")).blank?%> <!--The condition has to be satisfied before the season can start-->
-					<%@user_contains = 1%>
+				
+					<%if @user.leagues.include?(@interest_season.leagues.last)%>						
+						<%@enrollment_checker = 1%>
+					<%end%>
+					
 					<%@user_interest_id = UserInterest.where(["user_id = ? and interest_id = ?",1,1])%>	
 					<%unless @interest_season.interest_name == "Random"%>
 				 		<div class="season_header small_bark_font_method">
@@ -152,7 +156,7 @@
 															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>
 															<span style="font-size:11px;", class="third_font_method">
 															<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.blank?%>
-																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.point%><br/>
+																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.point.round%><br/>
 															<%else%>
 															     Points: 0
 															<%end%>
@@ -164,6 +168,7 @@
 												    </div>
 										  <%end%>
 									 <%end%><!--end of loop-->
+									 <%if @enrollment_checker == 1%>
 										<%unless @user_contains == 0%>
 							   				<div class="user_position_domain small_bark_font_method">
 									 				<div class="brief_league_header">
@@ -196,7 +201,7 @@
 																								<%= link_to @above_user.user_name,portfolio_path(:id=>@above_user.id)%><br/>
 																								<span style="font-size:11px;", class="third_font_method">
 																								<%unless UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.blank?%>
-																									 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.point%><br/>
+																									 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_season.id])[0].point.point.round%><br/>
 																								<%else%>
 																								     Points: 0
 																								<%end%>
@@ -224,7 +229,7 @@
 																					<%= link_to @user.user_name,portfolio_path(:id=>@user.id)%><br/>
 																					<span style="font-size:11px;", class="third_font_method">
 																					<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.blank?%>
-																						 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.point%><br/>
+																						 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_season.id])[0].point.point.round%><br/>
 																					<%else%>
 																					     Points: 0
 																					<%end%>
@@ -253,7 +258,7 @@
 																			<%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%><br/>
 																			<span style="font-size:11px;", class="third_font_method">
 																				<%unless UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.blank?%>
-																					 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.point%><br/>
+																					 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_season.id])[0].point.point.round%><br/>
 																				<%else%>
 																				     Points: 0
 																				<%end%>
@@ -266,6 +271,7 @@
 													   <%end%>								       								   
 												<%end%>
 											</div>
+										<%end%>
 				               			<%end%>
 						               <div class="join_leave_league second_font_method">
 										<!--check if user is enrolled or not-->															   			
@@ -312,7 +318,7 @@
 			<%else%>				
 				<div class="preseason_central">
 					<div class="preseason_header third_font_method">
-					The season is coming<!-- Are you ready or not? -->	
+					Preseason<!-- Are you ready or not? -->	
 					</div>
 					<br/><br/>
 					<span style="font-size: 50px;" class="largest_font">

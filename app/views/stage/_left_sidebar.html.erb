@@ -30,7 +30,7 @@
 	<%unless @user.notifications.where("status=?",0).blank?%>
 
 		<%for notification in @user.notifications.where("status=?",0)%>
-			  <% if notification.notification_type == "Point" %>
+			  <% if notification.notification_type == "Point" or notification.notification_type == "Friendship" %>
 				   	<%= link_to(notification_path) do %>
 					    <div class="notification">
 					    	<div class="notification_icon">

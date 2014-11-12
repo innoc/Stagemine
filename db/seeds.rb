@@ -13,7 +13,7 @@ User.create([{user_name: "Admin",first_name: "Admin",last_name: "Admin",email: "
 Rankdetail.create([{ name: "Green Stage", rank_max_point: 299, rank_min_point: 0 , rank_color: "lightgreen"},
                     { name: "Blue Stage", rank_max_point: 599 , rank_min_point: 300, rank_color: "lightblue"},
                     { name: "Red Stage", rank_max_point: 999 , rank_min_point: 600, rank_color: "red"},
-                    { name: "Black Stage", rank_max_point: 1000, rank_min_point: 1000, rank_color: "black"}])
+                    { name: "Gold Stage", rank_max_point: 1000, rank_min_point: 1000, rank_color: "gold"}])
 
 Badge.create([{ name: "Bronze", priority:0},
                     { name: "Ruby", priority:1},
@@ -24,4 +24,4 @@ Badge.create([{ name: "Bronze", priority:0},
 
 Pointdata.create([{point_number: 5, picture_divider:3, word_divider:5, vote_adder:5}])
 
-Interest.create([{interest_name:"Random"},{interest_name:"Salsa"},{interest_name:"Hip Hop"},interest_name:"Latin Dance"])
+Interest.create([{interest_name:"Random"},{interest_name:"Breakdancing and popping"},{interest_name:"Hip Hop"},{interest_name:"Contemporary"},{interest_name:"Ballet"},{interest_name:"Salsa"}])

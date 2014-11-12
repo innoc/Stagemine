@@ -1,10 +1,9 @@
-<div class="cheer_style">
+<div class="third_font_method">
 <% if user_notify(current_user,@post) == "no"%>
 
 
 <div class="cheer_icon">
 	<%=link_to image_tag("Cheers.png") ,{:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post",:remote=>"true"%>
-	
 </div>
 <div class="cheer_status">
     <%unless @post.class.name=="Video"%>

@@ -37,7 +37,7 @@
 										 <%end%>
 										 <%unless @user.leagues.where(:id=>@interest_id.leagues.last.id)[0].blank?%> <!--This is used in case the user is not enrolled in the league-->
 											 <%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.blank?%>
-											 	Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.point%><br/>
+											 	Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.point.round%><br/>
 											 <%else%>
 											 	Points: 0
 											 <%end%>
@@ -96,7 +96,7 @@
 												<%= link_to @above_user.user_name,portfolio_path(:id=>@above_user.id)%><br/>
 												<span style="font-size:11px;", class="third_font_method">
 												<%unless UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_id.id])[0].point.blank?%>
-													 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_id.id])[0].point.point%><br/>
+													 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@above_user.id, @interest_id.id])[0].point.point.round%><br/>
 												<%else%>
 												     Points: 0
 												<%end%>
@@ -127,7 +127,7 @@
 													<%= link_to @user.user_name,portfolio_path(:id=>@user.id)%><br/>
 													<span style="font-size:11px;", class="third_font_method">
 													<%unless UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.blank?%>
-														 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.point%><br/>
+														 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@user.id, @interest_id.id])[0].point.point.round%><br/>
 													<%else%>
 													     Points: 0
 													<%end%>
@@ -158,7 +158,7 @@
 														<%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%><br/>
 														<span style="font-size:11px;", class="third_font_method">
 														<%unless UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_id.id])[0].point.blank?%>
-															 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_id.id])[0].point.point%><br/>
+															 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",@below_user.id, @interest_id.id])[0].point.point.round%><br/>
 														<%else%>
 														     Points: 0
 														<%end%>
@@ -198,7 +198,7 @@
 															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>
 															<span style="font-size:11px;", class="third_font_method">
 															<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_id.id])[0].point.blank?%>
-																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_id.id])[0].point.point%><br/>
+																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_id.id])[0].point.point.round%><br/>
 															<%else%>
 															     Points: 0
 															<%end%>

@@ -17,7 +17,7 @@
 		<%unless feed.user.userimage.blank?%>
 			    <%@image= feed.user.userimage%>
 	   	<%end%>
-		<div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
+	    <div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
 
 			 
  

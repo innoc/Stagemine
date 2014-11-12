@@ -10,30 +10,41 @@ Select an Interest type
 Explore the full potential of StageMine by selecting your prefered dance style
 </div>
 <div class="interest_list">
-<%=form_tag add_interest_path do %>
 
-	<table width=70%, align=center>
+<%=form_tag add_interest_path do %>
+  
+	<table width=70%, align=left>
 	<%@interest = Interest.all%>
 	<%for interest in @interest%>
-	<%unless interest.interest_name == "Random"%>
-	   <%if @user.interests.include?(interest)%>
-	   	<tr>
-			<td>
-				<%=check_box_tag "interest[#{interest.id}]", interest.id,checked=true, :name => "interest_ids[]" %> <%=interest.interest_name%>
-			</td>
-		</tr>
-	   <%else%>
-		<tr>
-			<td>
-				<%=check_box_tag "interest[#{interest.id}]", interest.id,checked=false, :name => "interest_ids[]" %> <%=interest.interest_name%>
-			</td>
-		</tr>
+		<%unless interest.interest_name == "Random"%>	
+
+			<%if @league_interest.include?(interest)%>
+				<span class="third_font_method">
+					<tr>
+						<td>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=interest.interest_name%>  <span class="third_font_method">- leave league before changing</span>
+						</td>
+					</tr>
+				</span>
+			<%else%>
+			   <%if @user.interests.include?(interest)%>
+			   	<tr>
+					<td>
+						<%=check_box_tag "interest[#{interest.id}]", interest.id,checked=true, :name => "interest_ids[]" %> <%=interest.interest_name%>
+					</td>
+				</tr>
+			   <%else%>
+				<tr>
+					<td>
+						<%=check_box_tag "interest[#{interest.id}]", interest.id,checked=false, :name => "interest_ids[]" %> <%=interest.interest_name%>
+					</td>
+				</tr>
+				<%end%>
+			<%end%>
 		<%end%>
 	<%end%>
-	<%end%>
-   </table>
-	
-	<div class="login_button">
+   </table>	
+	<div class="interest_button">
 	<%=submit_tag "Submit",:class => 'submit_class'%>
 	</div>
 <%end%>

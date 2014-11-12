@@ -112,18 +112,22 @@ def stage
                            end
                        end
                     else
-                    unless user_feed.picture_id.blank?                     
-                        @feed << user_feed    
+                      unless user_feed.picture_id.blank?                     
+                        unless user_feed.picture.label.blank?
+                          if user_feed.picture.label.interest.id == Interest.find(params[:id]).id
+                             @feed << user_feed
+                          end
+                        end  
                     else
-                    unless user_feed.video_id.blank?
-                      unless user_feed.video.label.blank?
+                        unless user_feed.video_id.blank?
+                          unless user_feed.video.label.blank?
                             if user_feed.video.label.interest.id == Interest.find(params[:id]).id
                                @feed << user_feed
                             end
+                          end
+                        end
                       end
-                    end
-                    end
-                    end
+                   end
                 end
              end
              @current_filter = filtered_interest.interest_name
@@ -178,13 +182,16 @@ end
 
 def create_image 
   @picture = Picture.new()
+  @user_interest = current_user.interests
+
   if request.post?
        
            @new_post = Picture.new(image_params)
            @new_post.user_id = current_user.id
-           @label_interest= Interest.where(:interest_name => "Random")
-           @new_post.build_label(interest_id: @label_interest[0].id, video_id: @new_post.id)
-           @new_post.build_feed(feed_name: "Image",user_id: current_user.id, interest_id: @label_interest[0].id)
+           @label_interest= Interest.find(params[:label_interest_id])
+           @new_post.build_label(interest_id: @label_interest.id, picture_id: @new_post.id)
+           @new_post.build_feed(feed_name: "Image",user_id: current_user.id, interest_id: @label_interest.id)
+
            if @new_post.save
                flash[:notice]="Your Post was successfully created"
            else
