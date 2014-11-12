@@ -45,7 +45,7 @@ $(document).ready(function(){
 				<%unless @comment.user.userimage.blank?%>
 			    	<%@image = @comment.user.userimage%>
 	   			<%end%>
-		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
+		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
 
 			 
 				<div class="feed_comment_box small_bark_font_method">
