@@ -4,6 +4,7 @@ class Season < ActiveRecord::Base
   has_many :pointhistories
   has_many :auditions, :dependent=>:destroy
   has_one  :preseason, :dependent=>:destroy
+  has_one  :season_winner_notification
   
    def self.league_top_three(league_id)
      @league = League.find(league_id)

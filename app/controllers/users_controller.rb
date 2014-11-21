@@ -62,6 +62,11 @@ class UsersController < ApplicationController
      params.require(:user).permit(:first_name,:last_name,:user_name,:gender,:email,:password,:password_confirmation)
   end
   
+  def user_history
+    @user = User.find(params[:id])
+    @user_history = @user.pointhistories
+  end
+
   def resolve_layout
     case action_name
     when 'create'

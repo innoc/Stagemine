@@ -24,7 +24,7 @@
 							<div class="league_user_name second_font_method_alternate">
 								<%= link_to fan.user_name,portfolio_path(:id=>fan.id)%><br/>
 								<span style="font-size:11px;" class="third_font_method">
-								<%=fan.rank.rankdetail.name%>
+									<%=fan.rank.rankdetail.name%>
 								</span>								 
 							</div>
 					    </div>
@@ -93,7 +93,7 @@
 	 				<table border="0" width="100%" style="font-size: 0.8em;">
 	 						<tr>
 								<td>
-	 								<%if @fan.count == 1 %><%=link_to "Fan", see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%else%><%=link_to "Fans"%><%end%><br/><%=@fan.count%>
+	 								<%if @fan.count == 1 %><%=link_to "Fan", see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%else%><%=link_to "Fans",see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%end%><br/><%=@fan.count%>
 	 							</td>
 	 							<td>
 	 							</td>
@@ -108,7 +108,7 @@
 	 				</table>
  				</div>
 	 			
-	 			<div class="portfolio_page first_font_method">
+	 			<div class="portfolio_page second_font_method_alternate">
 		 			 <%unless @portfolio_restriction == "allow"%>
 		 		    	<div class="dropdown_portfolio">
 			 		    	<!-- put edit for the same user-->
@@ -151,7 +151,7 @@
  		<div class="portfolio_small_column">
  			<div class="portfolio_fan ">
  				<%=image_tag "history.png"%>
- 				<div class="cheers_count">	<%=link_to"User History"%> </div>
+ 				<div class="cheers_count">	<%=link_to"User History", user_history_path(:id=>@user.id)%> </div>
  			</div>
  			<div class="portfolio_column_color portfolio_fanned second_font_method_alternate">
  				<%if @portfolio_restriction == "allow"%>

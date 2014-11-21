@@ -1,0 +1,83 @@
+<div class="container">
+<div class="middle_cover">
+     <div class="middle_cover_header small_bark_font_method second_font_method_alternate">
+        <%=image_tag "history_small.png"%>
+        <div>
+        <%=link_to"User History", user_history_path(:id=>@user.id)%>
+        </div>
+     </div>  
+     <%unless @user_history.blank?%>   
+      <%for user_history in @user_history%>        
+        <div class="user_history_container">          
+          <div class="user_history_badge_container" style="background-color:<%=@user.rank.rankdetail.rank_color%>">
+            <%=user_history.position.ordinalize%>
+          </div>
+          <div class="user_season_details_container small_dark_font_method">
+            <span class="bold_header">
+              <%=user_history.season.name%>
+            </span>
+            <div class="margin-adder third_font_method">
+              The <%=Interest.find(user_history.interest_id).interest_name%> league
+            </div>
+            <div class="margin-adder">
+              <span class="light_bold_font">
+                <%=user_history.point%> 
+              </span>
+              <span class="third_font_11px">
+                <% if user_history.point > 1%>
+                  points
+                <%else%>
+                  point
+                <%end%>
+                  &nbsp;&nbsp; | &nbsp;&nbsp; Duration: <%=pluralize((user_history.season.end_date.to_date - user_history.season.start_date.to_date).to_i, 'day') %>
+                  &nbsp;&nbsp; | &nbsp;&nbsp; Enrollments: <%= pluralize(Interest.find(user_history.interest_id).leagues.last.league_enrollments.count,"person")%> 
+              </span>
+            </div>
+          </div>
+            <div class="task_season_container">
+              <%@task = @user.tasks.where("start_date > ? and end_date < ? ", user_history.season.start_date, user_history.season.end_date)%>
+              <%if @task.blank?%>
+                no task to show
+              <%else%>
+                <%for task in @task%>
+                  <%task_point=@user.task_points.where(:task_id=>task.id)[0]%>
+                  <span class="bold_header">
+                    <%=task.title%>
+                  </span>
+                  <div class="third_font_method">
+                    <% unless task.winner.blank?%>
+                      <% if task.winner.user_id == @user.id%>
+                        Task Winner!!!
+                      <%else%>
+                        Task Participant
+                      <%end%>
+                    <%else%>
+                      Task Participant
+                    <%end%>
+                  </div>
+                  <div class="margin-adder-2">                 
+                    <span class="third_font_11px">
+                      <%if task_point.blank?%>
+                      <%else%>
+                        <%=pluralize(task_point.point,"point")%> &nbsp;&nbsp; | &nbsp;&nbsp; Enrollments: <%= pluralize(task.enrolls.count, "person")%>
+                      <%end%>
+                    </span>
+                  </div>
+                  <br/>
+                <%end%>
+              <%end%>                   
+          </div>
+        </div>
+      <%end%>      
+    <%else%>
+      <div class="no_season small_bark_font_method">
+        <div class="default_season">
+          <%=image_tag("history_small_grey.png")%><br/>
+        </div>
+        <div class="season_text third_font_method">
+          This user currently has no history
+        </div>
+      </div>
+    <%end%>
+</div>
+</div>

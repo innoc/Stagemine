@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   match '/view_search'=>"users#view_search", :as=>"view_search", via: :all
   match '/badge'=>"badge#badge", :as=>"badge", via: :all
   match '/admin_task_checker'=>"admin#admin_task_checker", :as=>"admin_task_checker", via: :all
+  match '/view_user'=>"admin#view_user", :as=>"all_user", via: :all
+  match '/user_history'=>"users#user_history", :as=>"user_history", via: :all
   
 
   resources :users

@@ -6,13 +6,25 @@ def stage
     @feed = []
     @user_task = []
     user_check = [] # you need this to prevent duplicate feed
+    @user_interest_league = []
     @user = current_user   
     @user_cheers = current_user.cheers.count
     @task_list = Task.where("status=?","active")
     @filter_code = params[:id]
     @user_interest_old = current_user.interests
     @user_interest = @user_interest_old.reject { |a| a == Interest.where(:interest_name => "Random")[0] } 
-    @random_interest = @user_interest.sample(1)
+    
+    for user_interest in @user_interest_old
+      if @user.leagues.include?(user_interest.leagues.last)
+         @user_interest_league << user_interest
+      end
+    end
+    
+    if @user_interest_league.blank?
+      @random_interest = @user_interest.sample(1)
+    else
+      @random_interest = @user_interest_league.sample(1)
+    end    
     @fan = Friendship.where("friend_id=?",@user.id)
     @user_performer = current_user.friends
       
@@ -184,8 +196,7 @@ def create_image
   @picture = Picture.new()
   @user_interest = current_user.interests
 
-  if request.post?
-       
+  if request.post?       
            @new_post = Picture.new(image_params)
            @new_post.user_id = current_user.id
            @label_interest= Interest.find(params[:label_interest_id])

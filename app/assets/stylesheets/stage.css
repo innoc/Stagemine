@@ -36,11 +36,40 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 }
 
 .portfolio_left_side{
-border:1px solid white;
-float:left;
-height:250px;
-width:450px;
+  border:1px solid white;
+  float:left;
+  height:250px;
+  width:450px;
 }
+
+
+.user_history_container{ 
+  border-bottom:1px solid lightblue;
+  min-height:115px;
+  width:670px;
+  margin-left:3px;
+}
+
+.user_season_details_container{ 
+  float:left;
+  width:313px;
+  height:96px;
+  padding-top:2px; 
+  margin-left:15px;
+}
+
+.task_season_container{ 
+  border-left:1px solid lightblue; 
+  width:250px;
+  margin-left:410px;
+  min-height:100px;
+  padding-top:4px;
+  padding-left:7px;
+  padding-right:2px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
 .portfolio_right_side{
 border:1px solid white;
 float:right;
@@ -127,7 +156,6 @@ padding-right:6px;
 height:23px;
 padding-top:3px;
 text-align:center;
-
 float:right;
 }
 
@@ -525,37 +553,46 @@ border-bottom-left-radius:4px;
 border-bottom-right-radius:4px;
 margin-top:20px;	
 background-color:#eeeeee;
-height:30px;
-padding-top:5px;
+height:35px;
 }
 .post_border_bottom{ 
-width:265px;
-height:4px;
-margin-top:7px;
-margin-left:14px;	
+width:320px;
+height:35px;
 } 
+
 .post_border_color_first{ 
  float:left;
- background-color:lightgreen;
- height:3px;
- width:66px;	
+ background-color:#dcdcdc;
+ height:30px;
+ padding-top:5px;
+ padding-left:5px;
+ padding-right:5px;
+ background-image:url(small_noise.png); 
+ border-right:1px solid #ccc; 
 }
 .post_border_color_second{ 
  float:left;
- background-color:rgb(100,100,115); 
- height:3px;
- width:85px;
- margin-left:18px;	
+ background-color:#dcdcdc;
+ height:30px;
+ padding-top:5px;
+ padding-left:5px;
+ padding-right:5px;
+ background-image:url(small_noise.png); 
+ border-right:1px solid #ccc;
 }
 .post_border_color_third{ 
  float:left;
- background-color:lightblue;
- height:3px;
- width:74px;
- margin-left:20px;	
+ background-color:#dcdcdc;
+ height:30px;
+ padding-top:5px;
+ padding-left:5px;
+ padding-right:5px;
+ background-image:url(small_noise.png); 
+ border-right:1px solid #ccc;	
 }
 .second_font_method a{ 
   font-size:small;
+  font-weight:400;
   color:#2b6cc2;  
 }
 .largest_font { 
@@ -582,10 +619,9 @@ text-align:center;
 }
 
 .second_font_method_alternate a{ 
-  font-size:12px;
   color:rgb(100,100,115);
-  font-weight:bold;
-   
+  font-size:small;
+  font-weight: 700;   
 }
 .style ul{ 
    display: table-cell;
@@ -598,10 +634,18 @@ text-align:center;
   font-weight:bold; 
 }
 .league_details{ 
-padding-left:5px;
-padding-bottom :15px;	
+  padding-left:5px;
+  padding-bottom :15px;	
 }
 
+.margin-adder{
+  margin-top:2px;
+}
+
+.margin-adder-2{ 
+  margin-top:11px;
+
+}
 .centralize{ 
 text-align: center;	
 }
@@ -609,6 +653,12 @@ text-align: center;
   color:rgb(170,170,170);
   font-size:smaller;
 }
+
+.third_font_11px{ 
+  color:rgb(170,170,170);
+  font-size:smaller;
+  font-size:11px;
+} 
 
 .suggested_friend_area{ 
 border-bottom:1px solid lightblue;
@@ -632,8 +682,8 @@ height:50px;
 }
 .first_font_method  a{  
   color:#333;
-  font-weight: bold;
   font-size: .8em;
+  font-weight:700;
 }
 
 .task_title_header{ 
@@ -922,13 +972,6 @@ padding-top:5px;
 font-size:11px;
 }
 
-.hidden_task_box{ 
-float:right;
-margin-top:5px;
-width:100px;
-margin-right:5px;
-text-align: center;
-}
 .league_user{ 
 border-bottom: 1px solid rgb(235,235,235);	
 height:40px;
@@ -979,12 +1022,18 @@ border-right:1px solid lightblue;
 
 .hidden_season_box{ 
 min-width:100px;
-margin-right:15px;
+margin-right:5px;
+margin-top:5px;
 float:right;
 text-align:center;
-font-size: .8em;
-padding-top:6px;
-padding-bottom:2px;
+}
+
+.hidden_task_box{ 
+float:right;
+margin-top:5px;
+width:100px;
+margin-right:5px;
+text-align: center;
 }
 
 .dance_type{ 
@@ -993,6 +1042,7 @@ width:150px;
 margin-top:0px;
 margin-left:3px;
 height:24px;
+font-weight:700;
 }
 
 .cheer{ 
@@ -1142,6 +1192,7 @@ float:right;
 width:80px;
 height:24px;
 padding-top:2px;
+font-weight:700;
 text-align:center;
 border-radius:5px;  
 border: 1px solid #ddd;
@@ -1487,23 +1538,22 @@ margin-top:12px;
   border-bottom-right-radius:5px;
 }
 .menu_unit{
-border-left:1px solid #ddd; 
+border-left:1px solid #ddd;
 float:right;
 padding-left:12px;
 padding-right:12px;
 height:23px;
 margin-top:0px;
-padding-top:3px;
+padding-top:4px;
 margin-right:2.5px;
 }
-
 .last_unit{
 float:right;
 text-align:center;
 padding-left:10px;
 padding-right:10px;
-margin-top:3px;
-margin-right:2.5px;
+margin-top:4px;
+margin-right:9px;
 }
 .left_mini_menu{ 
 width:270px;
@@ -1518,6 +1568,28 @@ background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
 background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
 background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */
 }
+.season-task-help{ 
+width:275px;
+height:35px;
+float:right;
+margin-right:23px;
+}
+
+.season-help{ 
+float: left;
+padding-right: 3px;
+border-right: 1px solid lightblue;
+height: 20px;
+margin-top: 6px;
+}
+
+.task-help{ 
+height: 20px;
+margin-top: 6px;
+width:120px;
+float:right;
+}
+
 
 /* ~~ The header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo. ~~ */
 .header {
@@ -2044,7 +2116,6 @@ border-radius:5px;
   -webkit-column-fill: auto;
   -moz-column-count: 2;
   -moz-column-gap: 12px;
-  -moz-column-fill: auto;
   column-count: 2;
   column-gap: 35px;
   column-fill: auto;
@@ -2392,9 +2463,6 @@ margin-top:5px;
 margin-left:5px;
 height:40px; 
 }
-
-
-
 .feed_comment{ 
 border-top:1px solid lightblue; 
 margin-top:7px;
@@ -2417,12 +2485,17 @@ float:left;
  padding-right:2px;
  width:270px; 
 }
+.message_menu{ 
+margin-top:2px;
+}
+
 .setting_icon{ 
 float:left;
 width:25px;
 }
 .setting{ 
-float:right;	
+float:right;
+margin-top:2px;
 }
 .lower_comment_form{ 
 margin-top:10px;	
@@ -2696,10 +2769,29 @@ margin-right:31px;
 margin-top:12px;
 }
 
+.user_history_badge_container{  
+  width:70px;
+  text-align: center;
+  padding-top:25px;
+  margin-left:5px;
+  margin-top:6px;
+  color:rgb(76,76,76);
+  font-weight: bold;
+  font-size: 15px;  
+  padding-bottom:25px;
+  background-color:#d4af37; 
+  float:left;
+}
+
 .bold_header{
   color:#333;
   font-weight: bold;
   font-size: .8em;	
+}
+.bold_header a{
+  color:#333;
+  font-weight: bold;
+  font-size: 1em;  
 }
 .suggested_header{ 
 margin-left:8px;

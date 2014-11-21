@@ -15,7 +15,8 @@
 </div>
 
 <div class="admin_dashboard">
-	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span><br/>
+	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	|&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "User Count :  #{@user_count}",all_user_path%><br/>
 </div>
 <%unless @task.blank?%>
 	<div class="admin_lower_dashboard">

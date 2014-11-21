@@ -1,0 +1,44 @@
+<div class="container">
+<div class="middle_cover">
+	<div class="middle_cover_header small_bark_font_method second_font_method_alternate">
+		<%=image_tag "network.png"%><br/>
+		<%=@user_list.count%>
+	</div>
+
+	
+	
+	 <%unless @user_list.blank?%>		
+	 	<%for user in @user_list%>
+	 		<%unless user.usertype=="admin"%>
+				<div class="message_container">
+						<div class="league_rank_color_alternative" style="background-color:<%=user.rank.rankdetail.rank_color%>"></div>
+					   	<div class="notification_image">
+							<%unless user.userimage.blank?%>
+								<%@user_image = user.userimage%>
+							<%end%>
+						    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+					   	</div>
+					   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
+		   					<%= link_to "#{user.first_name} #{user.last_name}", portfolio_path(:id=>user.id) %><br/>
+					   		<div class="third_font_method">
+					   			<%=user.user_name%>
+					   		</div>			   		
+					   	</div>
+				</div>
+			 <%end%>
+			<%@user_image = nil%>
+		<%end%>
+	<%else%>
+	<div class="no_season small_bark_font_method">
+						<div class="default_season">
+							<%=image_tag("network_eeeeee.png")%><br/>
+						</div>
+						<div class="season_text third_font_method">
+							There are no users
+						</div>
+	</div>	
+
+	<%end%>
+</div>
+</div>
+

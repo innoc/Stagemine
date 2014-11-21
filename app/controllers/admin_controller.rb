@@ -8,6 +8,7 @@ class AdminController < ApplicationController
       @preseason = Preseason.where(:status=>"active")
       @season = Season.where(:status=>"active")
       @task = Task.where(:status=>"active")
+      @user_count = User.count
       unless Season.count == 0
         if Season.last.status == "complete"
           if Season.last.leagues.where(:status=>"active").blank?
@@ -19,6 +20,9 @@ class AdminController < ApplicationController
       end    
   end
   
+  def view_user
+      @user_list = User.all.order("id DESC")
+  end
   
   def league_winner
     for league in League.where(:status => "active")
@@ -30,7 +34,7 @@ class AdminController < ApplicationController
              point = point + 1
            end
         end
-           league.update_attributes(:status=>"inactive")
+          league.update_attributes(:status=>"inactive")
     end 
         flash[:notice]="The winners were created"        
         respond_to do |format|
@@ -40,6 +44,7 @@ class AdminController < ApplicationController
   end
   
   def create_history
+    #user history is created for all the enrolled user in all the leagues and the points table is cleard
     last_season = Season.last
     leagues = last_season.leagues
       for league in leagues

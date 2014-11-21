@@ -83,10 +83,12 @@ def create_cheer
                         end
                        
                         unless  @new_rank == @post_author.rank.rankdetail.id
-                           if @rank.update_attributes(:rankdetail_id=>@new_rank)
-                              Feed.create(feed_name: "Rank",user_id: @post_author.id,rank_id:@rank.id)
-                              Notification.create(:cheer_storage=>@point_value,:notification_type=>"Rank",:notification_type_id=>@new_rank,:user_id=>@post_author.id,:notification_counter=>@point_value)
-                           end
+                             if @rank.update_attributes(:rankdetail_id=>@new_rank)
+                                if Rankdetail.find(@new_rank).rank_max_point > @post_author.rank.rankdetail.rank_max_point
+                                  Feed.create(feed_name: "Rank",user_id: @post_author.id,rank_id:@rank.id)
+                                  Notification.create(:cheer_storage=>@point_value,:notification_type=>"Rank",:notification_type_id=>@new_rank,:user_id=>@post_author.id,:notification_counter=>@point_value)
+                                end
+                            end
                            #this will only change if the user was promoted to a new rank
                         end
                    end

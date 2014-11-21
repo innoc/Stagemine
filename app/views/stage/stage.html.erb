@@ -26,34 +26,35 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 	<div class="top_menu">
 		 <div class="top_mini_menu">	 	
 		 	<div class="left_mini_menu">	 		
-		 		<div class="menu_unit first_font_method">
+		 		<div class="menu_unit bold_header">
 					 <%=link_to "Log Out", destroy_path%>     						 								 	
 		 		</div><!-- end of menu_unit -->
 		 		
-		 		<div class="menu_unit first_font_method">
+		 		<div class="menu_unit bold_header">
 		 			<%=link_to "Interest", add_interest_path%>
 		 		</div><!-- end of menu_unit -->	
 		 		 		
-		 		<div class="menu_unit first_font_method">
+		 		<div class="menu_unit bold_header">
 		 			<%=link_to "Task", task_path(:id=>"welcome")%>
 		 		</div><!-- end of menu_unit -->	 
 		 				
-		 		<div class="last_unit first_font_method">
+		 		<div class="last_unit bold_header">
 		 			<%=link_to "Help"%>
-		 		</div><!-- end of last_unit -->	
-		 		 		
+		 		</div>		 			 		 		
 		 	</div><!--last_mini_menu-->
 		 	
-		 	<div class="create_post first_font_method">
+		 	<div class="create_post bold_header">
 		       <ul class="post_it">
 		       		<li class="dropdown">
-							<%=link_to "Message", message_path%>
-					</li>
+		       		<div class="message_menu">
+								<%=link_to "Message", message_path%>
+							</div>
+							</li>
 		       </ul>    
 		 	</div> <!-- end of create_post-->
 			 		
-			 <div class="dance_type second_font_method">
-				<div class="settings_box first_font_method">
+			 <div class="dance_type bold_header">
+				<div class="settings_box">
 			       <ul class="post_it">
 			       		<li class="dropdown">
 							<div class="setting_icon">
@@ -69,65 +70,60 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 			</div>	<!-- end of dance_type -->	
 		 </div><!-- end of top_mini_menu-->
 	 
-		 <div class="bottom_container second_font_method_alternate">
-		 	
-			 <div class="hidden_task_box second_font_method">
-				  <span class="task_cover">
-				 	<%unless @user.tasks.blank?%>
-				 		<%=link_to "Task status",hidden_task_path,:rel=>"block"%>
-				 	<%end%>
-				  </span>
-			 </div>
-			 			 
-			 <div class="hidden_season_box second_font_method third_font_method">
-			 	<span class="task_cover">	 		
-			 		
-			 		
-			 	<%if (@preseason=Preseason.where(status: "active")).blank?%>
-		 			<%unless Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>			 		
-			 			<%unless (Season.last.status == "active").blank?%>			 			
-				 			<%if @user.leagues.include?(@interest_season.leagues.last)%>
-				 				<%=link_to "View League", see_all_path(:id=>@interest_season.id)%>
-				 			<%else%>
-				 			<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
-												<%unless @user.leagues.include?(@interest_season.leagues.last)%>
-													<%=link_to "Join #{@interest_season.interest_name} League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-												<%else%>
-													<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-												<%end%>
-							<%else%>
-								<%@audition_status = Audition.audition_check(@user.id,@interest_season.leagues.last.id)%>
-								<%unless @audition_status == "Yes"%>
-									<%if @audition_status.qualified == "Yes"%>
-										<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
-									<%else%>									
-									<span style="font-size:11px;" class="third_font_method">
-										 Auditioned										 
-									</span>
+		 <div class="bottom_container second_font_method_alternate">		 	
+			 <span class="task_cover">			 		
+				 <div class="hidden_task_box second_font_method">
+					 	<%unless @user.tasks.blank?%>
+					 		<%=link_to "Task status",hidden_task_path,:rel=>"block"%>
+					 	<%end%>
+				 </div>
+				 			 
+				 <div class="hidden_season_box second_font_method">
+					 	<%if (@preseason=Preseason.where(status: "active")).blank?%>
+				 			<%unless Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>			 		
+					 			<%unless (Season.last.status == "active").blank?%>			 			
+						 			<%if @user.leagues.include?(@interest_season.leagues.last)%>
+						 				<%=link_to "View League", see_all_path(:id=>@interest_season.id)%>
+						 			<%else%>
+						 			<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
+														<%unless @user.leagues.include?(@interest_season.leagues.last)%>
+															<%=link_to "Join ' #{@interest_season.interest_name} ' League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+														<%else%>
+															<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+														<%end%>
+									<%else%>
+										<%@audition_status = Audition.audition_check(@user.id,@interest_season.leagues.last.id)%>
+										<%unless @audition_status == "Yes"%>
+											<%if @audition_status.qualified == "Yes"%>
+												<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
+											<%else%>									
+											<span style="font-size:11px;" class="third_font_method">
+												 Auditioned										 
+											</span>
+											<%end%>
+										<%else%>
+												 <%=link_to "Audition",create_vid_path(:league=>@interest_season.leagues.last.id),:rel=>"block"%>&nbsp;&nbsp;
+										<%end%>						 	
 									<%end%>
-								<%else%>
-										 <%=link_to "Audition",create_vid_path(:league=>@interest_season.leagues.last.id),:rel=>"block"%>&nbsp;&nbsp;
-								<%end%>						 	
+									<%end%>
+								<%end%>
 							<%end%>
-							<%end%>
-						<%end%>
-					<%end%>
-				<%else%>
-				 			<%=link_to "Preseason", see_all_path(:id=>@interest_season.id)%>
-				<%end%>		 
-			 	</span>
-			 </div>
-					&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Add a video",create_vid_path, :rel=>"block"%>
-				    &nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Share an image",pictures_path, :rel=>"block"%>
-					&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Share an idea",create_word_path, :rel=>"block"%>
-					<div class="post_border_bottom">
-						<div class="post_border_color_first">							
-						</div>
-						<div class="post_border_color_second">							
-						</div>
-						<div class="post_border_color_third">
-						</div>
-					</div>			
+						<%else%>
+						 			<%=link_to "Preseason", see_all_path(:id=>@interest_season.id)%>
+						<%end%>		 
+				 </div>
+			 </span>
+				<div class="post_border_bottom">
+					<div class="post_border_color_first">							
+						<%= link_to "Add a video",create_vid_path, :rel=>"block"%>
+					</div>
+					<div class="post_border_color_second">						
+				    <%= link_to "Share an image",pictures_path, :rel=>"block"%>
+				  </div>
+				  <div class="post_border_color_third">
+						<%= link_to "Share an idea",create_word_path, :rel=>"block"%>
+					</div>				
+				</div>			
 		 </div>	<!-- end of bottom_container-->
 	</div> <!-- end of top_menu-->
 	
@@ -318,13 +314,15 @@ $(document).ready(function(){
 	  { 
 		$('.sidebar1').hide();
 	 	$('.sidebar2').hide(); 
-	 	$('.task_cover').show(); 	 	
+	 	$('.task_cover').show(); 
+    $('.season-task-help').show();
 	  }	  
 	  else if($(window).width() > 1035)
 	  { 
 		$('.sidebar1').show();
 	    $('.sidebar2').show();
 	    $('.task_cover').hide(); 
+	    $('.season-task-help').show();
 	  }	  
 	$(window).resize(function() {
 	  // This will execute whenever the window is resized	 
