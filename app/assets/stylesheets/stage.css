@@ -97,11 +97,25 @@ border:1px solid lightblue;
 	border-bottom-left-radius:4px;
 }
 
+.top_menu_image_container{ 
+  width:105px;
+  height:89px;
+  padding-top:1px;
+  border-bottom-left-radius:4px;
+}
+
 .portfolio_username { 
 float:right;
 margin-left:10px;
 margin-top:27px;
 width:145px;
+}
+.top_menu_username{ 
+float:right;
+margin-left:0px;
+width:265px;
+padding-top:5px;
+
 }
 
 .change_image{ 
@@ -137,6 +151,23 @@ color:rgb(100,100,115);
 font-weight:bold;
 padding-bottom:4px;
 }
+.top_menu_mini_left{ 
+float:right;
+width:300px;
+height:86px;
+margin-right:0px;
+color:rgb(100,100,115);
+font-weight:bold;
+padding-bottom:4px;
+border-left:1px dotted lightblue;
+} 
+.top_menu_mini_left:hover{ 
+background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
+background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
+background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */ 
+}
+
 .portfolio_notification a {
 font-weight: normal;	
 }
@@ -203,12 +234,10 @@ font-size:small;
 	padding:5px;
 	width: auto;
 }
-
 .portfolio_list{ 
 	margin-left:10px;
 	margin-top:5px;	
 }
-
 .portfolio_column{ 
 border-top:1px solid lightblue;
 border-bottom:1px solid lightblue;
@@ -219,7 +248,6 @@ height:165px;
 margin-top:8px;
 }
 
-
 .portfolio_user_image_smaller_container{ 
 	border:1px solid white;
 	height:100px;	
@@ -227,6 +255,16 @@ margin-top:8px;
 	background-color:white;
 	border-radius:100%;	
 	margin-left:0px;
+}
+
+.top_menu_user_smaller_container{ 
+  border:3px solid white;
+  height:75px; 
+  width:75px;    
+  background-color:white;
+  border-radius:100%; 
+  margin-left:12px;
+  margin-top:3px; 
 }
 
 .portfolio_fan{ 
@@ -516,12 +554,11 @@ height:38px;
 }
 .top_menu{ 
 width:680px;
-height:99px;
-background-color:#fff;
+height:90px;
+background-color:white;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:5px;
 border:1px solid lightblue;
-border-bottom-left-radius: 4px;
-border-bottom-right-radius: 4px;
-margin:0px auto;
 }
 
 .notification_image
@@ -560,43 +597,13 @@ width:320px;
 height:35px;
 } 
 
-.post_border_color_first{ 
- float:left;
- background-color:#dcdcdc;
- height:30px;
- padding-top:5px;
- padding-left:5px;
- padding-right:5px;
- background-image:url(small_noise.png); 
- border-right:1px solid #ccc; 
-}
-.post_border_color_second{ 
- float:left;
- background-color:#dcdcdc;
- height:30px;
- padding-top:5px;
- padding-left:5px;
- padding-right:5px;
- background-image:url(small_noise.png); 
- border-right:1px solid #ccc;
-}
-.post_border_color_third{ 
- float:left;
- background-color:#dcdcdc;
- height:30px;
- padding-top:5px;
- padding-left:5px;
- padding-right:5px;
- background-image:url(small_noise.png); 
- border-right:1px solid #ccc;	
-}
 .second_font_method a{ 
   font-size:small;
   font-weight:400;
   color:#2b6cc2;  
 }
 .largest_font { 
-	font-size:60px;	
+	font-size:50px;	
 	color:rgb(100,100,115);
 	font-weight:normal;
 }
@@ -622,6 +629,11 @@ text-align:center;
   color:rgb(100,100,115);
   font-size:small;
   font-weight: 700;   
+}
+.fifth_font_method { 
+  color:#646473;
+  font-size:small;
+  font-weight: 700;  
 }
 .style ul{ 
    display: table-cell;
@@ -685,7 +697,14 @@ height:50px;
   font-size: .8em;
   font-weight:700;
 }
-
+.smaller_bark_font_method{ 
+  color:#333;
+  font-size:12px; 
+}
+.smaller_bark_font_method a{ 
+  color:#333;
+  font-size:12px; 
+}
 .task_title_header{ 
 font-weight:bold;
 }
@@ -832,7 +851,7 @@ height:30px;
 border-top-right-radius:3px;
 background-color:#f7f7f7;
 color:white;
-padding-top:2px;
+padding-top:4px;
 padding-bottom:2px;
 }
 .unit_box{ 
@@ -850,7 +869,7 @@ text-align: center;
 
 .season_cup{ 
 text-align: center;
-margin-top:30%;	
+margin-top:50%;	
 }
 
 .season_title{ 
@@ -1007,6 +1026,14 @@ width:200px;
 
 .task_cover{ 
 display:none;
+padding-top:4px;
+float:left;
+}
+
+.cheer_line_mini_container{ 
+  width:79px;
+  float:right;
+  margin-right:3px;
 }
 
 .filter_feed{ 
@@ -1099,7 +1126,7 @@ padding-bottom:10px;
 .cheer_line{ 
 margin-top:15px;
 width:680px;
-height:140px;
+height:134px;
 background-color:white;
 border:1px solid lightblue;
 /* background: -webkit-linear-gradient(white, #eeeeee); For Safari 5.1 to 6.0 */
@@ -1110,9 +1137,9 @@ border:1px solid lightblue;
 .cheer_number{ 
 	float:right;
 	text-align:right;
-	width:300px;
-	margin-right:40px;
-	margin-top:3px;
+	width:290px;
+	padding-right:5px;
+	margin-top:0px;
 }
 
 .portfolio_cheer_number{
@@ -1153,9 +1180,12 @@ color:#333;
 }
 
 .cheers_label{ 
-margin-top:70px;
-width:300px;	
+margin-top:0px;
+width:200px;
+height:20px;	
 text-align:right;
+padding-right:5px;
+float:right;
 }
 
 .network_image{ 
@@ -2491,11 +2521,13 @@ margin-top:2px;
 
 .setting_icon{ 
 float:left;
-width:25px;
+width: 19px;
+margin-top:6px;
 }
 .setting{ 
-float:right;
-margin-top:2px;
+float: right;
+margin-top: 5px;
+margin-right: 5px;
 }
 .lower_comment_form{ 
 margin-top:10px;	
@@ -2566,20 +2598,15 @@ margin-top:10px;
 }
 
 .task_sidebar1{ 
-background-color:white;	
-border-bottom-right-radius:5px;
-height:70px;
-padding-top:4px;
-color:#3f3f3f;
-border:1px solid rgb(158,158,158);
-text-align:center;
+width: 60%;
+height: 83px;
+padding-top: 19px;
+text-align: center;
 }
 .season_sidebar1{
-background-color:white;	
-border-top-right-radius:5px;
-height:100vh;
-margin-top:25px;
-border:1px solid rgb(158,158,158);	
+background-color: white;
+height: 100vh;
+border: 1px solid rgb(158,158,158);	
 }
 .user_position_domain{ 
 margin-left:0px;
@@ -2630,6 +2657,7 @@ border-bottom:1px solid #eeeeee;
 .notification:hover{ 
 border-bottom:1px solid lightblue;	
 }
+
 .task_info{ 
 font-size:0.8em;	
 }
@@ -2831,7 +2859,6 @@ margin-top:3px;
 text-align: center;
 padding-top:7px;
 padding-bottom:7px;
-border-bottom:1px solid rgb(235,235,235);
 text-align: left;
 padding-left:2px;
 padding-right:2px;
@@ -2887,38 +2914,104 @@ text-align:center;
 font-size:small;
 }
 
-.task_winner{ 
-border-right:1px solid lightblue;
-color:rgb(170,170,170);
-margin-right:6px;
-width:339px;
-background-color:white;
-text-align:center;
-height:135px;
-padding-bottom:5px;
-/*background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
-/*background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
-/*background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
-/*background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+.cheer_line_header{ 
+  height: 24px;
+  border-bottom: 1px solid lightblue;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 3px;
 }
+.cheer_line_interest_change{ 
+  float: right;
+  width: 241px;
+  height: 103px;
+  padding-left: 8px;
+}
+.cheer_line_interest_change:hover{
+  background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */ 
+}
+.cheer_line_interest_label{ 
+  float:left;
+  margin-top: 81px;
+}
+.interest_change_logo{ 
+text-align:center;
+padding-top:20px;
+width:50px;
+float:right;
+margin-right:100px;
+height:59px;
+}
+.task_winner a:hover{ 
+   text-decoration: none;
+}
+.task_winner{ 
+  border-right:1px solid lightblue;
+  margin-right:6px;
+  width:430px;
+  background-color:white;
+  height: 98px;
+  padding-bottom:5px;
+  /*background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
+  /*background: linear-gradient(white, #eeeeee)); /* Standard syntax (must be last) */
+}
+
+.cheer_line_middle{ 
+  float:right;
+  width:170px;
+  height: 103px;
+  border-left:1px solid lightblue;
+}
+
+.cheer_line_message_icon{ 
+  text-align: center;
+  margin-top:5px;
+  height:20px;
+}
+
+.rank_info{ 
+  height: 67px;
+  padding-top: 35px;
+  background: #eeeeee;
+  text-align: center;
+}
+.rank_info_label{ 
+height: 13px;
+padding-top: 16px;
+padding-left: 4px;
+text-align: left;
+}
+.post_container{ 
+  width:350px; 
+  color:rgb(170,170,170);
+  margin-top:3px;
+ }
+
+ .cheer_line_header_right{ 
+  float:right;
+  width:339px;
+  margin-top:0px;
+ }
 
 .menu_nav{ 
 	text-align:left;	
-	margin-top:70px;
+	margin-top:4px;
 	color:rgb(100,100,115);
-	padding-bottom:4px;
-	width:265px;
-	margin-left:67px;
+	width:240px;
 }
 .task_notification_winner{ 
 height:110px;
 }
 
 .winner_description{ 
-float:right;
 width:268px;
-margin-top:16px;	
 text-align:left;
+margin-left:2px;
 }
 
 .user_fan_performer{ 
