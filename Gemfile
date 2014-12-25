@@ -30,6 +30,8 @@ gem "paperclip", "~> 3.5.1"
 
 gem 'kaminari',  '~> 0.14.0'
 
+gem 'yui-compressor', '~> 0.12.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
