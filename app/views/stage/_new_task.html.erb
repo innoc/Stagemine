@@ -1,0 +1,14 @@
+<%= link_to(task_info_path,:rel=>"block") do %>
+<div class="task_sidebar1 smaller_bark_font_method">	
+	<table align="center"  height="55">
+		<tr>
+			<td width="40">
+				<%=image_tag("task_sample.png")%>
+			</td>
+			<td>
+				<%=pluralize(@user_task.count,'Task Alert!!!')%>
+			</td>
+		</tr>
+	</table>
+</div>
+<%end%>

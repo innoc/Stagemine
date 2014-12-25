@@ -90,7 +90,7 @@ def stage
           end
       else
       if params[:id] == "fanned" #03 means following feed
-          @user_performer = current_user.friends.where("status=?",0)
+          @user_performer = current_user.friends
           unless @user_performer.blank?
              for performer in @user_performer
                for performer_feed in performer.feeds
@@ -114,6 +114,13 @@ def stage
         else
             #filter feed based on interest 
             filtered_interest = Interest.find(params[:id])
+            unless filtered_interest.interest_name == "Random"
+              @season_winner_notification_finder = filtered_interest.leagues.last.season.season_winner_notification
+              unless @season_winner_notification_finder.blank?
+                @season_winner_notification_active = @season_winner_notification_finder if @season_winner_notification_finder.status == "active"
+                @season_winner_notification = @season_winner_notification_active if !(@season_winner_notification_active.blank?) and current_user.winner_notification_checks.where(:season_winner_notification_id=>@season_winner_notification_active.id, :interest_name=>filtered_interest.interest_name).blank?
+              end
+            end
             @user_list = filtered_interest.users
              for user_list in @user_list
                 for user_feed in user_list.feeds
@@ -305,10 +312,16 @@ def create_vid
                end
         end 
         respond_to do |format|
-          format.html{redirect_to session.delete(:return_to)}
+          #format.html{redirect_to session.delete(:return_to)}
+          format.html{redirect_to stage_path}
           format.js
         end
     end
+end
+
+def rank_info
+  @user = current_user
+ @rank  = Rankdetail.all
 end
 
 private
@@ -319,7 +332,7 @@ end
 
 def resolve_layout
     case action_name
-    when 'vid_display', 'create_vid', 'create_image', 'image_display','create_word','hidden_task'
+    when 'vid_display', 'create_vid', 'create_image', 'image_display','create_word','hidden_task', 'rank_info'
       false
     else
       'application'

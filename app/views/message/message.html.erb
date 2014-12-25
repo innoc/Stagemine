@@ -15,8 +15,18 @@
 					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
 				   	</div>
 				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
-				   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>&nbsp;&nbsp;<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span><br/>
-				   		<%= message.content%>
+				   		<%if sender.usertype == "admin"%>
+								<span class="font_method_alternative">
+									<%=sender.user_name%>
+									<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
+								</span>
+					   	<%else%>
+					   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
+					   		<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
+					   	<%end%>
+					   	<p>
+				   			<%= message.content%>
+				   		</p>
 				   	</div>
 			</div>
 			<%@user_image = nil%>

@@ -10,8 +10,7 @@
 							  </td>
 							</tr>
 						</table>		
-		<%else%>
-		
+		<%else%>		
 				<%if @user.tasks.last.status == "inactive" or @user.enrolls.last.status == 0%>
 						<table align="center"  height="55">
 							<tr>
@@ -38,20 +37,31 @@
 										</tr>
 									</table>									
 								<%else%>
-									<div class="task_timer">
-										<%@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %>
-										<%@position = Task.task_table(12,@user.id)%>
-										<%if @position == "blank"%>
-											<!--no contest-->
-										<%else%>
-											<%=@position.ordinalize%>
-										<%end%>
-									</div>													
-									<%if @duration > 1%>			
-										<%=@duration%> days remaining for task											
-									<%else%>					
-										<%=@duration%> day remaining for task											
+									<%@duration=(@recent_enrolled_task.end_date.to_date - DateTime.now.to_date).to_i %>
+									<%@position = Task.task_table_position(@recent_enrolled_task.id,@user.id)%>
+									<%if @position == -2%>
+										<div class="no_contest">
+											Waiting for more poeple to enroll
+										</div>
+									<%else%>
+										<div class="task_timer">
+											<%unless TaskPoint.where(:task_id=>@recent_enrolled_task, :user_id=> @user.id).first.blank?%>
+												<%=@position.ordinalize%>
+											<%else%>
+												Enrolled
+											<%end%>
+										</div>
 									<%end%>
+									<div class="day_remaining">
+										<%if @duration > 1%>			
+											<%=@duration%> days remaining for task											
+										<%else%>					
+											<%=@duration%> day remaining for task											
+										<%end%>
+									</div>
+									<div class="task_small_icon">
+									<%=image_tag("task_small.png")%>
+									</div>
 							 <%end%>	
 					</div>					
 				<%end%>

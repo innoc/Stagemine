@@ -18,25 +18,23 @@ class Point < ActiveRecord::Base
                         user_interest_id = UserInterest.where(["user_id = ? and interest_id = ?",post_author.id, post.label.interest.id])
                         point_update.update_attributes(:previous_point=>point_update.point, :point=> point_update.point+point_value, :user_interest_id=>user_interest_id[0].id)
                         point_flag = 0 #used for notification creation.
-                        point_update = point_update.point + point_value
-
-              end
-        
-              if point_flag.blank?
-                  last_notification = post_author.notifications.where("user_id=? AND notification_type=?", post_author.id,"Point")
+                        point_update = point_update.point 
+              end        
+              if point_flag == 0
+                  last_notification = post_author.notifications.where("user_id=? AND notification_type=?", post_author.id,"Point").last
                   unless last_notification.blank?
-                        if ((Time.now() - last_notification[0].updated_at)/60) > 30.0
-                            if last_notification[0].status == 0
-                                new_counter = point_update - last_notification[0].cheer_storage
-                                new_counter = new_counter + last_notification[0].notification_counter 
-                                last_notification[0].update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=>new_counter)
+                        if ((Time.now() - last_notification.updated_at)/60) > 30.0
+                            if last_notification.status == 0
+                                new_counter = point_update - last_notification.cheer_storage
+                                new_counter = new_counter + last_notification.notification_counter 
+                                last_notification.update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=>new_counter)
                             else
-                                if last_notification[0].cheer_storage.blank?
+                                if last_notification.cheer_storage.blank?
                                   cheer_storage = 0.0
                                 else 
-                                  cheer_storage = last_notification[0].cheer_storage
+                                  cheer_storage = last_notification.cheer_storage
                                 end
-                                last_notification[0].update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=> point_update - cheer_storage)
+                                last_notification.update_attributes(:cheer_storage=>point_update,:updated_at=>Time.now,:notification_type=>"Point",:status=>0,:notification_type_id=>post.id,:user_id=>post_author.id,:notification_counter=> point_update - cheer_storage)
                             end
                         end
                   else

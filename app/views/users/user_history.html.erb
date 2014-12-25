@@ -10,7 +10,11 @@
       <%for user_history in @user_history%>        
         <div class="user_history_container">          
           <div class="user_history_badge_container" style="background-color:<%=@user.rank.rankdetail.rank_color%>">
-            <%=user_history.position.ordinalize%>
+            <%if user_history.position == 0 %>
+             0  
+            <%else%>
+              <%=user_history.position.ordinalize%>
+            <%end%>
           </div>
           <div class="user_season_details_container small_dark_font_method">
             <span class="bold_header">
@@ -34,7 +38,7 @@
               </span>
             </div>
           </div>
-            <div class="task_season_container">
+            <div class="task_season_container third_font_method">
               <%@task = @user.tasks.where("start_date > ? and end_date < ? ", user_history.season.start_date, user_history.season.end_date)%>
               <%if @task.blank?%>
                 no task to show

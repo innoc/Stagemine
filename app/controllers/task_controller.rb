@@ -2,11 +2,13 @@ class TaskController < ApplicationController
   layout :resolve_layout
   #THIS METHOD MUST BE RESCRICTED TO ADMINITRATORS ALONE
   def task
-      @current_user = current_user
+      @user = current_user
       @interest_list = current_user.interests
-      if params[:id] == "welcome"
+      if params[:id] == "Enrolled Task"
         @params = params[:id]
+        @interest_name = @params
       else
+        @interest_name = params[:id]
         @task_list = Task.where("status=?","active")
         @user_task = []
           unless @task_list.blank?
@@ -85,7 +87,7 @@ class TaskController < ApplicationController
                               end
                           end
                           if @winner_instance.user.winners.count.count > 5
-                             BadgeAllocation.create(:user_id=>@winner,:badge_id=>Badge.where(:priority=> 5)[0].id,:task_name=>task.title)
+                             BadgeAllocation.create(:user_id=>@winner,:badge_id=>Badge.where(:priority=> 4)[0].id,:task_name=>task.title)
                           end 
                           #need optimization
                           #_seasonFeed.find(task.feed.id).update_attributes(:created_at=>@winner_instance.created_at)
@@ -128,6 +130,7 @@ class TaskController < ApplicationController
   def task_disenroll
       @current_user = current_user
       @user_task = []
+      @user = current_user
       @user_task << Task.find(params[:id])
       @task = Task.find(params[:id])
       for enroll in current_user.enrolls

@@ -50,7 +50,12 @@
 					    	<%=image_tag("message_icon.png")%>
 					    	</div>
 					    	<div class="notification_content">
-					    		New message from <%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%>
+					    	<%user= User.find(notification.secondary_user)%>
+					    	<%if user.usertype == "admin"%>
+					    		New Message from Stagemine
+					    	<%else%>
+					    		New message from <span class="second_font_method"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span>
+					    	<%end%>
 					    	</div>
 					    </div>
 				    <%end%>
@@ -69,8 +74,7 @@
 				    <%end%>
 			  <%end%>
 		 <%end%>
-    <%end%>
-    
+    <%end%>    
    <%unless @user_task.empty?%>
 	   <%= link_to(task_info_path,:rel=>"block") do %>
 			        <div class="notification">
@@ -86,6 +90,6 @@
 	   <%end%>
    <%end%>
    <div class="notification_text">
-   	<%=image_tag("notification_large.png")%><br/><br/>
-   	Notification
+   	<%=image_tag("notification_large.png")%>
+   	<p>Notification</p>
    </div>

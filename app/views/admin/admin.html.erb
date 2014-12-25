@@ -14,10 +14,19 @@
 		<%end%>
 </div>
 
+<%unless @pending_winner.blank?%>	
+  <%= link_to(pending_winners_path) do %>		
+		<div class="admin_smaller_dashboard small_bark_font_method">		
+			Pending winners!!!
+		</div>
+	<%end%>
+<%end%>
+
 <div class="admin_dashboard">
 	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span>&nbsp;&nbsp;&nbsp;&nbsp;
 	|&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "User Count :  #{@user_count}",all_user_path%><br/>
 </div>
+
 <%unless @task.blank?%>
 	<div class="admin_lower_dashboard">
 	<div class="admin_header small_bark_font_method">
@@ -33,7 +42,7 @@
 			</td></tr> 
 			<tr><td>
 				<span class="task_timer">
-			   		<%=@duration = (task.end_date.to_date - DateTime.now.to_date).to_i%>
+		   		<%=@duration = (task.end_date.to_date - DateTime.now.to_date).to_i%>					
 			   	</span>
 			</td></tr>
 		 	<tr><td>
@@ -94,13 +103,13 @@
 					</td></tr> 
 					<tr><td>
 						<span class="task_timer">
-				   			<%=@duration_season = (@season[0].end_date.to_date - DateTime.now.to_date).to_i%>
-					   	</span>
+			   			<%=@duration_season = (@season[0].end_date.to_date - DateTime.now.to_date).to_i%>
+					  </span>
 					</td></tr>
 				 	<tr><td>
 					   	<span style="font-size:11px;" class="third_font_method">
 							<%if @duration_season > 1%>days left to<%else%>day left to<%end%>	
-						</span>
+							</span>
 					</td></tr> 
 					<tr><td>
 						<span style="font-size:11px;" class="second_font_method">
@@ -282,11 +291,16 @@
 										<option value="2015">2019</option>
 									</select>	
 						</td>
-					</tr>
-				</table><br/>			
+					</tr>					
+				</table><br/>	
+				<table align="center">
+					<tr height="10%">
+						<td colspan="2">Description:<br/><%=text_area_tag(:description,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a description",:title=>"Write a description")%></td>
+					</tr>	
+				</table>	
 				
 		<div id="form_btn">	
-		<%= submit_tag 'Click to Post',:class => 'classname'%>
+			<%= submit_tag 'Click to Post',:class => 'classname'%>
 		</div>
 		<br/>
 <%end%>
@@ -461,12 +475,10 @@
 </div>
 
 <script>
-$(document).ready(function(){  
-	
+$(document).ready(function(){	
 	$(".season_link").click(function(){	
 		$(".season_container ").toggle();
-		$(".league_container").hide();
-		
+		$(".league_container").hide();		
 	});
 	$(".league_link").click(function(){	
 		$(".league_container").toggle();

@@ -2,9 +2,9 @@
 	Send a message
 </div>
 
-<%=form_tag({:controller=>'message',:action=>'create_message',:id=>@user.id}) do%>
+<%=form_tag({:controller=>'message',:action=>'create_message',:id=>@user.id,:identifier=>@identifier}) do%>
 		<div class="image_text_field">
-			    <%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>
+			    <%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>			    
 		</div>
 	
 		<div id="form_btn">	

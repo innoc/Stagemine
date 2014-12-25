@@ -1,4 +1,4 @@
-<%@enrolled_task = @current_user.enrolls.where("status=?",1)[0]%>
+<%@enrolled_task = @user.enrolls.where("status=?",1)[0]%>
 <%if @enrolled_task.blank?%>
 	<%=link_to "enroll",enroll_path(:id=>@user_task[0].id)%> <br/>
 <%else%>

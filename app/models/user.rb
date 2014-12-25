@@ -24,8 +24,7 @@ has_many :task_points, :dependent=>:destroy
 has_many :Leaguewinners, :dependent=>:destroy
 has_many :pointhistories, :dependent=> :destroy
 has_many :auditions, :dependent=>:destroy
-
-
+has_many :winner_notification_checks, :dependent=>:destroy  
 validates_confirmation_of :password, :message => "Password doesnt match"
 validates :password, confirmation: true
 validates_uniqueness_of :user_name
@@ -44,8 +43,18 @@ def self.searchsuggestion(prefix)
 end
 
 def authenticated?(password)
-self.hashed_password == encrypt(password)
+	self.hashed_password == encrypt(password)
 end
+
+def enrolled?
+	self.enrolls.where(:status=>1).last
+end
+
+def enrolled_task
+	return self.enrolls.where(:status=>1).last
+end
+
+
 
 def authenticated?(password)
 self.password == encrypt(password)

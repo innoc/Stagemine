@@ -1,0 +1,63 @@
+<div class="container_large">
+  <%unless @pending_winner.blank?%>
+    <% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>    
+    <div class="pending_dashboard">
+    <%season_id = @pending_winner.first.league.season.id%>
+    <div class="pending_winner_header small_bark_font_method">  
+      Season Name: <%=Season.find(season_id).name%>
+    </div>
+
+    <%for winner in @pending_winner%>
+      <%unless season_id == winner.league.season.id%>
+        <%season_id = winner.league.season.id%>    
+        <div class="pending_winner_header small_bark_font_method">  
+          Season Name: <%=Season.find(season_id).name%>
+        </div>
+      <%end%>
+      <%user = winner.user%>
+      <div class="winner_container">
+        <div class="message_container">
+          <div class="winner_pending_position">
+            <%=winner.position.ordinalize%>
+          </div>
+          <div class="league_rank_color_alternative" style="background-color:<%=user.rank.rankdetail.rank_color%>"></div>
+          <div class="notification_image">
+            <%unless user.userimage.blank?%>
+              <%@user_image = user.userimage%>
+            <%end%>
+            <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
+          </div>
+          <div class="pending_winner_link second_font_method">
+            <%if winner.status == "active"%>
+              <%=link_to "Send Message",create_message_path(:id=>user.id,:identifier=>winner.id),:rel=>"block" %>
+            <%else%>
+            <%if winner.status == "pending"%>
+              <%=link_to "click to close",complete_winners_path(:id=>winner.id)%>
+            <%end%>
+            <%end%>
+          </div>
+          <div class="padding_winner_body second_font_method_alternate small_bark_font_method ">
+            <%= link_to "#{user.first_name} #{user.last_name}", portfolio_path(:id=>user.id) %><br/>
+            <div class="third_font_method">
+              <%=user.user_name%>
+            </div> 
+            <div class="third_font_method">
+              <%=winner.league.interest.interest_name%>
+            </div>          
+          </div>
+        </div>
+      </div>
+    <%end%>
+    </div>
+  <%else%>
+    <div class="message_container">
+      no pending winners
+    </div>
+  <%end%>
+</div>
+ 
+<script>
+$(document).ready(function(){ 
+  $('a[rel*=block]').block();
+})
+</script>

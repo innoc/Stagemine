@@ -23,6 +23,11 @@ class UsersController < ApplicationController
   end    
  end
  
+ def winner_notification_check
+  if request.xhr?    
+    WinnerNotificationCheck.create(:user_id=>current_user.id,:season_winner_notification_id=>params[:id],:interest_name=>params[:interest_name])
+  end
+ end
   
   def search_suggestions
      @suggestion = User.searchsuggestion(params[:term])

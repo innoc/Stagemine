@@ -1,0 +1,87 @@
+<%enrollment = @user.enrolled_task%>
+<%task_table = Task.task_table(enrollment.task_id,@user.id)%>
+<%if task_table == -2 %>
+	<div class="aligned_well">	
+		<div class="no_contest">	
+			Waiting for more poeple to enroll <br/><br/><br/><br/>
+		</div>
+		<%=image_tag("task_big_icon.png")%><br/><br/>
+		<div class="third_font_method">
+				A minimum of two people are required to start a task
+		</div>
+	</div>
+<%else%>
+<%hash = Hash[task_table.map.with_index.to_a]%>
+<%interest_info = enrollment.task.label.interest%>
+<%@duration=(enrollment.task.end_date.to_date - DateTime.now.to_date).to_i %>
+<div class="task_user_info_container">
+	<%unless @user.userimage.blank?%>
+	<%@image = @user.userimage%>
+	<%end%>	
+	<div class="task_user_info second_font_method_alternate">
+			<%=link_to "#{@user.first_name}  #{@user.last_name}", portfolio_path(:id=>@user.id) %>
+			<div class="third_font_method">
+				<%=@user.user_name%>
+			</div>
+			<div class="third_font_method">
+				<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=>@user.id).first.blank?%>
+					Points: <%=TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> @user.id).first.point.round%><br/>
+				<%else%>
+					Points: 0
+				<%end%>
+			</div>			
+			<div class="third_font_method">
+					<%unless task_table.blank?%>
+						<%unless task_table.last == "blank"%>
+							<div class="task_position_left">		
+								<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> @user.id).first.blank?%>
+									<%=task_table.last[1..-1].to_i.ordinalize%>
+								<%end%>
+							</div>
+						<%end%>
+					<%end%>
+			</div>
+	</div>
+	<div class="task_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@image.image.url(:moderate))%><%end%>) no-repeat;" ></div>
+</div>
+<div class="league_table_container">
+	<div class="season_interest small_bark_font_method">
+		<%=interest_info.interest_name%> Task <br/> <span style="font-weight:normal">	<%=@duration%> days remaining										
+</span>
+	</div>
+	<%@place = 0%>
+	<%for task_user in task_table%>
+		<%unless hash[task_user] == hash[task_table.last]%>	
+			<%task_user = User.find(task_user)%>
+			<div class="season_league_user">
+				<%unless task_user.userimage.blank?%>
+					<%@task_user_image = task_user.userimage%>
+				<%end%>
+				<div class="season_league_user_detail">
+					<div class="rank_color" style="background-color:<%=task_user.rank.rankdetail.rank_color%>"></div>
+					<div class="unit_box">
+						<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.blank?%>
+						<%task_point = TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first%>
+							<%@place = @place + 1%>
+							<%=@place.ordinalize%>
+						<%end%>
+					</div>
+					<div class="season_league_user_name second_font_method">
+						<%= link_to task_user.user_name,portfolio_path(:id=>task_user.id)%><br/>
+						<span style="font-size:11px;", class="third_font_method">
+							<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.blank?%>
+								Points: <%=TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.point.round%><br/>
+							<%else%>
+								Points: 0
+							<%end%>
+						</span>
+					</div>
+				</div>
+				<div class=""><%if @task_user_image.blank?%><%=image_tag("Default_small.png")%><%else%><%=image_tag(@task_user_image.image.url(:small))%><%end%></div>
+				<%@task_user_image = nil%>
+			</div>
+
+		<%end%>
+	<%end%> <!--end of for-->
+</div>
+<%end%>

@@ -17,7 +17,8 @@
 									   	
 									   </td>
 									   <td>
-									   		You have <%=notification.notification_counter%> new Points
+									   		You have <%=notification.notification_counter%> new Points 
+									   		<span class="third_font_method">unread</span>
 									   </td>
 								</tr>
 							   </table>
@@ -32,7 +33,8 @@
 									   	
 									   </td>
 									   <td>
-									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan
+									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan 
+									   		<span class="third_font_method">unread</span>
 									   </td>
 								</tr>
 							   </table>
@@ -48,6 +50,7 @@
 									   </td>
 									   <td>
 									   		Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>"
+									   		<span class="third_font_method">unread</span>
 									   </td>
 								   </tr>
 							   </table> 
@@ -62,7 +65,7 @@
 									   	
 									   </td>
 									   <td>
-									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%>
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="third_font_method">unread</span>
 									   </td>
 								   </tr>
 							   </table> 
@@ -77,8 +80,17 @@
 			   							    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
 									   	</div>
 									   	<div class="notification_body_message second_font_method_alternate">
-									   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%><br/>
-									   		<%=Message.find(notification.notification_type_id).content%>
+									   	<%if sender.usertype == "admin"%>
+									   		<span class="font_method_alternative">
+									   			<%=sender.user_name%>
+									   		</span>
+									   	<%else%>
+									   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
+									   	<%end%>
+									   	<p>
+									   		<%=Message.find(notification.notification_type_id).content%> 
+									   		<span class="third_font_method">unread</span>
+									   	</p>
 									   	</div>
 								</div>
 		
@@ -97,15 +109,11 @@
 							   <table>
 							   		<tr>
 									   <td>
-										   	<%if notification.status==1%>
-										   	<%=image_tag("tick.png")%>
-										   	<%end%>
-									   </td>
-									   <td>
 									   	
 									   </td>
 									   <td>
-									   		You have <%=notification.notification_counter%> new Points
+									   		You have <%=notification.notification_counter%> new Points 
+									   		<span class="third_font_method">read</span>
 									   </td>
 								</tr>
 							   </table>
@@ -114,15 +122,10 @@
 							   <table>
 							   		<tr>
 									   <td>
-											<%if notification.status==1%>
-												<%=image_tag("tick.png")%>
-											<%end%>
-									   </td>
-									   <td>
 									   	
 									   </td>
 									   <td>
-									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan
+									   		<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan <span class="third_font_method">read</span>
 									   </td>
 								</tr>
 							   </table>
@@ -131,15 +134,10 @@
 						  		<table>
 							   		<tr>
 									   <td>
-										   	<%if notification.status==1%>
-										   	<%=image_tag("tick.png")%>
-										   	<%end%>
-									   </td>
-									   <td>
 									   	
 									   </td>
 									   <td>
-									   		Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>"
+									   		Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>" <span class="third_font_method">read</span>
 									   </td>
 								   </tr>
 							   </table>  	
@@ -148,30 +146,18 @@
 						  		<table>
 							   		<tr>
 									   <td>
-											<%if notification.status==1%>
-										   	<%=image_tag("tick.png")%>
-										   	<%end%>
-									   </td>
-									   <td>
 									   	
 									   </td>
 									   <td>
-									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%> 
+									   		Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="third_font_method">read</span>
 									   </td>
 								   </tr>
 							    </table>  
 						 <%else%>
 						 
-						 <% if notification.notification_type == "Message" %>
-						  		
+						 <% if notification.notification_type == "Message" %>						  		
 								<div class="notification_container">		   
-									    <div class="notification_tick">
-									    	<%if notification.status==1%>
-										   		 <%=image_tag("tick.png")%>
-										   	<%end%>
-										</div>
-						
-									   	<div class="notification_image">
+							   	<div class="notification_image">
 											<%sender = User.find(notification.secondary_user)%>
 											<%unless sender.userimage.blank?%>
 												<%@winner_user_image = fan.userimage%>
@@ -179,8 +165,17 @@
 			   							    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
 									   	</div>
 									   	<div class="notification_body_message second_font_method_alternate">
-									   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%><br/>
-									   		<%=Message.find(notification.notification_type_id).content%>
+												<%if sender.usertype == "admin"%>
+													<span class="font_method_alternative">
+														<%=sender.user_name%>
+													</span>
+												<%else%>
+													<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
+												<%end%>
+												<p>
+													<%=Message.find(notification.notification_type_id).content%>
+													<span class="third_font_method">read</span>
+												</p>
 									   	</div>
 								</div>
 		

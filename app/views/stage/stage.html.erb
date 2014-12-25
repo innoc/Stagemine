@@ -76,7 +76,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 			<%unless @user.userimage.blank?%>
 				<%@season_user = @user.userimage%>
 			<%end%>	
-	    <div class="top_menu_user_smaller_container" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @season_user.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@season_user.image.url(:moderate))%><%end%>) no-repeat;" >			
+	    <div class="top_menu_user_smaller_container" style="border:1px solid white%>;background: url(<%if @season_user.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@season_user.image.url(:moderate))%><%end%>) no-repeat;" >
 	    </div>
 		</div>
 	</div> <!-- end of top_menu-->
@@ -86,43 +86,16 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 			<div class="cheer_line_header_right">
 			<div class="cheer_line_mini_container">
 				<div class="setting_icon">
-										<%=image_tag("message_eeeeee.png")%>
+				  <%=image_tag("message_eeeeee.png")%>
 				</div>
 				<div class="setting second_font_method">					
-							<%=link_to "Message",message_path%>
+				  <%=link_to "Message",message_path%>
 				</div>
 			</div>
-			 <div class="task_cover">			 	
-				<%unless Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>			 		
-					 			<%unless (Season.last.status == "active").blank?%>			 			
-						 			<%if @user.leagues.include?(@interest_season.leagues.last)%>
-						 				<%=link_to "View League", see_all_path(:id=>@interest_season.id)%>
-						 			<%else%>
-							 			<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
-											<%unless @user.leagues.include?(@interest_season.leagues.last)%>
-												<%=link_to "Join ' #{@interest_season.interest_name} ' League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-											<%else%>
-												<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-											<%end%> <!--end of unless line 95-->
-										<%else%>
-											<%@audition_status = Audition.audition_check(@user.id,@interest_season.leagues.last.id)%>
-											<%unless @audition_status == "Yes"%>
-												<%if @audition_status.qualified == "Yes"%>
-													<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
-												<%else%>									
-													<span style="font-size:11px;" class="third_font_method">
-														 Auditioned										 
-													</span>
-												<%end%> <!--end of if-->
-											<%else%>
-													 <%=link_to "Audition",create_vid_path(:league=>@interest_season.leagues.last.id),:rel=>"block"%>&nbsp;&nbsp;
-											<%end%>	 <!--end of unless-->					 	
-										<%end%>  <!--end of if line 94-->
-									<%end%>  <!--end of if-->
-								<%end%> <!--end of unless-->
-						<%else%>
-						 			<%=link_to "Preseason", see_all_path(:id=>@interest_season.id)%>
-						<%end%>		 
+			 <div class="task_cover second_font_method">			 	
+			 	<%unless Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>	 		
+		 		<%=link_to "View #{@interest_season.interest_name} League", see_all_path(:id=>@interest_season.id)%>
+				<%end%>	 
 			 </div>
 			</div>
 			<div class="post_container second_font_method_alternate">
@@ -143,7 +116,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 		<%end%>
 		<div class="task_winner">		
 			<div class="cheer_line_middle smaller_bark_font_method">
-				<%= link_to(message_path) do %>	
+				<%= link_to(rank_info_path,:rel=>"block") do %>	
 					<div class="rank_info" style="border-bottom:2px solid <%=@user.rank.rankdetail.rank_color%>">
 						<%=image_tag("star.png")%>
 							<div class="rank_info_label">
@@ -153,7 +126,13 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 				<%end%>
 			</div>
 			<div class="cheer_line_left">
+				<%if !(@user_task.empty?) and !(@user.enrolled?) %>
+						<%= render :partial=>"new_task"%>
+				<%else%>
+					<%= link_to(task_path(:id=>"Enrolled Task")) do %>	
 						<%= render :partial=>"right_sidebar"%>
+					<%end%>
+				<%end%>
 			</div>
 		</div>	<!--end of task_winner-->
 
@@ -286,14 +265,14 @@ The javascript below handles the following
 <script>
 $(document).ready(function(){ 
 	  $('a[rel*=block]').block();
-	  if($(window).width() < 1035)
+	  if($(window).width() < 1227)
 	  { 
 		$('.sidebar1').hide();
 	 	$('.sidebar2').hide(); 
 	 	$('.task_cover').show(); 
     $('.season-task-help').show();
 	  }	  
-	  else if($(window).width() > 1035)
+	  else if($(window).width() > 1227)
 	  { 
 		$('.sidebar1').show();
 	    $('.sidebar2').show();
@@ -302,13 +281,13 @@ $(document).ready(function(){
 	  }	  
 	$(window).resize(function() {
 	  // This will execute whenever the window is resized	 
-	  if($(window).width() < 1035)
+	  if($(window).width() < 1227)
 	  { 
 		$('.sidebar1').hide();
 		$('.sidebar2').hide();
 		$('.task_cover').show(); 
 	  }
-	  else if($(window).width() > 1035)
+	  else if($(window).width() > 1227)
 	  { 
 		$('.sidebar1').show();
 		$('.sidebar2').show();
@@ -316,6 +295,11 @@ $(document).ready(function(){
 	  }	
 	});
 	});	
+
+	var closeid = document.getElementById('close')
+	closeid.onclick = function(){
+		$(".pin_close").hide();
+	};  
 	$( ".task_header_title" ).fadeOut( "slow" );
 	$( ".task_header_title" ).fadeIn( "slow" );
 	$('.delete_link').hide(); 
@@ -331,17 +315,6 @@ $(document).ready(function(){
 					     });
 					  }, 900000); //15 mins
 			  <%end%>
-
-			   <%if Audition.where(:status=>"active") and @season_duration.status=="active" %>		  
-				//window.setInterval(function(){
-				  window.setTimeout(function(){	
-				  /// call your function here
-				  	 $.ajax({
-				        url: '/audition_checker',
-				        type: 'get'
-				     });
-				  }, 1800000); //30 mins
-				<%end%>
 	    <%end%>
 	 	
 	 <%unless @user.tasks.blank?%>

@@ -101,7 +101,6 @@ border:1px solid lightblue;
   width:105px;
   height:89px;
   padding-top:1px;
-  border-bottom-left-radius:4px;
 }
 
 .portfolio_username { 
@@ -173,6 +172,34 @@ font-weight: normal;
 }
 .portfolio_column_color{ 
 background-color:rgb(242,242,248);
+}
+
+.rank_detail_color{ 
+  width:40px;
+  height:40px;
+  border-radius:100%;
+  border:1px solid white; 
+  float:left;
+  margin-top:15px;
+}
+
+.rank_detail{ 
+  height: 52px;
+  margin-left: 51px;
+  margin-top: 21px;
+}
+.rank_detail_container{ 
+  border-bottom:1px solid lightblue;
+  padding:5px;  
+  padding-left: 36px;
+}
+
+.rank_detail_container2{ 
+  border-bottom:1px solid lightblue;
+  padding:5px;  
+  padding-left: 36px;
+  background-image:url(noise2.png);
+  background-color:#eeeeee;
 }
 
 .portfolio_page{ 
@@ -265,6 +292,16 @@ margin-top:8px;
   border-radius:100%; 
   margin-left:12px;
   margin-top:3px; 
+}
+
+.winner_image_radius{ 
+  border: 3px solid white;
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  border-radius: 100%;
+  margin-left: 18px;
+  margin-top: 17px;
 }
 
 .portfolio_fan{ 
@@ -472,26 +509,22 @@ margin-top:11px;
 .welcome_mid_header{ 
 width: 960px;
 height: 43px;
-margin: 0 auto;
-padding-top:5px; 
-}
-.search_bar{ 
-height:25px;
-width:195px;
-margin-top:3px;
-float:right;
-margin-right:80px;
+  margin: 0 auto;
+  padding-top:5px; 
 }
 .search_username{ 
-font-size:11px;	
+  font-size:11px;	
 }
+
 .search_float_right{ 
-float:left;
-padding-right:5px;	
+  float:left;
+  padding-right:5px;	
 }
+
 .testing_body{ 
  display: table; 	
 } 
+
 .testing{ 
 	height: 100%;
     display: table-cell;   
@@ -514,6 +547,7 @@ margin-top:10px;
 }
 .header_user_detail a{ 
 	color:white;
+  text-shadow: 0 -1px rgba(0, 0, 0, .5);
 }
 .search_bar_sample{ 
 	float:right;
@@ -542,10 +576,7 @@ margin-right:3px;
 .search_bar_sample:focus, .search_field:focus{
     outline: 0;
 }
-.search_bar a{ 
-font-size:0.8em;
-color:white;
-}
+
 .header_icon{ 
 float:right;
 width:165px;
@@ -556,8 +587,6 @@ height:38px;
 width:680px;
 height:90px;
 background-color:white;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:5px;
 border:1px solid lightblue;
 }
 
@@ -778,7 +807,26 @@ padding-left:5px;
 }
 .task_timer{ 
 font-size:18px;
-padding-top:11px;
+text-align:center;
+font-weight:normal;
+color:rgb(100,100,115);
+padding-bottom:10px;
+font-weight: bold;
+text-align:center;
+}
+.task_small_icon{ 
+float:left;
+margin-left: 5px;
+margin-top: 8px;
+width:20px;
+}
+.day_remaining{ 
+width: 100%;
+text-align: center;
+}
+.no_contest{ 
+font-size:12px;
+padding-top:5px;
 text-align:center;
 font-weight:normal;
 color:rgb(100,100,115);
@@ -789,7 +837,6 @@ text-align:center;
 .enrolled_task_display{ 
 text-align: center; 
 font-weight:normal;
-font-size:0.85em;
 }
 
 .task_body_info{ 
@@ -903,7 +950,34 @@ float:right;
 min-height:400px;
 background-color:white;
 border:1px solid lightblue;
-width:400px;	
+width:400px;
+}
+.task_user_info{ 
+float: right;
+width: 315px;
+margin-top: 30px;
+height: 52px;
+}
+.task_position_left{ 
+float:right;   
+font-size: 18px;
+font-weight: normal;
+color: rgb(100,100,115);
+font-weight: bold;
+text-align: center;
+}
+.league_table_container{ 
+margin-left:54px;
+min-height:400px;
+background-color:white;
+border:1px solid lightblue;
+width:400px;
+}
+.task_user_info_container{ 
+width:400px;
+margin-left:54px;
+padding-top:5px;
+padding-bottom:20px;
 }
 .join_leave_league a{ 
 	font-size:11px;
@@ -1028,6 +1102,8 @@ width:200px;
 display:none;
 padding-top:4px;
 float:left;
+text-align: center;
+width:240px;
 }
 
 .cheer_line_mini_container{ 
@@ -1111,7 +1187,11 @@ padding-bottom:5px;
   font-size: 1.5em;
   font-weight:bold;	
 }
-
+.light_bold_font_second{ 
+  color:rgb(100,100,115);
+  font-size: 0.9em;
+  font-weight:bold; 
+}
 .light_bold_font a{ 
   color:black;
   font-size: .5em;
@@ -1385,7 +1465,7 @@ margin-top:12px;
 	
 }
 
-.header_dropdown:hover ul {
+.header_dropdown:focus ul {
 	display: block;
 }
 
@@ -1399,14 +1479,11 @@ margin-top:12px;
   border-bottom-right-radius:5px;
 }
 
-
-
 .post_it li {
 	display: inline-block;
 	margin-top:1px;
 	text-align:left;
 }
-
 
 .filter li {
 	display: inline-block;
@@ -1417,6 +1494,90 @@ margin-top:12px;
 	position: relative;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+.search_bar{ 
+  height:25px;
+  width:195px;
+  margin-top:3px;
+  float:right;
+  margin-right:80px;
+  position: relative;
+}
+.header_user_name{ 
+  float: right;
+  font-size:0.8em;
+  color:white;
+  width: 123px;
+  margin-right: 25px;
+  padding-left: 5px;
+  padding-right: 5px;  
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  border:0;
+}
+.header_user_name:focus .onclick-menu-content {
+    display: block;
+}
+.click-nav {
+  margin-left:40px;
+  margin-top:11px;
+  font-size:small;
+  font-weight:400;
+  color:#2b6cc2;  
+}
+.click-nav ul {
+  position:relative;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+.click-nav ul li {
+  position:relative;
+  list-style:none;  
+}
+.click-nav ul li ul {
+  position:absolute;left:0;
+  right:0;
+}
+.click-nav ul .clicker {
+  position:relative;
+  background:transparent;
+  cursor:pointer;
+  color:#FFF;
+  text-shadow: 0 -1px rgba(0, 0, 0, .5);
+}
+.click-nav ul .clicker:hover,.click-nav ul .active {
+  background:transparent;
+}
+.click-nav ul li a {
+display:block;
+background:#FFF;
+font-size: 1em;
+padding-left: 5px;
+padding-top:5px;
+padding-bottom:5px;
+color:#2b6cc2; 
+border-bottom:1px solid lightblue;
+border-right:1px solid lightblue;
+border-left:1px solid lightblue;
+text-decoration:none;
+}
+.click-nav ul li a:hover {background:#F2F2F2;}
+/* Fallbacks */
+.click-nav .header_user_name ul {display:none;}
+.click-nav .header_user_name:hover ul {display:block;}
+
+.header_user_name:focus{ 
+  outline:0;
+}
+.onclick-menu-content {
+    position: absolute;
+    z-index: 1;
+    top:20px;
+    display: none;
+    background:white;
+    width:150px;
 }
 
 .filter_drop span {
@@ -1430,7 +1591,7 @@ margin-top:12px;
 	background: rgb(251,251,251);
 	top: -10px;
 	left: -5px;
-	z-index: 2;
+	z-index: 200;
 	border:1px solid #ddd;
 	border-radius:5px;
 }
@@ -1457,7 +1618,6 @@ margin-top:12px;
 	padding-right:5px;
 	border-right:1px solid #eeeeee;
 	height:30px;
-
 }
 
 .filter_drop li a {
@@ -1790,23 +1950,87 @@ padding-top:50px;
 background-color:white;
 padding-bottom:50px;
 text-align: center;
+margin-top:1%;
 }
-.task_display{
-float:left;
-width:140px;
-text-align:center
+.admin_smaller_dashboard{ 
+  border:1px solid lightblue;
+  width: 720px;
+  padding-top:1%;
+  padding-bottom:1%;
+  text-align: center;
+  background:rgb(243,221,167); 
+  border:1px solid rgb(225,169,32);
+  font-weight: bold; 
+}
+
+.admin_smaller_dashboard a { 
+  color:#333;
+  font-size:0.8em;
+  text-decoration: none;
+}
+.admin_smaller_dashboard a:hover{ 
+  text-decoration: none;
+  border:1px solid rgb(243,221,167); 
+}
+
+.task_display{ 
+  float:left;
+  width:140px;
+  text-align:center
 }
 .admin_lower_dashboard{ 
-border:1px solid lightblue;
-width: 710px;
-padding-bottom:5px;
-margin-top:5%;
-background-color:white;
-height:130px;
+  border:1px solid lightblue;
+  width: 710px;
+  padding-bottom:5px;
+  margin-top:5%;
+  background-color:white;
+  height:130px;
 }
-#cssTable{ 
+.pending_dashboard{
+  border:1px solid lightblue;
+  padding-bottom:5px;
+  margin-top:5%;
+  background-color:white;
+  padding-left:5%;
+  padding-right:5%; 
+  padding-top:2%; 
+  padding-bottom:5%;
+}
+.pending_winner_header{ 
+  background:#eeeeee;
+  margin-top:3%;
+  padding-top:1%;
+  padding-bottom:1%;
+  padding-left:1%;
+}
+.winner_pending_position{ 
+  float:right;
+  border:1px solid black;
+  width: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  background: rgb(100,100,115);
+  color:white;
+  font-weight: bold;
+  font-size: 0.8em;  
+}
+.winner_container{
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:2%;
+  width:auto;
+}
+#cssTable{  
 text-align: center;
 width:150px;
+}
+.pending_winner_link{ 
+  float: right;
+  margin-right: 120px;
+  margin-top: 8px;
+  width:15%;
+  text-align:center;
 }
 .admin_header{ 
 background-color:#EEEEEE;
@@ -1816,6 +2040,14 @@ padding-top:3px;
 padding-left:3px;
 padding-bottom:3px;
 }
+
+.notification_body_message {
+  margin-left: 32px; 
+}
+.padding_winner_body{ 
+  width:200px;
+  margin-left:49px;
+} 
 .season_container{ 
 display:none;
 margin-top:20px;	
@@ -2216,7 +2448,79 @@ border:1px solid lightblue;
   -o-transition: all .2s ease;
   transition: all .2s ease;
  }
+ .notification_header{ 
+  height: 60px;
+  background: #eeeeee;
+  border-bottom: 1px solid lightblue;
+ }
+.notification_body{ 
+  height: 138px;
+  margin-top: 11px;
+  width: 327px;
+ }
+ .winner_position{ 
+  float: right;
+  margin-right: 12px;
+  width: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  background: rgb(100,100,115);
+  color:white;
+  font-weight: bold;
+  font-size: 1.0em;  
+ }
+ .other_winner_position{
+  float: right;
+  margin-right: 23px;
+  width: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  background: white;
+  border: 1px solid lightblue;
+  color:#333;
+  font-weight: bold;
+  font-size: 1.0em;  
+ }
+ .winner_points{ 
+  float:right;
+  margin-top: 13px; 
+ }
  
+ .winner_info_container{ 
+  float: right;
+  width: 179px;
+  height: 108px;
+  margin-top: 21px;
+  margin-right: 13px;
+ }
+.notification_footer{ 
+  padding-bottom: 10px;
+  background-color:#eeeeee;
+  border-top:1px solid lightblue;
+ }
+ .close_notification{ 
+  float: right;
+  width: 45px;
+  height: 21px;
+  margin-top: 35px;
+ }
+.winner_label{ 
+  float:right;
+  width:240px;
+  height :40px;
+  text-align: center;
+  padding-top: 7px;
+ }
+ .winner_notification_icon{ 
+  float: right;
+  width: 35px;
+  height: 40px;
+  text-align: center;
+  padding-top: 14px;
+  cursor: pointer;
+ }
 .pin_large{ 
   display: inline-block;
   background: #FEFEFE;
@@ -2403,12 +2707,20 @@ margin-left:5px;
 float:left;
 }
 .comment_radi{ 
-border-radius:100%;
-width:40px;
-height:40px;
-margin-top :9px;
-margin-left:7px;
-float:left;	
+  border-radius:100%;
+  width:40px;
+  height:40px;
+  margin-top :9px;
+  margin-left:7px;
+  float:left;	
+}
+.other_winner_radi{ 
+  border-radius:100%;
+  width:40px;
+  height:40px;
+  margin-top :9px;
+  margin-left:42px;
+  float:left; 
 }
 .season_user_radi{ 
 border-radius:100%;
@@ -2416,11 +2728,17 @@ width:100px;
 height:100px; 
 margin-top :10px;
 }
+.task_user_radi{ 
+border-radius:100%;
+width:75px;
+height:75px; 
+margin-top :10px;
+}
 .season_user_position_radi{ 
 float:right;
 margin-top:40px;
-width:120px;
-font-size:14px;
+width:140px;
+font-size:12px;
 }
 .radi_season_header{ 
 border-radius:100%;
@@ -2439,8 +2757,8 @@ background-color:#f7f7f7;
 font-weight:bold;
 }
 .leave_season{ 
-width:90%;	
-text-align:center;
+width: 148px;
+margin-top: 4px;
 }
 
 .season_radi{ 
@@ -2472,7 +2790,7 @@ border-radius:100%;
 width:55px;
 height:55px; 
 margin-top :10px;
-margin-left:105px;
+margin-left:125px;
 }
 .user_name{ 
 margin-top:21px;
@@ -2514,6 +2832,13 @@ float:left;
  margin-top:15px;
  padding-right:2px;
  width:270px; 
+}
+.other_winner_detail_box{
+min-height: 50px;
+margin-left: 95px;
+margin-top: 15px;
+padding-right: 2px;
+width: 227px;
 }
 .message_menu{ 
 margin-top:2px;
@@ -2695,17 +3020,16 @@ font-weight:bold;
 .task_duration_header{ 
 text-align: center;	
 }
-
-
 .task_title{ 
 color:#333;
 font-size: 1em;
 font-weight:bold;
 text-decoration: underline;
 }
-
+.aligned_well{ 
+  text-align: center;
+}
 .task_description{ 
-font-size:0.9em;
 }
 .rank_description{ 
 font-size:0.85em;
@@ -2742,11 +3066,19 @@ font-weight: bold;
 }
 
 .task_notification_count{ 
-margin-top:0px;	
+  margin-top:0px;	
+}
+
+.task_name_header{ 
+  text-align: center;
+  padding-bottom: 11px;
+  padding-top: 8px;
+  margin-left: 83px;
+  margin-right: 80px;
 }
 
 .task_container{ 
-width:700px;	
+width: 536px;	
 text-align: center;
 padding-top:50px;
 }
@@ -2790,12 +3122,7 @@ float:right;
 	font-size:15px;
 }
 
-.header_user_name{ 
-float:right;
-width:123px;
-margin-right:31px;
-margin-top:12px;
-}
+
 
 .user_history_badge_container{  
   width:70px;
@@ -2992,15 +3319,27 @@ text-align: left;
   margin-top:3px;
  }
 
+.rank_lock{ 
+  width:20px;
+  height:20px;
+  float:right;
+}
  .cheer_line_header_right{ 
   float:right;
   width:339px;
   margin-top:0px;
  }
 
+ .cheer_line_left:hover{ 
+  background: -webkit-linear-gradient(white, #eeeeee); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(white, #eeeeee); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, #eeeeee); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, #eeeeee); /* Standard syntax (must be last) */ 
+ }
+
 .menu_nav{ 
 	text-align:left;	
-	margin-top:4px;
+	margin-top:0px;
 	color:rgb(100,100,115);
 	width:240px;
 }

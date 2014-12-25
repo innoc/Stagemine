@@ -47,7 +47,6 @@ Rails.application.routes.draw do
   match '/display_cheer'=>"point_allocation#display_cheer", :as=>"display_cheer", via: :all
   match '/league_detail'=>"season#league_detail", :as=>"league_detail", via: :all
   match '/start_season'=>"admin#start_season", :as=>"start_season", via: :all
-  match '/audition_checker'=>"season#audition_checker", :as=>"audition_checker", via: :all
   match '/see_all_friendship'=>"friendship#see_all_friendship", :as=>"see_all_friendship", via: :all
   match '/search_suggestions'=>"users#search_suggestions", :as=>"search_suggestions", via: :all
   match '/view_search'=>"users#view_search", :as=>"view_search", via: :all
@@ -55,7 +54,12 @@ Rails.application.routes.draw do
   match '/admin_task_checker'=>"admin#admin_task_checker", :as=>"admin_task_checker", via: :all
   match '/view_user'=>"admin#view_user", :as=>"all_user", via: :all
   match '/user_history'=>"users#user_history", :as=>"user_history", via: :all
-  
+  match '/rank_info'=>"stage#rank_info", :as=>"rank_info", via: :all  
+  match '/winner_notification_check' => "users#winner_notification_check", :as=>"close" , via: :all 
+  match '/pending_winners' => "admin#pending_winners", :as=>"pending_winners", via: :all
+  match '/complete_winners' => "admin#complete_winners", :as=>"complete_winners", via: :all
+
+
 
   resources :users
   # Example of regular route:

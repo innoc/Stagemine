@@ -1,0 +1,40 @@
+<div class="facebox_header">
+	Rank Info
+</div>
+
+<div>
+  <%for rank in @rank%>   
+   <%if rank.id == @user.rank.rankdetail.id%>
+	   <div class="rank_detail_container">
+		   <div class="rank_detail_color" style="background-color:<%=rank.rank_color%>"></div>	   
+		   <div class="rank_detail small_bark_font_method">
+		     <%=rank.name%>
+		     <div class="third_font_method">
+		     	<% if rank.rank_min_point == 0 %>
+		     		no points are required
+		     	<%else%>
+		     		<%=rank.rank_min_point%> points are required to unlock
+		     	<%end%>
+		     </div>
+		   </div>
+		</div> 
+   <%else%>
+    	<div class="rank_detail_container2">
+		   <div class="rank_detail_color" style="background-color:<%=rank.rank_color%>"></div>	   
+		   <div class="rank_detail small_bark_font_method">
+		     <%=rank.name%>
+		     <div class="third_font_method">
+		        <% if rank.rank_min_point == 0 %>
+		     		no points are required
+		     	<%else%>
+		     		<%=rank.rank_min_point%> points are required to unlock
+		     	<%end%>
+		     </div>
+		     <div class="rank_lock">
+		     	<%=image_tag("padlock.png")%>
+		     </div>
+		   </div>
+		</div> 
+   <%end%>
+ <%end%>
+</div>

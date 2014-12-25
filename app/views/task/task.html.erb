@@ -26,30 +26,35 @@ function callPlayer(frame_id, func, args) {
         }), "*");
     }
 }
-
 </script>
 
 
 
 
-
 <div class="container_large">
-<div class="task_menu">
-	<%=link_to "Welcome",task_path(:id=>"welcome") %><br/><br/>
+<div class="task_menu second_font_method">
+	<%=link_to "Enrolled Task",task_path(:id=>"Enrolled Task") %><br/><br/>
 	<%for interest in @interest_list do%>
 	 <%=link_to interest.interest_name,task_path(:id=>interest.interest_name)%><br/>
 	<%end%>
 </div>
 
 <div class="task_body">
-	<%if @params == "welcome"%>
-		<div class="task_container third_font_method">
-				<span style="font-size:20px;">Welcome to Task</span><br/><br/><br/>
-				<%=image_tag("task_big_icon.png")%><br/><br/>
-				Browse for new tasks at the top left menu.
-		</div>
-	<%else%>
-		
+<div class="task_name_header second_font_method">
+	<%=link_to @interest_name,task_path(:id=>@interest_name)%><br/>
+</div>
+	<%if @params == "Enrolled Task"%>
+		<%if @user.enrolled?%>
+			<%=render :partial=>"task_table"%>
+		<%else%>
+			<div class="task_container third_font_method">
+					<span style="font-size:20px;">Welcome to Task</span>
+					<div>you are currently not enrolled in any task</div><br/><br/><br/>
+					<%=image_tag("task_big_icon.png")%><br/><br/>
+					Browse for new tasks at the top left menu.
+			</div>
+		<%end%>
+	<%else%>		
 		<% if @user_task.blank?%>
 			<div class="task_container third_font_method">
 				<%=image_tag("task_big_icon.png")%><br/><br/>

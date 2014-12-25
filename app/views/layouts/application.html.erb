@@ -6,7 +6,6 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>   
   <%= javascript_include_tag 'turbolinks'%>
   <%= javascript_include_tag 'block'%>
-  <%= javascript_include_tag 'js_dropdown'%>
   <%= javascript_include_tag 'facebox'%>
   <%= javascript_include_tag 'imagepop'%>
   <%= javascript_include_tag 'jquery-ui.min'%>
@@ -17,6 +16,25 @@
   
   <link href='http://fonts.googleapis.com/css?family=Oxygen:700,400' rel='stylesheet' type='text/css'>
   
+
+<script>
+	$(function () {
+	  $('.click-nav > ul').toggleClass('header_user_name js');
+	  $('.click-nav .js ul').hide();
+	  $('.click-nav .js').click(function(e) {
+	    $('.click-nav .js ul').slideToggle(200);
+	    $('.clicker').toggleClass('active');
+	    e.stopPropagation();
+	  });
+	  $(document).click(function() {
+	    if ($('.click-nav .js ul').is(':visible')) {
+	      $('.click-nav .js ul', this).slideUp();
+	      $('.clicker').removeClass('active');
+	    }
+	  });
+	});
+</script>
+
 
 	<style type="text/css">
 	body {
@@ -53,13 +71,25 @@
 			       	</div>
 			 	</div> 
 			 	
-			 	<div class="search_bar">					
-					<%unless current_user.usertype=="admin"%>
-						<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
-					<%end%>
-					<div class="header_user_name"><%= link_to current_user.user_name, portfolio_path(:id=>current_user.id)%></div>
-			    </div>
-			    
+			 	 	<div class="search_bar">					
+						<%unless current_user.usertype=="admin"%>
+							<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
+						<%end%>
+						<div class="click-nav">
+						  <ul class="header_user_name">
+						    <li>
+						      <span class="clicker"><%=current_user.user_name%>&nbsp;<%=image_tag("pointer.png")%></span>
+						      <ul>
+   						        <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
+						        <li><%=link_to "Help"%></li>
+						        <li><%=link_to "Settings",alter_path%></li>
+   						        <li><%=link_to "Log Out", destroy_path%></li>
+						      </ul>
+						    </li>
+						  </ul>
+						</div>
+				    </div>
+    
 			    <div class="brand_icon">
 			    	
 			    	<%unless current_user.notifications.where("status=?",0).blank?%>
@@ -80,18 +110,16 @@
 <script>
 $.ajaxSetup({ dataType: 'script' });
 </script>
-
 <%=yield%>
-	
 <script>
 	 $(document).ready(function(){  
-	  if($(window).width() < 1035)
+	  if($(window).width() < 1227)
 	  { 
 		$('.notification_top_icon').show();
 		$('.stagemine_name').hide();
 		
 	  }
-	  else if($(window).width() > 1035)
+	  else if($(window).width() > 1227)
 	  { 
 		$('.notification_top_icon').hide();
 		$('.stagemine_name').show();
@@ -102,12 +130,12 @@ $.ajaxSetup({ dataType: 'script' });
 	$(window).resize(function() {
 	  // This will execute whenever the window is resized
 	 
-	  if($(window).width() < 1035)
+	  if($(window).width() < 1227)
 	  { 
 	    $('.notification_top_icon').show();
 	    $('.stagemine_name').hide();
 	  }
-	  else if($(window).width() > 1035)
+	  else if($(window).width() > 1227)
 	  { 
 		$('.notification_top_icon').hide();
 		$('.stagemine_name').show();
@@ -115,8 +143,6 @@ $.ajaxSetup({ dataType: 'script' });
 	
 	});
 	});
-	</script>	
-
-
+	</script>
 </body>
 </html>

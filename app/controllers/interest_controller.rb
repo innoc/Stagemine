@@ -18,7 +18,7 @@ class InterestController < ApplicationController
     @user = current_user
     @league_interest = []
     unless @user.leagues.blank?
-      for league in @user.leagues    
+      for league in @user.leagues.where(:status=>"active")    
         @league_interest << league.interest 
       end
     end

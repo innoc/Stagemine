@@ -22,6 +22,7 @@ def create_cheer
    if request.post?
        #THE SECONG SECTION HANDLES THE CHEER AND NOTIFICATION CREATION
        @cheer = Cheer.new()
+       @task_checker = 0
        @pointdata = Pointdata.find(1)
        @cheer.user_id = @post_author.id
        @cheer.cheerer_id = current_user.id
@@ -37,15 +38,20 @@ def create_cheer
                   @cheer.video_id = @post.id
                   @point_value = @pointdata.point_number
                       unless @post.task_id.blank?
-                        @point_value = @pointdata.point_number + @pointdata.vote_adder
-                        @point_update = TaskPoint.task_point_allocator(@post_author,@post,@point_value) 
-                      end 
+                        if @post_author.enrolled? 
+                          @point_value = @pointdata.point_number + @pointdata.vote_adder
+                          @point_update = TaskPoint.task_point_allocator(@post_author,@post,@point_value) 
+                        end   
+                        @task_checker = 1 #this is to revent task points from being added to league points    
+                     end 
                 end
             end
         end 
         @cheer.save
         unless Season.all.blank?
-          @point_update = Point.league_point_allocation(@post,@post_author,@point_value)
+          unless @task_checker == 1
+            @point_update = Point.league_point_allocation(@post,@post_author,@point_value)
+          end
         end
 
         

@@ -83,42 +83,11 @@
 										League has ended
 									</div>
 								<%else%>
-							    	<%if @interest_season.leagues.last.users.blank? and @interest_season.leagues.last.season.status == "active"%> <!-- if no one is enrolled in the season-->
+							    	<%if @interest_season.leagues.last.users.blank? and @interest_season.leagues.last.season.status == "active"%> <!-- if no one is enrolled in the league-->
 									    <div class="season_cup small_bark_font_method second_font_method third_font_method">
    									    <span style="font-size:11px;" class="third_font_method">
-											<%=image_tag('season_default.png')%><br/><br/>											
-											<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
-												 <%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
-											<%else%>
-												<%@audition_status = Audition.audition_check(@user.id,@interest_season.leagues.last.id)%>
-												<%unless @audition_status == "Yes"%>
-													<%if @audition_status.qualified == "Yes"%>
-													    Congratulations!!! You qualified<br/>
-														<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
-													<%else%>
-														 Auditioned<br/>
-														 <%@audition_video_cheer = Video.where(:audition_id=> @audition_status.id, :user_id=> @user.id)[0].cheers.count%>
-														 <%if @audition_video_cheer.blank?%>
-														 	<%@audition_video_cheer = 0%>
-														 <%end%>														 
-														
-														 <%if @interest_season.leagues.last.cheers_to_qualify - @audition_video_cheer == 0%>
-														   	&nbsp;&nbsp;Qualified!!! <br/><br/>
-														 <%else%>
-															&nbsp;&nbsp;You need <%=pluralize(@interest_season.leagues.last.cheers_to_qualify - @audition_video_cheer, 'cheer')%> to qualify <br/><br/>		   
-														 <%end%>
-														
-													<%end%>
-												<%else%>
-		 												 <%=link_to "Audition",create_vid_path(:league=>@interest_season.leagues.last.id),:rel=>"block"%><br/>
-	 													 	
-	 													    Click the above link to audition for this league. 
-	 														The first <%=@interest_season.leagues.last.enrollment_limit%> people to get 
-	 														<%=@interest_season.leagues.last.cheers_to_qualify%> 
-	 														cheers will qualify to participate in the league.
-	 								
-	 											<%end%>
-	 										<%end%>
+											<%=image_tag('season_default.png')%><br/><br/>									    
+												 <%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>											
 	 										</span>
 										</div>
 									<%else%>
@@ -272,44 +241,13 @@
 											</div>
 										<%end%>
 				               			<%end%>
-						               <div class="join_leave_league second_font_method">
-										<!--check if user is enrolled or not-->															   			
-										<%if @interest_season.leagues.last.cheers_to_qualify == 0%>
+						          <div class="join_leave_league second_font_method"><!--check if user is enrolled or not-->										
 												<%unless @user.leagues.include?(@interest_season.leagues.last)%>
 													<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
 												<%else%>
 													<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
 												<%end%>
-										<%else%>
-												<%@audition_status = Audition.audition_check(@user.id,@interest_season.leagues.last.id)%>
-												
-													<%unless @audition_status == "Yes"%>
-														<%if @audition_status.qualified == "Yes"%>
-															<%unless @user.leagues.include?(@interest_season.leagues.last)%>
-															<%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-															<%else%>
-															<%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
-															<%end%>
-														<%else%>														
-														<span style="font-size:11px;" class="third_font_method">
-															<br/>
-															 You have auditioned.<br/>
-															 <%@audition_video_cheer = Video.where(:audition_id=> @audition_status.id, :user_id=> @user.id)[0].cheers.count%>
-															 <%if @audition_video_cheer.blank?%>
-															 	<%@audition_video_cheer = 0%>
-															 <%end%>
-															 <%if @interest_season.leagues.last.cheers_to_qualify - @audition_video_cheer == 0%>
-															   	&nbsp;&nbsp;Qualified!!! <br/><br/>
-															 <%else%>
-																&nbsp;&nbsp;You need <%=pluralize(@interest_season.leagues.last.cheers_to_qualify - @audition_video_cheer, 'cheer')%> to qualify <br/><br/>		   
-															 <%end%>
-														</span>
-														<%end%>
-													<%else%>
-			 												 <%=link_to "Audition",create_vid_path(:league=>@interest_season.leagues.last.id),:rel=>"block"%>&nbsp;&nbsp;
-		 											<%end%>
-	 									<%end%>
-									   			<%=link_to "See all", see_all_path(:id=>@interest_season.id)%>
+												<%=link_to "See all", see_all_path(:id=>@interest_season.id)%>
 									   </div>		
 				   				<%end%> <!--end of "if not user enrolled in a season"-->							   			
 					   <%end%> <!--end of "if season has ended"-->				    
@@ -319,9 +257,9 @@
 					Preseason<!-- Are you ready or not? -->	
 					</div>
 					<br/><br/>
-					<span style="font-size: 50px;" class="largest_font">
-						<%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%><br/>
-					</span>
+					<div style="font-size: 50px;" class="largest_font">
+						<%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%>
+					</div>
 					<%=image_tag("banner.png")%><br/>
 					<%if @duration == 1%>
 						<span class="small_bark_font_method">day left</span><br/>

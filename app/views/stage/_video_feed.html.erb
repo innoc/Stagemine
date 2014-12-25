@@ -20,12 +20,12 @@
 		
  	<!--END OF TASK INFO-->
 	    <% unless feed.video.description.blank?%>
-	    <div class=" feed_content_v2 small_bark_font_method">
-	    <%=feed.video.description%>
-	    </div>
+		    <div class=" feed_content_v2 small_bark_font_method">
+		    <%=feed.video.description%>
+		    </div>
 	    <%end%>		 
 		 <div class="interest_tag second_font_method small_bark_font_method">				   
-			         <div class="time_spent third_font_method">
+			       <div class="time_spent third_font_method">
 				     	<%= distance_of_time_in_words_to_now(feed.created_at)%> ago
 				     </div>
 				     <%if feed.video.task.blank?%>
@@ -33,7 +33,7 @@
 				    	 	<%if @link_type == 1%>			    	  
 				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",portfolio_path(:id=>@user.id,:interest=>feed.video.label.interest.id)%>	
 				    	 	<%else%>
-				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",stage_path(:id=>feed.video.label.interest.id)%> &nbsp;&nbsp;<%if feed.video.audition%> <span class="third_font_method">Audition</span><%end%>	 	
+				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",stage_path(:id=>feed.video.label.interest.id)%> &nbsp
 				    	 	<%end%>			    	
 				    	 <%end%>
 				     <%else%>	
