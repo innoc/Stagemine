@@ -15,7 +15,7 @@
 				<%= f.text_area :description ,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"describe your image(optional)",:title=>"Describe your image"%>
 		</div>
 			<div class="all_center_image">
-				<div class="small_bark_font_method">Select the appropriate video category</div>
+				<div class="small_bark_font_method">Select the appropriate category</div>
 				<select id="custom_select" name="label_interest_id">
 					<%for user_interest in @user_interest%>
 						<option value="<%=user_interest.id%>"><%=user_interest.interest_name%></option>

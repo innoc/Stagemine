@@ -40,14 +40,14 @@ def stage
       unless user_interest == "Random"
         for interested_user in user_interest.users #Loop through the users that have similar interest
           unless interested_user.usertype 
-              unless interested_user.id == current_user.id 
-                unless user_friends.include? interested_user 
-                    unless user_check.include? interested_user
-                         user_check << interested_user
-                         @friend_suggestion << interested_user 
-                    end
+            unless interested_user.id == current_user.id 
+              unless user_friends.include? interested_user 
+                unless user_check.include? interested_user
+                 user_check << interested_user
+                 @friend_suggestion << interested_user 
                 end
               end
+            end
           end            
         end
       end 
@@ -115,7 +115,7 @@ def stage
             #filter feed based on interest 
             filtered_interest = Interest.find(params[:id])
             unless filtered_interest.interest_name == "Random"
-              @season_winner_notification_finder = filtered_interest.leagues.last.season.season_winner_notification
+              @season_winner_notification_finder = filtered_interest.try(:leagues).try(:last).try(:season).try(:season_winner_notification)
               unless @season_winner_notification_finder.blank?
                 @season_winner_notification_active = @season_winner_notification_finder if @season_winner_notification_finder.status == "active"
                 @season_winner_notification = @season_winner_notification_active if !(@season_winner_notification_active.blank?) and current_user.winner_notification_checks.where(:season_winner_notification_id=>@season_winner_notification_active.id, :interest_name=>filtered_interest.interest_name).blank?

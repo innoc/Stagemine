@@ -7,8 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create([{user_name: "Admin",first_name: "Admin",last_name: "Admin",email: "admin@stagemine.com",password: "369a26b1649cea05cd78df3c15adbb2fb3bcfe6a",gender: "none",usertype: "admin", activated: "Yes", created_at: "2014-10-06 17:03:58.759516", updated_at: "2014-10-06 17:03:58.759516"}])
-
+User.create([{user_name: "Stagemine",first_name: "Stagemine",last_name: "Stagemine",email: "admin@stagemine.com",password: "adminstage",gender: "none",usertype: "admin", activated: "Yes", created_at: "2014-10-06 17:03:58.759516", updated_at: "2014-10-06 17:03:58.759516"}])
 
 Rankdetail.create([{ name: "Green Stage", rank_max_point: 299, rank_min_point: 0 , rank_color: "lightgreen"},
                     { name: "Blue Stage", rank_max_point: 599 , rank_min_point: 300, rank_color: "lightblue"},

@@ -103,6 +103,7 @@ class AdminController < ApplicationController
       for notification in season_notification
         notification.update_attributes(:status=>"Inactive")
       end
+      
     end
     if preseason.update_attributes(:status=>"inactive") and season.update_attributes(:status=>"active")
       for leagues in season.leagues
