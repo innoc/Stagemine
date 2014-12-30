@@ -24,13 +24,15 @@ class InterestController < ApplicationController
     end
     if request.post?
      unless @user.user_interests.blank?     
-       for interest in @user.user_interests
-         unless @league_interest.blank?
-           unless @league_interest.include?(interest.interest)
+        for interest in @user.user_interests
+          unless @league_interest.blank?
+            unless @league_interest.include?(interest.interest)
+              interest.destroy
+            end
+          else
             interest.destroy
-           end
-         end
-       end
+          end
+        end
       end
       @interest = Interest.where(:interest_name=>"Random").last
       unless params[:interest_ids].blank?
