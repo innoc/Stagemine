@@ -7,7 +7,8 @@
 </div>
  <%if @fan.blank?%>
 		<div class="network_eeeeee">
-	   		<%=image_tag "network_eeeeee.png"%> <br/><br/> No Fans
+	   		<%=image_tag "network_eeeeee.png"%> 
+	   		<p>No Fans</p>
 	   	</div>
  <%else%>
 		<%for fan in @fan%>			
@@ -51,7 +52,7 @@
 
    <%if @fanned.blank?%>
 		<div class="network_eeeeee">
-	   		<%=image_tag "network_eeeeee.png"%> <br/><br/> No Fanned
+	   		<%=image_tag "network_eeeeee.png"%> <p> No Fanned </p>
 	   	</div>
    <%else%>
 		<%for fanned in @fanned%>			

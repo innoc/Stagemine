@@ -32,6 +32,9 @@ gem 'kaminari',  '~> 0.14.0'
 
 gem 'yui-compressor', '~> 0.12.0'
 
+gem 'aws-sdk'
+
+gem 'figaro'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
