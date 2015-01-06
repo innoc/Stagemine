@@ -4,12 +4,9 @@ class UsersController < ApplicationController
   @user = User.new()
   if request.post?
     @user= User.new(user_params)
-    user_params[:first_name][0] = user_params[:first_name][0].capitalize
-    user_params[:last_name][0] = user_params[:last_name][0].capitalize
-    user_params[:user_name][0] = user_params[:user_name][0].downcase
-    @user.first_name = user_params[:first_name]
-    @user.last_name = user_params[:last_name]
-    @user.user_name = user_params[:user_name]    
+    @user.first_name = user_params[:first_name][0].try(:capitalize)
+    @user.last_name = user_params[:last_name][0].try(:capitalize)
+    @user.user_name = user_params[:user_name][0].try(:downcase)
     @user.activated = "No"
     @user.usertype = "normal"
     @user.build_rank(user_id: @user.id, rankdetail_id:1)

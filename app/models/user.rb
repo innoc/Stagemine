@@ -31,6 +31,8 @@ validates_uniqueness_of :user_name
 validates_uniqueness_of :email
 validates_presence_of :first_name,:last_name,:email,:password,:gender,:activated
 before_save :encrypt_new_password
+validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+
 
 def self.authenticate(user_name, password)
     user = find_by_user_name(user_name)

@@ -1,6 +1,7 @@
+<div class="edit-container"> 
 <div class="register_container">
 <div class="facebox_header2">
-	<%=image_tag("stagemine.png")%>
+	Change your info.
 </div>
 <div class="register_box small_bark_font_method">
 	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
@@ -34,9 +35,10 @@
 						</tr>
 			        </table>
 			        <div class="register_button">
-					<%=submit_tag "Register",:class => 'submit_class'%>
+					<%=submit_tag "Update",:class => 'submit_class'%>
 					</div>
 	<%end%>
 	</div>
+</div>
 </div>
 </div>

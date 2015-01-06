@@ -1937,9 +1937,23 @@ font-size: 12px;
 }
 .register_container{ 
 width:400px;
-height:400px;
+height:390px;
 margin:auto;	
-margin-top:10%;	
+margin-top:5%;	
+}
+.create-container{ 
+width:700px;
+height:470px;
+margin:auto;
+text-align: center;  
+margin-top:2%; 
+}
+.edit-container{ 
+width:700px;
+height:470px;
+margin:auto;
+text-align: center;  
+margin-top:12%; 
 }
 .admin_dashboard{ 
 border:1px solid lightblue;
@@ -2096,6 +2110,8 @@ margin-top:-1px;
 border-bottom-right-radius:5px;
 border-bottom-left-radius:5px;
 min-height:300px;	
+background-color:white;
+text-align: left;
 }
 
 .interest_list{
@@ -2342,6 +2358,7 @@ padding-top:8px;
 padding-bottom:5px;
 text-align:center;
 color:white;
+font-size: small;
 background-color:rgb(100,100,115);
 background-image:url(noisecolor2.png);
 border-top-right-radius:4px;
