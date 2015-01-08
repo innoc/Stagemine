@@ -10,7 +10,7 @@
 				   	<div class="notification_image">
 						<%sender = User.find(message.sender_id)%>
 						<%unless sender.userimage.blank?%>
-							<%@user_image = fan.userimage%>
+							<%@user_image = sender.userimage%>
 						<%end%>
 					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
 				   	</div>
