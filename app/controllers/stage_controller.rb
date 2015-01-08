@@ -163,7 +163,7 @@ def stage
 end
   
 def vid_display
-    @user = current_user
+    @user = User.find(params[:u_id])
     @vid_id = Video.find(params[:id])
 end
 

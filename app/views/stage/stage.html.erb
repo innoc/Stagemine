@@ -19,7 +19,7 @@ IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE
 
 
 <div class="container"> 
-<% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
+<% unless !flash.empty? %><div class="error_message_font">INNN<%= flash[:notice] %> </div><% end %>
 	<div class="top_menu">
 		<div class="top_menu_mini_left">
 			<%= link_to(display_cheer_path) do %>	
