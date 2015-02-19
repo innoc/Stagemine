@@ -1,0 +1,41 @@
+<%unless @user.portfolio_cover.portfolio_image.blank?%>
+  <% cover_image = @user.portfolio_cover.portfolio_image%>
+<%end%>
+<div class="portfolio__top--right--image" style="background: url(<%=image_path(cover_image.image.url(:moderate))%>) no-repeat;   -webkit-background-size: cover; -moz-background-size: cover;  -o-background-size: cover;  background-size: cover;background-position:50% <%="#{cover_image.margin}"%>px;">
+ <%if @portfolio_restriction == "allow"%>
+    <div class="portfolio__top--right--bottom">
+      <%= link_to(change_position_path(:id=>cover_image.id),:rel=>"block") do %> 
+        <div class="portfolio__top--right__position submit_class">
+          Change Position
+        </div>
+      <%end%>
+      <div class="portfolio__top--right__change second_font_method">       
+        <table align="center">
+          <tr>
+            <td>
+              <%=link_to "Remove image", remove_interest_path(:id=>cover_image.portfolio_cover.id)%>
+            </td>
+             <td></td>
+            <td>|</td>
+            <td></td>
+            <td>
+              <%= link_to image_tag("video_icon.png"), cover_video_path(:id=>@user.id),:rel=>"block"%>
+            </td>
+            <td></td>
+            <td>|</td>
+            <td></td>
+            <td>
+              <div id="imgButton">
+                <%=form_for :coverimage,:url=>{:controller=>"portfolio",:action=>"change_cover_image",:id=>@user.id},:html=>{:multipart=>true,:id=>"change_image"} do |f|%>
+                  <%= f.file_field :image, :id=>"imgFile"%>
+                  <%= link_to image_tag("small_image_icon.png")%>
+                <%end%>
+              </div> 
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <%end%>
+</div>
+

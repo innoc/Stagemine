@@ -1,0 +1,6 @@
+<%unless @page.blank?%>
+  $(".all_comment_partial").html("<%= escape_javascript(render("all_comment"))%>")
+<%else%>
+  $(".<%="#{@feed_id.id}"%>").html("<%= escape_javascript(render("change_comment"))%>")
+<%end%>
+

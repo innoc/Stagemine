@@ -25,7 +25,7 @@ function callPlayer(frame_id, func, args) {
 }
 </script>
 
-<div id="yid"><iframe width="640" height="390" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@vid_id.vid%>?enablejsapi=1" "></iframe></div>
+<div id="yid"><iframe width="640" height="390" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@vid_id.vid%>?enablejsapi=1&autoplay=1&showinfo=0&autohide=1&rel=0" "></iframe></div>
 <div class="image_facebox_content small_bark_font_method">
 	<% unless @vid_id.feed.blank?%>
 	<%=@vid_id.feed.video.description%>

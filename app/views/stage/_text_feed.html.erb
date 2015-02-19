@@ -28,7 +28,7 @@
 		<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
 		
 		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
-		<div class="<%="#{feed.id}_hover"%> delete_link second_font_method">
+		<div class="<%="#{feed.id}_hover"%> delete_link">
 			<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"w")%>
 		</div>
 		<%end%>

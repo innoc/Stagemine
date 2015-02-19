@@ -1,0 +1,113 @@
+<% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
+<div class="portfolio_top second_font_method">      
+  <div class="portfolio__top--left">
+    <%unless @user.userimage.blank?%>
+      <%@season_user = @user.userimage%>
+    <%end%> 
+    <div class="portfolio__top--left--top" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @season_user.blank?%><%=image_path("Default_large.png")%><%else%><%=image_path(@season_user.image.url(:large))%><%end%>) no-repeat;background-position: center">
+       <div class="image_wrapper">
+         <%if @portfolio_restriction == "allow"%>
+            <div id="mybutton">
+              <%=form_for :userimage,:url=>{:controller=>"edit",:action=>"user_avatar",:id=>@user.id},:html=>{:multipart=>true,:id=>"new_image"} do |f|%>
+                <%= f.file_field :image, :id=>"myfile"%>
+                Update
+                <br/>
+              <%end%>
+            </div> 
+          <%end%>
+        </div>
+      <div class="arrow_container" style="border-bottom:20px solid <%=@user.rank.rankdetail.rank_color%>">
+      </div>      
+    </div>
+    <div class="portfolio__top--left--name larger_font_method">
+      <%= link_to "#{@user.first_name} #{@user.last_name}", portfolio_path(:id=>@user.id) %>
+      <div class="third_font_method"><%=@user.user_name%></div>
+    </div>
+    <div class="portfolio__top--left--details third_font_method">
+      <ul>
+        <li>
+          <%=link_to "Rank",rank_info_path,:rel=>"block" %>: <span style="color: <%=@user.rank.rankdetail.rank_color%>"><%=@user.rank.rankdetail.name%></span>
+        </li>
+        <li>
+          <%link_to "Profession",rank_info_path,:rel=>"block" %> <!--this is a future feature-->
+        </li>        
+        <li>          
+            <%=@fan.count%> 
+            <%if @fan.count == 1 %><%=link_to "Fan", see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%else%><%=link_to "Fans",see_all_friendship_path(:id=>@user.id,:type=>"fan")%><%end%> | <%=@fanned.count%> <%=link_to "Fanned", see_all_friendship_path(:id=>@user.id,:type=>"fanned")%> 
+        </li>
+      </ul>
+    </div>
+  </div>  
+  <%if has_portfolio_content(@user.id) == "no"%>
+    <%= render :partial=>"default_cover"%>
+  <%else%>
+    <%if @user.portfolio_cover.cover_type == "vid"%>
+      <%= render :partial=>"video_cover"%>
+    <%else%>
+      <%if @user.portfolio_cover.cover_type == "pic"%>
+        <%= render :partial=>"pic_cover"%>
+      <%end%>
+    <%end%>
+  <%end%>
+</div>
+
+<div class="portfolio_interest second_font_method_alternate">
+  &bull;
+  <div class="portfolio__menu">
+    <div class="menu1">
+      <%=link_to"User History", user_history_path(:id=>@user.id)%> 
+    </div>
+
+    <div class="menu2">
+      <%=link_to "Awards",badge_path(:id=>@user.id)%>
+    </div>
+
+    <div class="menu3">
+      <div class="portfolio-nav-click">
+        <ul class="portfolio_interest_name">
+          <li>
+            <span class="portfolio-clicker">
+              <table align="center">
+                <tr>
+                  <td>
+                    <%if @filter_code == "all" %>
+                      Filter feed
+                    <%else%>
+                      <%=@current_filter%>
+                    <%end%>
+                  </td>
+                  <td>
+                    <%=image_tag("pointer.png")%>
+                  </td>
+                </tr>
+              </table>                
+            </span>
+            <ul>
+              <%for interest in @user.interests%>
+                <li>
+                  <%= link_to interest.interest_name,portfolio_path(:id=>@user.id,:interest=>interest.id)%>
+                </li>
+              <%end%>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu4">
+          <%=link_to "Message",create_message_path(:id=>@user.id),:rel=>"block"%>
+    </div>
+
+    <div class="menu5">
+      <%unless @portfolio_restriction == "allow"%>
+        <%if @fan_check.blank?%>
+          <%=link_to "Fan",add_performer_path(:id=>@user.id)%>
+        <%else%>
+          <%=link_to "Unfan", disconnect_path(:fan_id=>@fan_check[0].id,:id=>@user.id)%>
+        <%end%>
+      <%else%>
+        <%=link_to "Edit",alter_path%>
+      <%end%>
+    </div>
+  </div> 
+  &bull;
+</div>

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   match '/create_word' => "stage#create_word", :as=>"create_word", via: :all
   match '/create_image' => "stage#create_image", :as=>"pictures", via: :all
   match '/create_comment' => "comment#create_comment", :as=>"comment", via: :all
+  match '/delete_comment' => "comment#delete_comment", :as=>"delete_comment", via: :all
   match '/image_display' => "stage#image_display", :as=>"picture_display", via: :all
   match '/all_comment' => 'comment#all_comment', :as=>'all_comment', via: :all
   match '/create_cheer' => 'point_allocation#create_cheer', :as=>'point', via: :all
@@ -58,9 +59,13 @@ Rails.application.routes.draw do
   match '/winner_notification_check' => "users#winner_notification_check", :as=>"close" , via: :all 
   match '/pending_winners' => "admin#pending_winners", :as=>"pending_winners", via: :all
   match '/complete_winners' => "admin#complete_winners", :as=>"complete_winners", via: :all
-
-
-
+  match '/update_password' => "users#update_password", :as=>"update_password", via: :all
+  match '/view_conversation' => "message#view_conversation", :as=>"conversation", via: :all 
+  match '/reply_message' => "message#reply_message", :as=>"reply_message", via: :all 
+  match '/change_cover_image' => "portfolio#change_cover_image", :as=>"cover_image", via: :all
+  match '/cover_video' => "portfolio#cover_video", :as=>"cover_video", via: :all
+  match '/position_image' => "portfolio#position_image", :as=>"change_position", via: :all
+  match '/delete_portfolio_image'=> "portfolio#delete_portfolio_image", :as=>"remove_interest", via: :all
   resources :users
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

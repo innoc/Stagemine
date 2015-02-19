@@ -1,0 +1,25 @@
+      <div class="user-info__container">
+        <div class="user-info__container__basic-info">
+          <%unless @user_detail.userimage.blank?%>
+          <%@user_image = @user_detail.userimage%>
+        <%end%> 
+        <div class="user-info__container__image" style="border:2px solid <%=@user_detail.rank.rankdetail.rank_color%>;background: url(<%if @user_user.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@user_image.image.url(:thumb))%><%end%>) no-repeat;">
+        </div>
+        <p>
+          <div class="second_font_method_alternate ">
+            <%= link_to "#{@user_detail.first_name} #{@user_detail.last_name}", portfolio_path(:id=>@user_detail.id) %>
+          </div>
+          <span class="third_font_method">
+            <%=@user_detail.user_name%>
+          </span>
+        </p>        
+      </div>
+
+      <div class="user-info__container__other-info">
+          <ul>
+            <li>
+              <span class="third_font_method"><%=@user_detail.email%></span>
+            </li>
+          <ul>
+      </div>
+    </div>

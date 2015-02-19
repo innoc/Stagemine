@@ -1,0 +1,43 @@
+<div class="change-info__container small_bark_font_method">        
+  <%=form_for @user_detail,:validate=>true do |f|%>
+    <table border="0" width=90%, align=center >
+    <tr>
+      <td>
+        <label>
+          First name
+          <br/>
+          <%=f.text_field(:first_name,:class=>"logininput")%>
+        </lable>
+      </td> 
+      <td>Last name<br/>
+        <%=f.text_field(:last_name,:class=>"logininput")%>
+      </td>
+    </tr>
+    <tr><td></td><td></td></tr>
+    <tr>
+      <td>
+        <label>User name<br/>
+          <%=f.text_field(:user_name,:class=>"logininput")%>
+        </lable>
+      </td> 
+      <td>              
+        Gender&nbsp;&nbsp;&nbsp;
+      <table>
+      <tr>
+        <td><%= f.radio_button(:gender, "Male") %></td> <td>Male</td>
+        <td><%= f.radio_button(:gender, "Female")%></td> <td>Female </td>
+      </tr>
+    </table>
+
+    </td>
+    </tr>
+    <tr><td></td><td></td></tr>
+    <tr>
+    <td colspan="2"><label>Email:</lable><br/><%=f.text_field(:email,:class=>"loginemailinput")%></td>
+    </tr>
+    </table>
+    <div class="register_button">
+      <%=submit_tag "Update",:class => 'submit_class'%>
+    </div>
+  <%end%>
+</div>

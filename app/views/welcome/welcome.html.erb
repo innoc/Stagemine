@@ -26,7 +26,7 @@
 			<div class="second_font_method"><%=link_to "Learn more"%></div>
 		</div>
 		<div class="welcome_top_right_box">
-			<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
+			<%if !flash.empty? %><div class="sign_in_error_container"><%= flash[:notice] %></div><%end%>
 			<%=form_tag session_path do %>	
 			        <table width=70%, align=center >
 						<tr>

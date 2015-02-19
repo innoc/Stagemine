@@ -1,0 +1,53 @@
+<%counter = 0%>
+<%while counter < 5 do%>
+  <script>
+    $(document).ready(function(){ 
+      deleteComment("<%="#{@comment[counter].id}_delete"%>","<%="#{@comment[counter].id}_comment"%>");
+    })
+  </script>
+  <%unless @comment[counter].user.userimage.blank?%>
+    <%@comment_image = @comment[counter].user.userimage%>
+  <%end%>
+    <div class="comment_radi" style="border:2px solid <%=@comment[counter].user.rank.rankdetail.rank_color%>;background: url(<%if @comment_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_image.image.url(:smallest))%><%end%>) no-repeat;">
+    </div>
+    <div class="feed_comment_box small_bark_font_method">
+      <div class="<%="#{@comment[counter].id}_comment"%>">
+        <p> 
+          <div class="delete-comment">
+            <%if @comment[counter].user.id == @user.id%>
+              <span id="<%="#{@comment[counter].id}_delete"%>">
+                <%=link_to "x",delete_comment_path(:id=>@comment[counter].id,:feed_id=>@feed_id.id,:flag=>@flag),remote: true%>
+              </span> 
+            <%end%>
+          </div>     
+          <div class="comment_user_info">
+            <span class="second_font_method_alternate">
+              <%=link_to @comment[counter].user.user_name, portfolio_path(:id=>@comment[counter].user.id)%>
+              &nbsp
+              <span class="third_font_method"><%= distance_of_time_in_words_to_now(@comment[counter].created_at)%> ago 
+              </span>
+            </span>
+          </div>
+        </p> 
+        <p>
+          <%=@comment[counter].content%>
+        </p>
+      </div>
+    </div>
+  <%counter = counter + 1%>
+  <%@comment_image = nil%>
+<%end%>
+<div class="feed_comment_box small_bark_font_method">
+  <div class="comment_link">    
+    <%= link_to(all_comment_path(:feed_id=>@feed_id.id)) do %>  <!--The flag is for showing 5 more comments-->
+      <div class="see_all_comment">
+        See all
+      </div>              
+    <%end%> 
+    <span class="<%="#{@feed_id.id}_add"%>">            
+      <div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
+        Add a comment
+      </div>
+    </span>           
+  </div>
+</div>

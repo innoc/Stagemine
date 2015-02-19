@@ -14,8 +14,8 @@
 								<td></td>
 								<td></td>
 								<td>
-									You have <%=notification.notification_counter%> new Points 
-									<span class="third_font_method">unread</span>
+									You got <%=pluralize(notification.notification_counter,'Point')%>
+									<span class="unread-container">unread</span>
 								</td>
 							</tr>
 						</table>
@@ -25,7 +25,7 @@
 								<tr><td></td><td></td>
 									<td>
 										<span class="second_font_method_alternate"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span> is now your fan 
-										<span class="third_font_method">unread</span>
+										<span class="unread-container">unread</span>
 									</td>
 								</tr>
 							</table>
@@ -35,7 +35,7 @@
 									<tr><td></td><td></td>
 										<td>
 											Congratulation!!!! your rank has been upgraded to "<%=Rankdetail.find(notification.notification_type_id).name%>"
-											<span class="third_font_method">unread</span>
+											<span class="unread-container">unread</span>
 										</td>
 									</tr>
 								</table> 
@@ -44,7 +44,7 @@
 									<table>
 										<tr><td></td><td></td>
 											<td>
-												Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="third_font_method">unread</span>
+												Congratulation!!!! You just won the "<%=(notification.user.winners.last).try(:task).try(:title)%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="unread-container">unread</span>
 											</td>
 										</tr>
 									</table> 
@@ -69,7 +69,7 @@
 										   	<%end%>
 										   	<p>
 										   		<%=Message.find(notification.notification_type_id).content%> 
-										   		<span class="third_font_method">unread</span>
+										   		<span class="unread-container">unread</span>
 										   	</p>
 											</div>
 										</div>
@@ -81,7 +81,6 @@
 				</div>
 		  <%end%>
 		<%end%>
-		<%if @notifications_unread.blank?%>			
 	   	<% for notification in @notifications%>
 	   		<%@winner_user_image = nil%>
 				<div class="notification_unit small_bark_font_method">
@@ -91,7 +90,7 @@
 								<td></td>
 								<td></td>
 								<td>
-									You have <%=notification.notification_counter%> new Points 
+									You got <%=pluralize(notification.notification_counter,'Point')%>
 									<span class="third_font_method">read</span>
 								</td>
 							</tr>
@@ -121,7 +120,7 @@
 									<table>
 										<tr><td></td><td></td>
 											<td>
-												Congratulation!!!! You just won the "<%=(notification.user.winners.last).task.title%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="third_font_method">read</span>
+												Congratulation!!!! You just won the "<%=(notification.user.winners.last).try(:task).try(:title)%>" task and you have earned a new <%=link_to "badge",badge_path(:id=>notification.user_id)%><span class="third_font_method">read</span>
 											</td>
 										</tr>
 									</table> 
@@ -157,6 +156,5 @@
 					<%end%>
 				</div>
 			<%end%>
-		<%end%>
 	</div>
 </div>

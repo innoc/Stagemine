@@ -4,9 +4,11 @@ class UsersController < ApplicationController
   @user = User.new()
   if request.post?
     @user= User.new(user_params)
-    user_params[:first_name][0] = user_params[:first_name][0].try(:capitalize)
-    user_params[:last_name][0] = user_params[:last_name][0].try(:capitalize)
-    user_params[:user_name][0] = user_params[:user_name][0].try(:downcase)
+    if user_params[:first_name].present? and user_params[:last_name].present? and user_params[:user_name].present? 
+      user_params[:first_name][0] = user_params[:first_name][0].try(:capitalize)
+      user_params[:last_name][0] = user_params[:last_name][0].try(:capitalize)
+      user_params[:user_name][0] = user_params[:user_name][0].try(:downcase)
+    end
     @user.first_name = user_params[:first_name]
     @user.last_name = user_params[:last_name]
     @user.user_name = user_params[:user_name] 
@@ -15,6 +17,7 @@ class UsersController < ApplicationController
     @user.build_rank(user_id: @user.id, rankdetail_id:1)
     @user.user_interests.build(user_id: @user.id, interest_id:1)
     if @user.save
+       flash.discard(:notice) 
        session[:user_id] = @user.id
        redirect_to create_interest_path
     else
@@ -39,13 +42,17 @@ class UsersController < ApplicationController
        else
           @image = user.userimage.image.url(:tiny)
        end
-       @data << {:first => "#{user.first_name}", :value => "#{user.first_name} #{user.last_name}", :last => "#{user.last_name}",:img => "#{(@image)}",:id => "#{user.id}",:username => "#{user.user_name}"}
+       if params[:flag] == "m"
+        @data << {:first => "#{user.first_name}", :value => "#{user.user_name}", :last => "#{user.last_name}",:img => "#{(@image)}",:id => "#{user.id}",:username => "#{user.user_name}"}
+       else
+        @data << {:first => "#{user.first_name}", :value => "#{user.first_name} #{user.last_name}", :last => "#{user.last_name}",:img => "#{(@image)}",:id => "#{user.id}",:username => "#{user.user_name}"}
+       end
       end
      end
      @data.to_json
      render json: @data
   end
-  
+
   def view_search
      unless params[:search].blank?
       @suggestion = User.searchsuggestion(params[:search])
@@ -53,18 +60,37 @@ class UsersController < ApplicationController
   end
   
   def update
-    if current_user.update_attributes(user_params)
-    flash[:notice] = "You info was successfully edited"
-    redirect_to stage_path
-    else
-    flash[:notice] = "Ensure that all the fields are filled and your password matches"
-    redirect_to alter_path  
+    if user_params[:first_name].present? and user_params[:last_name].present? and user_params[:user_name].present? 
+      user_params[:first_name][0] = user_params[:first_name][0].try(:capitalize)
+      user_params[:last_name][0] = user_params[:last_name][0].try(:capitalize)
+      user_params[:user_name][0] = user_params[:user_name][0].try(:downcase)
     end
+    current_user.first_name = user_params[:first_name]
+    current_user.last_name = user_params[:last_name]
+    current_user.user_name = user_params[:user_name]      
+    current_user.gender = user_params[:gender]
+    current_user.email = user_params[:email]
+    current_user.usertype = current_user.usertype
+    current_user.hashed_password = "placeholder"
+    if current_user.save
+      flash[:notice] = "Your info was successfully edited"
+    else
+      flash[:notice] = "Ensure that all the fields are filled correctly"
+    end
+    redirect_to alter_path  
   end
 
+  def update_password    
+    if current_user.update_attributes(user_params)
+      flash[:notice] = "Your info was successfully edited"
+    else
+      flash[:notice] = "Ensure that your password matches"
+    end
+    redirect_to alter_path  
+  end
 
   def user_params
-     params.require(:user).permit(:first_name,:last_name,:user_name,:gender,:email,:password,:password_confirmation)
+    params.require(:user).permit(:first_name,:last_name,:user_name,:gender,:email,:password,:password_confirmation)
   end
   
   def user_history

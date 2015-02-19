@@ -1,0 +1,46 @@
+<script>
+$(document).ready(function(){ 
+  
+  $(".header_youtube_link").click(function(){   
+
+    $(".addlink_form").slideDown();
+    $(".addvid_form").hide();
+  });
+  
+  $(".header_youtube_vid").click(function(){
+
+  $(".addlink_form").hide();
+  $(".addvid_form").slideDown();
+  });
+})
+
+</script>
+
+<div class="facebox_header">
+    Add a portfolio video cover
+</div>
+<div class="addlink">
+  <div class="header_image_float"><%=image_tag("youtube.png")%></div>
+  <div class="header_youtube_link">Paste Youtube Link</div>
+  Click this link if you already have a video on youtube. 
+</div>
+
+<div class="addlink_form">
+  <br/>
+  <%=form_tag({:controller=>'portfolio',:action=>'cover_video'}) do%>
+    <div class="small_bark_font_method">Paste Youtube link here</div>
+      <%=text_area_tag(:vid,nil,:id=>"video_id",:autocomplete => "off",:placeholder=>"Paste you youtube link here",:title=>"Paste you youtube link here")%>  
+    <div id="form_btn"> 
+      <%= submit_tag 'Submit',:class => 'classname'%>
+    </div>     
+  <%end%>
+</div>
+<!--div class="addvid">
+<div class="header_image_float"></div>
+<!-- class="header_youtube_vid">Upload video</div>
+Click this link if your video is not on youtube.
+</div-->
+
+<div class="addvid_form">
+  add video
+</div>

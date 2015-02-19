@@ -1,45 +1,79 @@
-<div class="create-container"> 
+<div class="create-container">
 	<%=image_tag("alternative-logo.png")%>
-<div class="register_container">
-<div class="facebox_header2">
-	Join Stagemine today.
-</div>
-<div class="register_box small_bark_font_method">
-	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
-    <%=form_for @user, :validate=>true,:html => {:id => "form"} do |f|%>
-			         <table border="0" width=90%, align=center >
-						<tr>
-							<td><label>First name<br/><%=f.text_field(:first_name,:class=>"logininput")%></lable></td> 
-							<td>Last name<br/><%=f.text_field(:last_name,:class=>"logininput")%></td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-							<td><label>User name<br/><%=f.text_field(:user_name,:class=>"logininput")%></lable></td> 
-							<td>							
+	<div class="register_container">
+		<%if !flash.empty? %>
+			<div class="error_container">
+				<%= flash[:notice] %>
+			</div>
+		<%end%>
+		<div class="facebox_header2">
+			Join Stagemine today.
+		</div>
+		<div class="register_box small_bark_font_method">
+			<%=form_for @user, :validate=>true,:html => {:id => "form"} do |f|%>
+				<table border="0" width=90%, align=center >
+					<tr>
+						<td>
+							First name<br/><%=f.text_field(:first_name,:class=>"logininput")%>
+						</td> 
+						<td>
+							Last name<br/><%=f.text_field(:last_name,:class=>"logininput")%>
+						</td>
+					</tr>
+					<tr>
+						<td></td><td></td>
+					</tr>
+					<tr>
+						<td>
+							User name<br/><%=f.text_field(:user_name,:class=>"logininput")%>
+						</td> 
+						<td>							
 							Gender&nbsp;&nbsp;&nbsp;
 							<table>
-							<tr>
-								<td><%= f.radio_button(:gender, "Male") %></td> <td>Male</td>
-    							<td><%= f.radio_button(:gender, "Female")%></td> <td>Female	</td>
-    						</tr>
+								<tr>
+									<td>
+										<%= f.radio_button(:gender, "Male") %>
+									</td> 
+									<td>
+										Male
+									</td>
+									<td>
+										<%= f.radio_button(:gender, "Female")%>
+									</td> 
+									<td>
+										Female
+									</td>
+								</tr>
 							</table>
-							
-							</td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-							<td colspan="2"><label>Email:</lable><br/><%=f.text_field(:email,:class=>"loginemailinput")%></td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-						<td><label>Password<br/><%=f.password_field :password,:class=>"logininput" %></lable></td> <td>Re-enter password<br/><%=f.password_field :password_confirmation,:class=>"logininput"%></td>
-						</tr>
-			        </table>
-			        <div class="register_button">
+						</td>
+					</tr>
+					<tr><td></td><td></td></tr>
+					<tr>
+						<td colspan="2">
+							<label>
+								Email:
+							</lable>
+							<br/>
+							<%=f.text_field(:email,:class=>"loginemailinput")%>
+						</td>
+					</tr>
+					<tr>
+						<td></td><td></td>
+					</tr>
+					<tr>
+						<td>
+							Password<br/><%=f.password_field :password,:class=>"logininput" %>
+						</td> 
+						<td>
+							Re-enter password<br/><%=f.password_field :password_confirmation,:class=>"logininput"%>
+						</td>
+					</tr>
+				</table>
+				<div class="register_button">
 					<%=submit_tag "Register",:class => 'submit_class'%>
-					</div>
-	<%end%>
+				</div>
+			<%end%>
+		</div>
 	</div>
-</div>
 </div>
 </div>

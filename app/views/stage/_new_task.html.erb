@@ -1,14 +1,17 @@
 <%= link_to(task_info_path,:rel=>"block") do %>
-<div class="task_sidebar1 smaller_bark_font_method">	
+<div class="task_sidebar1 smaller_bark_font_method" style="background:;" >	
 	<table align="center"  height="55">
 		<tr>
 			<td width="40">
 				<%=image_tag("task_sample.png")%>
 			</td>
 			<td>
-				<%=pluralize(@user_task.count,'Task Alert!!!')%>
+				You've got a new task
 			</td>
 		</tr>
 	</table>
+	<div class="task_notification">
+			<%=image_tag("task_notification.png")%>
+	</div>
 </div>
 <%end%>

@@ -1,16 +1,23 @@
+<%= javascript_include_tag 'jquery-ui.min'%>
+<%= javascript_include_tag 'search'%> 
+
 <div class="facebox_header">
 	Send a message
 </div>
 
 <%=form_tag({:controller=>'message',:action=>'create_message',:id=>@user.id,:identifier=>@identifier}) do%>
+		<%unless @message_flag.blank?%>
+  		<%=text_field_tag(:search,nil,:class=>"message_search_field",:placeholder=>"Search for Recipient")%>
+		<%end%>	
 		<div class="image_text_field">
-			    <%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>			    
+			<%=text_area_tag(:content,nil,:class=>"image_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>			    
 		</div>
-	
+
 		<div id="form_btn">	
-		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		<%= submit_tag 'Send Message',:class => 'classname'%>
 		</div>
-		<br/>
-			
-	
+		<br/>	
+		<br/>	
 <%end%>
+
+

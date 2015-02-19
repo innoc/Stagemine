@@ -1,0 +1,43 @@
+<div class="sidebar_left">
+<div class="season_header">
+    <div class="season_title_default second_font_method">
+          <span class="third_font_method">Your Fans</span><!--The name of the most recent active season-->
+    </div>
+</div>
+ <%if @fan.blank?%>
+    <div class="network_eeeeee">
+        <%=image_tag "network_eeeeee.png"%> 
+        <p>No Fans</p>
+      </div>
+ <%else%>
+    <%for fan in @fan%>     
+           <div class="league_user">
+              <%fan = User.find(fan.user_id)%>
+          <%unless fan.userimage.blank?%>
+            <%@winner_user_image = fan.userimage%>
+          <%end%>
+            <div class="league_user_detail">
+              <div class="league_rank_color" style="background-color:<%=fan.rank.rankdetail.rank_color%>"></div>
+              <div class="unit_box">
+                
+              </div>
+              <div class="league_user_name second_font_method_alternate">
+                <%= link_to fan.user_name,portfolio_path(:id=>fan.id)%><br/>
+                <span style="font-size:11px;" class="third_font_method">
+                  <%=fan.rank.rankdetail.name%>
+                </span>                
+              </div>
+              </div>
+              <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
+        </div>
+        <%@winner_user_image = nil%>
+    <%end%>
+    <br/>
+    
+    <div class="centralize second_font_method">
+      <%if @fan.count == 10 %>
+        <%= link_to 'See all', see_all_friendship_path(:id=>@user.id,:type=>"fan")%>
+      <%end%>
+    </div>
+ <%end%>
+</div>

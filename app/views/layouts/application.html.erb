@@ -13,6 +13,9 @@
   <%= javascript_include_tag 'jquery.ddslick.min'%>
   <%= javascript_include_tag 'rails'%>
   <%= javascript_include_tag 'search'%> 
+  <%= javascript_include_tag 'comment'%>
+  <%= javascript_include_tag 'jquery.imagedrag.min'%>
+  
   <%= csrf_meta_tags %>
   
   <link href='http://fonts.googleapis.com/css?family=Oxygen:700,400' rel='stylesheet' type='text/css'>
@@ -40,7 +43,7 @@
 	<style type="text/css">
 	body {
 	  font-family: 'Oxygen', sans-serif;	  
-	  background-image:url(noise2.png);
+	  background-image:url(<%=image_path("noise2.png")%>);
 	  background-color: rgb(235,235,235);
 	  margin: 0;
 	  padding: 0;
@@ -63,13 +66,13 @@
 						<%end%>
 			 	    <%end%>
 			 	    <div class="search_bar_sample">
-			    	<%=form_tag(view_search_path) do%>
+			    		<%=form_tag(view_search_path) do%>
 			    			<div class="search_icon">
-			    			<%= image_submit_tag("search-icon.png") %>
+			    				<%= image_submit_tag("search-icon.png") %>
 			    			</div>			    	
 					    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
 			       	<%end%>
-			       	</div>
+			      </div>
 			 	</div> 
 			 	
 			 	 	<div class="search_bar">					
@@ -81,15 +84,16 @@
 						    <li>
 						      <span class="clicker"><%=current_user.user_name%>&nbsp;<%=image_tag("pointer.png")%></span>
 						      <ul>
-   						        <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
+   						      <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
+						        <li><%=link_to "Message",message_path%></li>
 						        <li><%=link_to "Help"%></li>
 						        <li><%=link_to "Settings",alter_path%></li>
-   						        <li><%=link_to "Log Out", destroy_path%></li>
+   						      <li><%=link_to "Log Out", destroy_path%></li>
 						      </ul>
 						    </li>
 						  </ul>
 						</div>
-				    </div>
+				  </div>
     
 			    <div class="brand_icon">
 			    	

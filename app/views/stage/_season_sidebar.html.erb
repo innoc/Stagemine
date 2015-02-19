@@ -121,14 +121,14 @@
 															<%end%>
 														</div>
 														<div class="league_user_name second_font_method">
-															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%><br/>
-															<span style="font-size:11px;", class="third_font_method">
+															<%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%>
+															<div style="font-size:11px;", class="third_font_method">
 															<%unless UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.blank?%>
-																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.point.round%><br/>
+																 Points: <%=UserInterest.where(["user_id = ? and interest_id = ?",league_user.id, @interest_season.id])[0].point.point.round%>
 															<%else%>
 															     Points: 0
 															<%end%>
-															</span>
+															</div>
 														</div>
 													</div>
 												    <div class=""><%if @league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@league_user_image.image.url(:smallest))%><%end%></div>
@@ -273,13 +273,17 @@
 				</div>
 				<br/>
 				<div class="join_leave_league second_font_method">
-						<%=link_to "Invite friends"%>
-						<%unless @interest_season.interest_name == "Random"%>
-						&nbsp;&nbsp;
-						<%=link_to "View  details", league_detail_path(:league_id=>@interest_season.leagues.last.id),:rel=>"block"%>
-						<%end%>
-				</div>	
+					<%=link_to "Invite friends"%>
+					<%unless @interest_season.interest_name == "Random"%>
+					&nbsp;&nbsp;
+					<%=link_to "View  details", league_detail_path(:league_id=>@interest_season.leagues.last.id),:rel=>"block"%>
+					<%end%>
+				</div>				
 			<%end%>
+			<div id="container">
+					<div class="dot"></div>
+					<div class="pulse" style="background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat; background-position:center;" ></div>
+			</div> 	
 	<%end%> <!-- end of "if season.blank?"-->
 	<%end%> <!--end of "no interest"-->
 </div>

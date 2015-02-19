@@ -24,24 +24,41 @@ function callPlayer(frame_id, func, args) {
     }
 }
 </script>
-
-
 <div class="container">
-	<div class="feed_content_focus small_bark_font_method ">
-	   <%unless @feed_id.picture.blank?%>
-	     <%=image_tag(@feed_id.picture.image.url(:medium))%>
-	   <%else%>
-	   <% unless @feed_id.video.blank?%>
-	   <div id="yid"><iframe width="300" height="250" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@feed_id.video.vid%>?enablejsapi=1" "></iframe></div>
-	   <%else%>
-	   <% unless @feed_id.word.blank?%>
-	   <%=@feed_id.word.content%>
-	   <%end%>
-	   <%end%>
-	   <%end%>
-	</div>
-
+  <div class="feed_content_focus small_bark_font_method "> 
+    <div class="comment__owner">
+      <%unless @feed_id.user.userimage.blank?%>
+        <%@comment_owner_image = @feed_id.user.userimage%>
+      <%end%>
+      <div class="all-comment__container">
+        <div class="comment-radi__alternative" style="border:2px solid <%=@feed_id.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_owner_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_owner_image.image.url(:smallest))%><%end%>) no-repeat;">
+        </div>
+        <div class="comment__owner__image second_font_method_alternate">
+          <%= link_to @feed_id.user.user_name, portfolio_path(:id=>@feed_id.user.id)%>
+          <p>
+            <span class="third_font_method"><%= distance_of_time_in_words_to_now(@feed_id.created_at)%> ago
+            </span>
+          </p>
+        </div>
+      </div>
+    </div> 
+    <br/> 
+    <%unless @feed_id.picture.blank?%>
+      <%=image_tag(@feed_id.picture.image.url(:medium))%>
+    <%else%>
+      <% unless @feed_id.video.blank?%>
+        <div id="yid">
+          <iframe width="370" height="300" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@feed_id.video.vid%>?enablejsapi=1">
+          </iframe>
+        </div>
+      <%else%>
+          <% unless @feed_id.word.blank?%>
+            <%=@feed_id.word.content%>
+          <%end%>
+      <%end%>
+    <%end%>
+  </div>
 	<div class="all_comment_partial">
   	<%=render :partial=>"all_comment"%>
-  	</div>
+  </div>
 </div>

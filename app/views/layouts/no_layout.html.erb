@@ -2,7 +2,7 @@
 <html>
 <head>
     <link rel="shortcut icon" type="image/png" href="/assets/stagemine_logo.ico">
-    <title>StageMine</title>
+    <title>Welcome to StageMine</title>
   	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>   
   	<%= javascript_include_tag 'turbolinks'%>
@@ -23,8 +23,12 @@
 		  padding: 0;
 		  color: #000;
 		  height:100%;
-		  background-color:rgb(229,229,229);
-	
+		  background:rgb(255,194,81) url(<%=image_path("background.jpg")%>);	
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center; 
+      background-size: cover; 
+
       } 
 	</style>
 </head>

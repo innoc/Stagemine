@@ -1,36 +1,54 @@
+<script>
+ $(document).ready(function(){ 
+ 	$('a[rel*=block]').block();
+ })
+</script>
 <div class="container">
-<div class="middle_cover">
-	<div class="middle_cover_header small_bark_font_method second_font_method_alternate">
-		<%=image_tag "message_icon.png"%><br/>
-		<%=link_to pluralize(@message.count, 'Message'), message_path%>
-	</div>
-	 <%unless @message.blank?%>		
-	 	<%for message in @message%>
-			<div class="message_container">		   
-				   	<div class="notification_image">
+	<% if !flash.empty? %>
+		<div class="error_message_font">
+			<%= flash[:notice] %> 
+		</div>
+	<% end %>
+	<div class="middle_cover">
+		<div class="middle_cover_header small_bark_font_method second_font_method">
+			<%=image_tag "message_icon.png"%><br/>
+			<%=link_to "Send a new message",create_message_path(:id=>current_user.id,:flag_message=>"flag"),:rel=>"block"%>
+		</div>
+		<%unless @conversations.blank?%>		
+		 	<%for conversation in @conversations%>
+		 		<%message = conversation.messages.last%>
+				<div class="message_container">		   
+			   	<div class="notification_image">
 						<%sender = User.find(message.sender_id)%>
 						<%unless sender.userimage.blank?%>
 							<%@user_image = sender.userimage%>
 						<%end%>
-					    <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%></div>
-				   	</div>
-				   	<div class="notification_body_message second_font_method_alternate small_bark_font_method ">
-				   		<%if sender.usertype == "admin"%>
-								<span class="font_method_alternative">
-									<%=sender.user_name%>
-									<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
+					  <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%>
+					  </div>
+			   	</div>
+					<div class="notification_body_message small_bark_font_method ">
+			   		<%if sender.usertype == "admin"%>
+							<span class="second_font_method_alternate font_method_alternative">
+								<%=sender.user_name%>
+								<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago
 								</span>
-					   	<%else%>
-					   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
-					   		<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
-					   	<%end%>
-					   	<p>
-				   			<%= message.content%>
-				   		</p>
-				   	</div>
-			</div>
-			<%@user_image = nil%>
+							</span>
+				   	<%else%>
+							<span class="second_font_method_alternate">
+				   		<%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
+				   		<span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
+				   		</span>
+				   	<%end%>
+				   	<p>
+			   			<%= message.content%> 
+			   			<%unless sender.usertype == "admin"%> <!--users should not be able to reply to an admin-->
+			   				&nbsp;&nbsp;&nbsp;<span class="second_font_method"><%=link_to "view conversation", conversation_path(:id=>conversation.id) %></span>
+			   			<%end%>
+			   		</p>
+					</div>
+				</div>
+				<%@user_image = nil%>
+			<%end%>
 		<%end%>
-	<%end%>
-</div>
+	</div>
 </div>

@@ -1,44 +1,47 @@
 <div class="edit-container"> 
-<div class="register_container">
-<div class="facebox_header2">
-	Change your info.
-</div>
-<div class="register_box small_bark_font_method">
-	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
-    <%=form_for @user_detail,:validate=>true do |f|%>
-			         <table border="0" width=90%, align=center >
-						<tr>
-							<td><label>First name<br/><%=f.text_field(:first_name,:class=>"logininput")%></lable></td> 
-							<td>Last name<br/><%=f.text_field(:last_name,:class=>"logininput")%></td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-							<td><label>User name<br/><%=f.text_field(:user_name,:class=>"logininput")%></lable></td> 
-							<td>							
-							Gender&nbsp;&nbsp;&nbsp;
-							<table>
-							<tr>
-								<td><%= f.radio_button(:gender, "Male") %></td> <td>Male</td>
-    							<td><%= f.radio_button(:gender, "Female")%></td> <td>Female	</td>
-    						</tr>
-							</table>
-							
-							</td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-							<td colspan="2"><label>Email:</lable><br/><%=f.text_field(:email,:class=>"loginemailinput")%></td>
-						</tr>
-						<tr><td></td><td></td></tr>
-						<tr>
-						<td><label>Password<br/><%=f.password_field :password,:class=>"logininput" %></lable></td> <td>Re-enter password<br/><%=f.password_field :password_confirmation,:class=>"logininput"%></td>
-						</tr>
-			        </table>
-			        <div class="register_button">
-					<%=submit_tag "Update",:class => 'submit_class'%>
-					</div>
-	<%end%>
+	<div class="register_container">
+  	<%if !flash.empty? %><div class="error_container"><%= flash[:notice] %></div><%end%>
+		<div class="settings_header">
+			<div class="change-password smaller_bark_font_method" onclick="settingJs('change-password')">
+					Change Password		
+			</div>
+			<div class="change-info smaller_bark_font_method" onclick="settingJs('change-info')">
+					Change Info
+			</div>
+			<div class="user-info smaller_bark_font_method" onclick="settingJs('user-info')">
+					User Info
+			</div>
+		</div>
+		<div class="setting-box">
+			<%= render :partial=>"user_info"%>
+			<%= render :partial=>"change_info"%>
+		<div class="change-password__container small_bark_font_method">
+			<%=form_for @user_detail,:url => {:action=>"update_password", :controller=>"users"},:validate=>true do |p|%>
+        <table border="0" width=90%, align=center >
+	        <tr>
+	          <td>	          	
+	          	Password<br/><%=p.password_field :password,:class=>"logininput" %>
+	          </td> 
+	          <td>
+	          	Re-enter password<br/><%=p.password_field :password_confirmation,:class=>"logininput"%>
+	          </td>
+	        </tr>
+	        <tr>
+	        	<td>
+	        		<%=p.hidden_field :flag, :value =>"password"%>
+	        	</td>
+	        </tr>
+	        <tr>
+	        	<td colspan="2">
+							<div class="register_button">
+								<%=submit_tag "Update",:class =>'submit_class'%>
+							</div>
+						</td>
+	        </tr>
+			 </table>
+      <%end%>
+		</div>
+
+		</div>
 	</div>
-</div>
-</div>
 </div>

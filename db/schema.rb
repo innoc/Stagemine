@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20242616020363) do
+ActiveRecord::Schema.define(version: 20242616020378) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 20242616020363) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "conversations", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "recipient_id"
   end
 
   create_table "enrolls", force: true do |t|
@@ -156,6 +163,7 @@ ActiveRecord::Schema.define(version: 20242616020363) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conversation_id"
   end
 
   create_table "notifications", force: true do |t|
@@ -207,6 +215,31 @@ ActiveRecord::Schema.define(version: 20242616020363) do
     t.integer  "status"
     t.decimal  "previous_point"
     t.decimal  "point"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portfolio_covers", force: true do |t|
+    t.integer  "user_id"
+    t.string   "cover_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portfolio_images", force: true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "portfolio_cover_id"
+    t.integer  "margin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portfolio_videos", force: true do |t|
+    t.string   "vid"
+    t.integer  "portfolio_cover_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

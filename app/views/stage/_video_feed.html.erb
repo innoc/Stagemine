@@ -2,7 +2,7 @@
 	<% @post = Video.find(feed.video_id)%>
 	<div class="<%="#{feed.id}_feed"%>  pin">		
 	<%= link_to(video_path(:id=>feed.video,:u_id=>feed.user.id), :rel=>"facebox") do %>
-		<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg);background-size:330px 320px; background-repeat:no-repeat;">
+		<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg);background-size:cover; background-repeat:no-repeat;">
 				<div class="vid_click"> <div class='arrow-right'></div> </div>
 	    </div>
 	<%end%>

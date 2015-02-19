@@ -1,92 +1,109 @@
 <script>
-$(document).ready(function(){ 		
-	$(".<%="#{@feed_id.id}_add"%>").click(function(){
-		$(".<%="#{@feed_id.id}_toggle"%>").toggle();
-		$(".<%="#{@feed_id.id}_form"%>").toggle();
-	});
-	$(".<%="#{@feed_id.id}_cancel"%>").click(function(){
-		$(".<%="#{@feed_id.id}_toggle"%>").toggle();
-		$(".<%="#{@feed_id.id}_form"%>").toggle();
-	});
-	
+$(document).ready(function(){ 
+	commentDropdown("<%="#{@feed_id.id}_add"%>","<%="#{@feed_id.id}_toggle"%>","<%="#{@feed_id.id}_cancel"%>", "<%="#{@feed_id.id}_form"%>")
 })
 </script>
 
-<%if @feed_id.comments.blank?%>
-			   <div class="blank_comment_link second_font_method">
-			   	<span class="<%="#{@feed_id.id}_add"%>">
-			   	<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field_alternative third_font_method">
-								Add a comment
-				</div>
-			   	</span>
-			  </div>
-				
-					<div class="<%="#{@feed_id.id}_form"%>" style="display: none;">
-						<%= form_tag(comment_path,remote: true) do %>
-
-							<div class="image_text_field">
-								    <%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
-			 						<%= hidden_field_tag 'feed_id',@feed_id.id%>
-			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-	     					</div>						
-							<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
-								Close
-							</div>	
-							<div id="form_btn_comment">	
-							<%= submit_tag 'Click to Comment',:class => 'classname'%>
-							</div>
-							<br/>
-							<br/>
-				 		<%end%>
-		    	   </div>
-		   <%else%>
-		   	  	<% @comment = @feed_id.comments.last!%>
-		   	  	
-				<%unless @comment.user.userimage.blank?%>
-			    	<%@comment_image = @comment.user.userimage%>
-	   			<%end%>
-		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
-
-			 
-				<div class="feed_comment_box small_bark_font_method">
-					<p> 
-						<span class="second_font_method_alternate"><%=link_to @comment.user.user_name, portfolio_path(:id=>@comment.user.id)%></span><br/>
-						<%=@comment.content%>
-					</p> 		
-					
-					<div class="comment_link">
-						<%= link_to(all_comment_path(:feed_id=>@feed_id.id)) do %>	
-							<div class="see_all_comment">
-								See all
-							</div>							
-						<%end%>	
-						<span class="<%="#{@feed_id.id}_add"%>">						
-							<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
-								Add a comment
-							</div>
-						</span>						
+<%if @feed_id.comments.blank?%>	
+	<div class="blank_comment_link second_font_method">
+		<span class="<%="#{@feed_id.id}_add"%>">
+			<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field_alternative third_font_method">
+				Add a comment
+			</div>
+		</span>
+	</div>
+	<div class="<%="#{@feed_id.id}_form"%>" style="display: none;">
+		<%= form_tag(comment_path,remote: true) do %>
+			<div class="image_text_field">
+				<%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+				<%= hidden_field_tag 'feed_id',@feed_id.id%>
+				<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+			</div>		
+			<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
+				Close
+			</div>	
+			<div id="form_btn_comment">	
+				<%= submit_tag 'Click to Comment',:class => 'classname'%>
+			</div>
+		<%end%>
+		<P></P>
+	</div>
+<%else%>
+	<%if @flag == "show more"%>
+		<%@comment = @feed_id.comments.order(created_at: :desc)%>
+		<%if @comment.size > 5%>
+			<%=render :partial=>"comment/five_more"%>
+		<%else%>
+			<%=render :partial=>"comment/show_more"%>
+		<%end%>
+	<%else%>
+		<%@comment = @feed_id.comments.last!%>
+		<script>
+			$(document).ready(function(){ 
+				deleteComment("<%="#{@comment.id}_delete"%>","<%="#{@comment.id}_comment"%>");
+			})
+		</script>
+		<%unless @comment.user.userimage.blank?%>
+			<%@comment_image = @comment.user.userimage%>
+		<%end%>
+		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_image.image.url(:smallest))%><%end%>) no-repeat;" >
+		</div>
+		<div class="feed_comment_box small_bark_font_method">
+			<div class="<%="#{@comment.id}_comment"%>">
+				<p> 
+					<div class="delete-comment">
+						<span id="<%="#{@comment.id}_delete"%>">
+							<%if @comment.user.id == @user.id%>
+								<%=link_to "x",delete_comment_path(:id=>@comment.id,:feed_id=>@feed_id.id,:flag=>@flag),remote: true%>
+							<%end%>
+						</span> 
 					</div>
-				</div>
-				<br/>
-				<div class="<%="#{@feed_id.id}_form"%> lower_comment_form"style="display:none;">
-					<%= form_tag(comment_path,remote: true) do %>
 
-							<div class="image_text_field">
-								    <%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
-			 						<%= hidden_field_tag 'feed_id',@feed_id.id%>
-			 						<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-	     					</div>
-						
-							
-							<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
-								Close
-							</div>	
-							<div id="form_btn_comment">	
-							<%= submit_tag 'Click to Comment',:class => 'classname'%>
-							</div>
-							<br/>
-				 	<%end%>
-	
+					<div class="comment_user_info">
+						<span class="second_font_method_alternate">
+							<%=link_to @comment.user.user_name, portfolio_path(:id=>@comment.user.id)%>
+		      		&nbsp
+				      <span class="third_font_method"><%= distance_of_time_in_words_to_now(@comment.created_at)%> ago 
+				      </span>
+						</span>
+					</div>
+				</p> 
+				<p>
+					<%=@comment.content%>
+				</p>
+			</div>
+			<div class="comment_link">		
+				<%= link_to(comment_path(:flag=>"show more",:feed_id=>@feed_id.id),remote: true) do %>	<!--The flag is for showing 5 more comments-->
+					<%if @feed_id.comments.size > 1%>
+						<div class="see_all_comment">
+							See more
+						</div>	
+					<%end%>						
+				<%end%>	
+				<span class="<%="#{@feed_id.id}_add"%>">						
+					<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
+						Add a comment
+					</div>
+				</span>						
+			</div>
+		</div>
+	<p>
+	<%end%>
+		<div class="<%="#{@feed_id.id}_form"%> lower_comment_form"style="display:none;">
+			<%= form_tag(comment_path(:flag=>@flag),remote: true) do %>
+				<div class="image_text_field comment__form">
+					<%=text_area_tag(:content,nil,:class=>"comment_text_field",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+					<%= hidden_field_tag 'feed_id',@feed_id.id%>
+					<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 				</div>
+				<div class="<%="#{@feed_id.id}_cancel"%> cancel_comment third_font_method">
+					Close
+				</div>	
+				<div id="form_btn_comment">	
+					<%= submit_tag 'Click to Comment',:class => 'classname'%>
+				</div>		
+			<%end%>
+		</div>
+	</p>
 <%end%>
 <%@comment_image = nil%>

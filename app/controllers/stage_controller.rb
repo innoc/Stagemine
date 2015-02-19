@@ -163,8 +163,8 @@ def stage
 end
   
 def vid_display
-    @user = User.find(params[:u_id])
-    @vid_id = Video.find(params[:id])
+  @user = User.find(params[:u_id])
+  @vid_id = Video.find(params[:id])
 end
 
 def delete_feed
@@ -202,24 +202,21 @@ end
 def create_image 
   @picture = Picture.new()
   @user_interest = current_user.interests
-
   if request.post?       
-           @new_post = Picture.new(image_params)
-           @new_post.user_id = current_user.id
-           @label_interest= Interest.find(params[:label_interest_id])
-           @new_post.build_label(interest_id: @label_interest.id, picture_id: @new_post.id)
-           @new_post.build_feed(feed_name: "Image",user_id: current_user.id, interest_id: @label_interest.id)
-
-           if @new_post.save
-               flash[:notice]="Your Post was successfully created"
-           else
-               flash[:notice]="You forgot to upload an image"
-           end 
-
-       respond_to do |format|
-            format.html{redirect_to stage_path}
-            format.js
-       end 
+    @new_post = Picture.new(image_params)
+    @new_post.user_id = current_user.id
+    @label_interest= Interest.find(params[:label_interest_id])
+    @new_post.build_label(interest_id: @label_interest.id, picture_id: @new_post.id)
+    @new_post.build_feed(feed_name: "Image",user_id: current_user.id, interest_id: @label_interest.id)
+    if @new_post.save
+     flash[:notice]="Your Post was successfully created"
+    else
+     flash[:notice]="You forgot to upload an image"
+    end
+    respond_to do |format|
+      format.html{redirect_to stage_path}
+      format.js
+    end 
   end
 end
 

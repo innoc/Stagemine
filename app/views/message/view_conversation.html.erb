@@ -1,0 +1,63 @@
+<script>
+ $(document).ready(function(){ 
+  $('a[rel*=block]').block();
+ })
+</script>
+<div class="container">
+  <% if !flash.empty? %>
+    <div class="error_message_font">
+      <%= flash[:notice] %> 
+    </div>
+  <% end %>
+  <div class="middle_cover">
+    <div class="middle_cover_header small_bark_font_method second_font_method">
+      <%=image_tag "message_icon.png"%><br/>
+      <%=link_to "Send a new message",create_message_path(:id=>current_user.id,:flag_message=>"flag"),:rel=>"block"%>
+    </div>
+    <%unless @messages.blank?%>    
+      <%for message in @messages%>
+        <div class="message_container">      
+          <div class="notification_image">
+            <%sender = User.find(message.sender_id)%>
+            <%unless sender.userimage.blank?%>
+              <%@user_image = sender.userimage%>
+            <%end%>
+            <div class=""><%if @user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@user_image.image.url(:smallest))%><%end%>
+            </div>
+          </div>
+          <div class="notification_body_message small_bark_font_method ">
+            <%if sender.usertype == "admin"%>
+              <span class="second_font_method_alternate font_method_alternative">
+                <%=sender.user_name%>
+                <span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago
+                </span>
+              </span>
+            <%else%>
+              <span class="second_font_method_alternate">
+              <%= link_to sender.user_name, portfolio_path(:id=>sender.id)%>
+              <span class="third_font_method"><%= distance_of_time_in_words_to_now(message.created_at)%> ago</span>
+              </span>
+            <%end%>
+            <p>
+              <%= message.content%>             
+            </p>
+          </div>
+        </div>
+        <%@user_image = nil%>
+      <%end%>
+    <%end%>
+    <div class="message-reply_form">
+      <%=form_tag({:controller=>'message',:action=>'reply_message',:id=>@recipient,:conversation_id=>@conversation.id}) do%>
+        <div class="image_text_field">
+          <%=text_area_tag(:content,nil,:class=>"reply_message_text_field_box",:autocomplete => "off",:placeholder=>"Send a message",:title=>"Send a message")%>          
+        </div>
+
+        <div id="form_btn"> 
+        <%= submit_tag 'Reply',:class => 'classname'%>
+        </div>
+        <br/> 
+        <br/> 
+      <%end%>
+    </div>
+  </div>
+</div>

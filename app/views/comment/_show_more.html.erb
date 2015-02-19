@@ -1,0 +1,51 @@
+<%for comment in @comment%>
+  <script>
+    $(document).ready(function(){ 
+      deleteComment("<%="#{comment.id}_delete"%>","<%="#{comment.id}_comment"%>");
+    })
+  </script>
+  <%unless comment.user.userimage.blank?%>
+    <%@comment_image = comment.user.userimage%>
+  <%end%>
+  <div class="comment_radi" style="border:2px solid <%=comment.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_image.image.url(:smallest))%><%end%>) no-repeat;">
+  </div>
+  <div class="feed_comment_box small_bark_font_method">
+    <div class="<%="#{comment.id}_comment"%>">
+      <p> 
+        <div class="delete-comment">
+          <%if comment.user.id == @user.id%>
+            <span id="<%="#{comment.id}_delete"%>">
+              <%=link_to "x",delete_comment_path(:id=>comment.id,:feed_id=>@feed_id.id,:flag=>@flag),remote: true%>
+            </span> 
+          <%end%>
+        </div>       
+        <div class="comment_user_info">
+          <span class="second_font_method_alternate">
+            <%=link_to comment.user.user_name, portfolio_path(:id=>comment.user.id)%>
+            &nbsp
+            <span class="third_font_method"><%= distance_of_time_in_words_to_now(comment.created_at)%> ago 
+            </span>
+          </span>
+        </div>
+      </p> 
+      <p>
+        <%=comment.content%>
+      </p>
+    </div>
+  </div>
+  <%@comment_image = nil%>
+<%end%>
+<div class="feed_comment_box small_bark_font_method">
+  <div class="comment_link">    
+    <%= link_to(all_comment_path(:feed_id=>@feed_id.id)) do %>  <!--The flag is for showing 5 more comments-->
+      <div class="see_all_comment">
+        See all
+      </div>              
+    <%end%> 
+    <span class="<%="#{@feed_id.id}_add"%>">            
+      <div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
+        Add a comment
+      </div>
+    </span>           
+  </div>
+</div>

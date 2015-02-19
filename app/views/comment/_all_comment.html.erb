@@ -1,31 +1,40 @@
+<%= form_tag(all_comment_path,remote: true) do %>
+	<div class="image_text_field">
+		<%=text_area_tag(:content,nil,:class=>"comment_text_field_v2",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
+		<%= hidden_field_tag 'feed_id',@feed_id.id%>
+		<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+	</div>
+	<div id="form_btn">	
+		<%= submit_tag 'Comment',:class => 'classname'%>
+	</div>
+<%end%>
 
-	<%= form_tag(all_comment_path,remote: true) do %>
-
-		<div class="image_text_field">
-			    <%=text_area_tag(:content,nil,:class=>"comment_text_field_v2",:autocomplete => "off",:placeholder=>"Write a comment",:title=>"Write a comment")%>
-				<%= hidden_field_tag 'feed_id',@feed_id.id%>
-				<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-		</div>
-	
-		<div id="form_btn">	
-		<%= submit_tag 'Click to Post',:class => 'classname'%>
-		</div>
-		<br/>
+<%for comment in @feed_id.comments.order(created_at: :desc)%>  
+	<script>
+    $(document).ready(function(){ 
+      deleteComment("<%="#{comment.id}_delete"%>","<%="#{comment.id}_comment"%>");
+    })
+  </script>	
+	<%unless comment.user.userimage.blank?%>
+		<%@image= comment.user.userimage%>
 	<%end%>
-<% for feed in @feed_id.comments.order(created_at: :desc)%>
-  	
-		<%unless feed.user.userimage.blank?%>
-			    <%@image= feed.user.userimage%>
-	   	<%end%>
-	    <div class="user_image"><%if @image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@image.image.url(:smallest))%><%end%></div>
-
-			 
- 
-	<div class="feed_comment_box small_bark_font_method second_font_method">
-		<p> 
-			<a><%=feed.user.user_name%></a><br/>
-			<%=feed.content%>
-		</p> 
+	<div class="<%="#{comment.id}_comment"%> all-comment__container">
+	  <div class="comment-radi__alternative" style="border:2px solid <%=comment.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@image.image.url(:smallest))%><%end%>) no-repeat;">
+    </div>
+    <div class="delete-comment">
+	    <%if comment.user.id == @user.id%>
+	      <span id="<%="#{comment.id}_delete"%>">
+	        <%=link_to "x",delete_comment_path(:id=>comment.id,:feed_id=>@feed_id.id,:flag=>@flag,:page=>1),remote: true%>
+	      </span> 
+	    <%end%>
+    </div>    
+		<div class="all-comment__box small_bark_font_method second_font_method_alternate">
+			<%=link_to comment.user.user_name, portfolio_path(:id=>comment.user.id)%>
+			&nbsp
+			<span class="third_font_method"><%= distance_of_time_in_words_to_now(comment.created_at)%> ago
+			</span>
+			<p><%=comment.content%></p>
+		</div>
 	</div>
 	<%@image = nil%>
 <%end%>

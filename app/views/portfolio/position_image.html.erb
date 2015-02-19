@@ -1,0 +1,28 @@
+<%= javascript_include_tag 'jquery-ui.min'%>
+<%= javascript_include_tag 'jquery.imagedrag.min'%>
+<%= javascript_include_tag 'rails'%>
+
+
+<script type="text/javascript">
+$(function(){
+  $('.wrap').imagedrag({
+    input: "#output",
+    position: "middle",
+    attribute: "html"
+  });
+});
+</script>
+  <div class="wrap-top small_bark_font_method">
+    Drag image to change position
+  </div>
+  <div class="wrap">
+    <%=image_tag(@portfolio_image.image.url(:moderate))%>
+  </div>
+<div class="position_form">
+  <%= form_tag(change_position_path(:id=>@portfolio_image.id)) do %> 
+    <%=hidden_field_tag('dimension',nil,:id=>"output")%>
+    <%=submit_tag "Update",:class => 'submit_class'%>
+  <%end%>
+</div>
+
+
