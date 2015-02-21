@@ -9,7 +9,13 @@
 		<%= link_to "Add an image",pictures_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block" %>
 	<%else%>
 		<%if @user_task[0].task_type == "video"%>
-		<%= link_to "Add a video",create_vid_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block" %>
+			<div class="add_content__link">
+				<%= link_to(create_vid_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block") do %>	
+					<div class="add_content">
+						Add a video
+					</div>
+				<%end%>
+			</div>
 		<%end%>
 	<%end%>
 <%else%>

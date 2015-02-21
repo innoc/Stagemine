@@ -42,7 +42,7 @@
 					<%end%>
 			</div>
 	</div>
-	<div class="task_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@image.image.url(:moderate))%><%end%>) no-repeat;" ></div>
+	<div class="task_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@image.image.url(:moderate))%><%end%>) no-repeat;" ></div>
 </div>
 <div class="league_table_container">
 	<div class="season_interest small_bark_font_method">

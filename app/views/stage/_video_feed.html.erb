@@ -12,7 +12,7 @@
 		<div class="task_feed_content small_bark_font_method">
 				<div class="task_title_header">
 					<%if feed.video.task.status == "active"%>
-				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>&nbsp;&nbsp;&nbsp;<%unless feed.video.task.blank?%>&nbsp;#Task<%end%>
+				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>
 				    <%end%>
 				</div>			    		    
 		</div>	
@@ -32,12 +32,14 @@
 				    	 <%unless feed.video.label.blank?%>
 				    	 	<%if @link_type == 1%>			    	  
 				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",portfolio_path(:id=>@user.id,:interest=>feed.video.label.interest.id)%>	
-				    	 	<%else%>
+				    	 	<%else%>				    	
 				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",stage_path(:id=>feed.video.label.interest.id)%> &nbsp
 				    	 	<%end%>			    	
 				    	 <%end%>
-				     <%else%>	
-				      &nbsp;&nbsp;<%="##{feed.video.task.label.interest.interest_name}"%>
+				     <%else%>
+				      <div class="task_interest_label">	
+				      	#task
+				      </div>
 			    	 <%end%>		     
 		 </div>
 
