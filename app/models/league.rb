@@ -5,4 +5,5 @@ class League < ActiveRecord::Base
   belongs_to :interest
   has_many :leaguewinners
   has_many :auditions
+  has_many :cheers
 end

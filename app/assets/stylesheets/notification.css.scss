@@ -1,3 +1,23 @@
 // Place all the styles related to the notification controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.notification_top_icon{ 
+  background-color:rgb(205,81,90);
+  color:white;
+  font-size:0.8em;
+  padding-top:3px;
+  padding-bottom:10px;
+  border-radius:5px;
+  padding-left:10px;
+  padding-right:10px;
+  height:10px;
+  border:1px solid black;
+  margin-top:9px;
+  float:right;
+}
+.notification_top_icon a{ 
+  color:white;
+  font-size:15px;
+}

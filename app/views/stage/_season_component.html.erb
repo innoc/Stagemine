@@ -1,0 +1,124 @@
+<%if (@preseason=Preseason.where(status: "active")).blank?%> <!--The condition has to be satisfied before the season can start-->     
+  <%if @user.leagues.include?(@interest_season.leagues.last)%>            
+    <% @current_user_is_enrolled = true %>
+  <%else%>
+    <% @current_user_is_enrolled = false %>
+  <%end%>         
+  <%@user_interest_id = UserInterest.where(["user_id = ? and interest_id = ?",1,1])%> 
+  <div class="sidebar--left__header">
+    <%@season_status = Season.where(status: "active")%> <!--Get the list of active seasons-->
+    <div class="season_title_header">
+      <div class="primary_link_font--small-bold">
+        <%=link_to @interest_season.interest_name, see_all_path(:id=>@interest_season.id)%>
+      </div>        
+      <div class="light_grey_font">
+        Dance league
+      </div><!--The name of the most recent active season-->
+    </div>
+    <%unless @season_status.blank?%>
+      <div class="time_remaining bold_grey_font">      
+        <%if (@season_status[0].end_date.to_date - DateTime.now.to_date).to_i < 1%>         
+        <%else%>
+          <%=pluralize((@season_status[0].end_date.to_date - DateTime.now.to_date).to_i, 'day')%> remaining
+        <%end%>
+      </div>
+    <%end%>
+  </div>        
+  <%if Season.league_table(@interest_season.leagues.last.id,@user.id) == 0 %> <!-- if the season has ended -->
+    <div class="season_cup small_bark_font_method">
+      <%=image_tag('season_default.png')%>
+      <p>League has ended</p>
+    </div>
+  <%else%>
+    <%if @interest_season.leagues.last.users.blank? and @interest_season.leagues.last.season.status == "active"%> <!-- if no one is enrolled in the league-->
+      <div class="season_cup second_font_method">
+        <%=image_tag('season_default.png')%>                     
+        <p>
+          <%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>
+        </p>
+      </div>
+    <%else%>
+      <%@season_table = Season.league_table(@interest_season.leagues.last.id,@user.id)%>  <!-- if league is active and poeple are enrolled-->
+      <%@place = 1%>  <!--The represents the position of each user in the league-->
+       <!--
+      Convert the array into a hash to make it easier to find the index.The reason you need this index is prevent the alogorithm from computing 
+      the last entry of the array. because the last entry is reserved for the user position
+      -->
+      <%for league_user in @season_table.to(3)%>             
+        <%league_user = User.find(league_user)%>
+        <%if @user.id == league_user.id%>
+          <%@user_contains = 0%>
+          <%@position = @place%> <!--IMPORTANT FOR THE USER POSITION WHEN SIDEBAR IS HIDDEN-->
+        <%end%>
+        <div class="league_user">
+          <%unless league_user.userimage.blank?%>
+            <%@league_user_image = league_user.userimage%>
+          <%end%>   
+          <%cheer_count = Cheer.where(["user_id = ? and league_id = ?",league_user.id, @interest_season.leagues.last.id])%>   
+          <div class="league_user_detail">
+            <div class="league_rank_color" style="background-color:<%=league_user.rank.rankdetail.rank_color%>"></div>
+            <div class="unit_box">            
+              <%unless cheer_count.blank?%>
+                <%=@place.ordinalize%>
+                <%@place = @place + 1%>
+              <%end%>
+            </div>
+            <div class="league_user_name second_font_method">
+              <%= link_to league_user.user_name,portfolio_path(:id=>league_user.id)%>
+              <div style="font-size:11px;", class="third_font_method">
+                <%if cheer_count.blank?%>
+                  Cheers : 0 
+                <%else%>
+                  Cheers : <%=cheer_count.inject(0){|sum,e| sum += e.cheer_number}%>
+                <%end%>
+              </div>
+            </div>
+          </div>
+          <div class=""><%if @league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@league_user_image.image.url(:smallest))%><%end%>
+          </div>
+          <%@league_user_image = nil%>
+        </div>
+      <%end%><!--end of loop-->
+      <%=render :partial=>"league_position_indicator"%>
+      <div class="join_leave_league second_font_method"><!--check if user is enrolled or not-->                   
+        <%unless @user.leagues.include?(@interest_season.leagues.last)%>
+          <%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+        <%else%>
+          <%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
+        <%end%>
+        <%=link_to "See all", see_all_path(:id=>@interest_season.id)%>
+     </div>   
+    <%end%> <!--end of "if not user enrolled in a season"-->                      
+  <%end%> <!--end of "if season has ended"-->            
+<%else%>        
+  <div class="preseason_central">
+    <div class="preseason_title primary_link_font--small-bold">
+      Preseason
+    </div>
+    <div style="font-size: 50px;" class="largest_font">
+      <%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%>
+    </div>
+    <%=image_tag("banner.png")%><br/>
+    <%if @duration == 1%>
+      <span class="small_bark_font_method">day left</span><br/>
+    <%else%>
+      <span class="small_bark_font_method">days left</span><br/>
+    <%end%>
+    <div style="font-size:11px;" class="preseason_description third_font_method">
+      The next season starts in <%=pluralize((@preseason[0].end_day.to_date - DateTime.now.to_date).to_i, 'day')%>. 
+      Use this time to gather supporters by inviting friends. 
+    </div>
+  </div>
+  <br/>
+  <div class="join_leave_league second_font_method">
+    <%=link_to "Invite friends"%>
+    <%unless @interest_season.interest_name == "Random"%>
+      &nbsp;&nbsp;
+      <%=link_to "View  Rewards", league_detail_path(:league_id=>@interest_season.leagues.last.id),:rel=>"block"%>
+    <%end%>
+  </div>
+  <div class="pulse_container">
+    <div class="dot"></div>
+    <div class="pulse" style="background: url(<%if @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat; background-position:center;" ></div>
+  </div>      
+<%end%>   

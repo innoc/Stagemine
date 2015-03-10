@@ -1,0 +1,51 @@
+<div class="interest_drop_down primary_link_font">
+  <p>&bull;</p>
+  <div class="interest_filter">
+    <div class="stage-nav-click">
+      <ul class="stage_interest_name">
+        <li>
+          <span class="stage-clicker">
+            <table>
+              <tr>
+                <td>
+                  <%if @filter_code == "all" %>
+                    <%=link_to "All feed",stage_path(:id=>"all")%>
+                  <%else%>
+                    <%if @filter_code == "fan" %>
+                      <%=link_to "Fan's feed",stage_path(:id=>"fan")%>
+                    <%else%>
+                      <%if @filter_code == "fanned"%>
+                        <%= link_to "Fanned feed",stage_path(:id=>"follow")%>
+                      <%else%>
+                        <%if @filter_code == "task"%>
+                          <%= link_to "Task",stage_path(:id=>"task")%>
+                        <%else%>        
+                          <%= link_to @current_filter,stage_path(:id=>@filter_code)%>
+                        <%end%>
+                      <%end%>
+                    <%end%>
+                  <%end%>
+                </td>
+                <td>
+                  &nbsp;<%=image_tag("pointer.png")%>
+                </td>
+              </tr>
+            </table>                
+          </span>
+          <ul>
+            <%for interest in @user.interests%>
+              <li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
+            <%end%>
+            <li><%= link_to "All feed",stage_path(:id=>"all")%></li>
+            <li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
+            <li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
+            <li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p>&bull;</p>
+</div>
+
+

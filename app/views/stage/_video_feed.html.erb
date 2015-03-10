@@ -1,94 +1,55 @@
 	<%@feed_id = feed%>
 	<% @post = Video.find(feed.video_id)%>
 	<div class="<%="#{feed.id}_feed"%>  pin">		
-	<%= link_to(video_path(:id=>feed.video,:u_id=>feed.user.id), :rel=>"facebox") do %>
-		<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg);background-size:cover; background-repeat:no-repeat;">
+		<%= link_to(video_path(:id=>feed.video,:u_id=>feed.user.id), :rel=>"facebox") do %>
+			<div class="vid_container" style="background-image: url(http://img.youtube.com/vi/<%=feed.video.vid%>/0.jpg);background-size:cover; background-repeat:no-repeat;">
 				<div class="vid_click"> <div class='arrow-right'></div> </div>
-	    </div>
-	<%end%>
-	<!--TASK INFO-->
-	
-	<%unless feed.video.task.blank?%> 
-		<div class="task_feed_content small_bark_font_method">
+		  </div>
+		<%end%>		
+		<%unless feed.video.task.blank?%> 
+			<div class="task_feed_content small_bark_font_method">
 				<div class="task_title_header">
 					<%if feed.video.task.status == "active"%>
 				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>
-				    <%end%>
+				  <%end%>
 				</div>			    		    
-		</div>	
-	 <%end%>
-		
- 	<!--END OF TASK INFO-->
-	    <% unless feed.video.description.blank?%>
-		    <div class=" feed_content_v2 small_bark_font_method">
-		    <%=feed.video.description%>
-		    </div>
-	    <%end%>		 
-		 <div class="interest_tag second_font_method small_bark_font_method">				   
-			       <div class="time_spent third_font_method">
-				     	<%= distance_of_time_in_words_to_now(feed.created_at)%> ago
-				     </div>
-				     <%if feed.video.task.blank?%>
-				    	 <%unless feed.video.label.blank?%>
-				    	 	<%if @link_type == 1%>			    	  
-				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",portfolio_path(:id=>@user.id,:interest=>feed.video.label.interest.id)%>	
-				    	 	<%else%>				    	
-				    	 	&nbsp;&nbsp;<%= link_to "##{feed.video.label.interest.interest_name}",stage_path(:id=>feed.video.label.interest.id)%> &nbsp
-				    	 	<%end%>			    	
-				    	 <%end%>
-				     <%else%>
-				      <div class="task_interest_label">	
-				      	#task
-				      </div>
-			    	 <%end%>		     
-		 </div>
-
-	    <%unless feed.user.userimage.blank?%>
-	    <%@image = feed.user.userimage%>
-	    <%end%>
-		<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
-		
-		
+			</div>	
+		<%end%>
+		<%unless feed.video.description.blank?%>
+		  <div class=" feed_description small_bark_font_method">
+		  	<%=feed.video.description%>
+		  </div>
+		<%end%>
+		<div class="feed_icons">			
+			<%=render :partial=>"point_allocation/cheers_added"%> 
+		</div>
+		<%unless feed.user.userimage.blank?%>
+			<%@image = feed.user.userimage%>
+		<%end%>
+		<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>		
 		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
 			<div  class="<%="#{feed.id}_hover"%> delete_link second_font_method">
-			<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"v")%>
+				<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"v")%>
 			</div>
 		<%end%>
 		<script>
 			$(document).ready(function(){
-   			    $(".<%="#{feed.id}_hover"%>").hide();
+	 			    $(".<%="#{feed.id}_hover"%>").hide();
 				$(".<%="#{feed.id}_feed"%>").hover(function(){
 				  $(".<%="#{feed.id}_hover"%>").show();
 				  },function(){
-  				  $(".<%="#{feed.id}_hover"%>").hide();
+					  $(".<%="#{feed.id}_hover"%>").hide();
 				});
 			})
-		</script> 
-		
-		<div class="user_name second_font_method_alternate third_font_method">
-			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%>
-			<div class="third_font_method">
-			<%=feed.user.rank.rankdetail.name%>
-			</div>
-		</div>
-		
-		
-		<div class="feed_icons">
-		  <%unless feed.user_id == current_user.id%>
-			<%unless feed.video.task.blank?%>  
-				<%if feed.video.task.status == "active"%>
-				     <%=render :partial=>"point_allocation/cheers_added"%> 
-				<%end%>
-			<%else%>
-	   		     	<%=render :partial=>"point_allocation/cheers_added"%> 
-			<%end%>
-		  <%end%>
-	 	</div>	   
-		   
+		</script>
+		<div class="user_name primary_link_font--large-bold">
+			<%=link_to feed.user.user_name, portfolio_path(:id=>feed.user.id)%> <span class="bold_grey_font"> &nbsp<%= distance_of_time_in_words_to_now(feed.created_at)%> ago </span>
+		</div>		   
 		<div class="feed_comment">	
 		  <%=render :partial=>"comment/add_comment", :locals=>{:feed=>feed}%> 
-	    </div>			
+	  </div>			
 	</div>
+
 	<script>
 		$(document).ready(function(){
 			$(".<%="#{feed.id}_feed"%>").hover(function(){

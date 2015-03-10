@@ -1,358 +1,156 @@
-<!-- 
-THE PURPOSE OF THIS PAGE IS TO SUPPORT MAJOR ACTIVITIES PERFORMED BY THE USER.
-IT'S A THREE COLUMN PAGE AND THE SIDEBAR RESPONDS TO THE SCREEN SIZE	
--->
-<div class="sidebar1">
-	<%= render :partial=>"season_sidebar"%>
-</div><!-- end of sidebar1 -->
-
-
-<div class="sidebar2">
-	<div class="season_header">
-		<div class="season_title_default second_font_method">
-			<span class="third_font_method">Notifications</span>
-			<!--The name of the most recent active season-->
-		</div><!-- end of season_title_default -->
-	</div><!-- season_header-->
-	<%= render :partial=>"left_sidebar"%>
-</div><!-- end of sidebar2 -->
-
-
+<div class="sidebar--left">
+  <%= render :partial=>"season_sidebar"%>
+</div>
+<div class="sidebar--right">
+  <%= render :partial=>"left_sidebar"%>
+</div>
 <div class="container"> 
-<% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
-	<%= link_to(badge_path(:id=>@user.id)) do %>		
-		<div class="notification_response_bar">
-			<%=image_tag("badge.png")%>
-			<p>
-				View Your Awards
-			</p>
-		</div>
-	<%end%>
-	<div class="stage__top__container">	
-		<div class="top_menu">
-			<div class="top_menu_mini_left">
-				<%= link_to(display_cheer_path) do %>	
-			  		<div class="cheer_number largest_font">
-				  		<%=@user_cheers%>
-				  	</div> <!--end of cheer_number-->
-			  		<div class="cheers_label fifth_font_method">
-				  		<%if @user_cheers > 1%>People cheered you <%else%><%if @user_cheers == 0 %>no cheers yet<%else%>Person cheered you<%end%><%end%>
-				  	</div> <!--end of cheers_label-->
-				  	<div class="cheers_dark_icon">
-				  		&nbsp;&nbsp;<%=image_tag "cheers_dark_icon_small.png"%>
-				  	</div> <!--end of cheers_dark-->
-			  <%end%>
-			</div>
-			
-			<div class="top_menu_username">
-				<div class="winner_description small_bark_font_method second_font_method_alternate">
-		 			<%=link_to @user.user_name, portfolio_path(:id=>@user.id)%><br/>
-		 			<span class="third_font_method"><%=@user.rank.rankdetail.name%></span>
-				</div> <!-- end of winner_description-->
-				<%unless @user.userimage.blank?%>
-					<%@season_user = @user.userimage%>
-				<%end%>
-					<div class="menu_nav second_font_method">
-					 	<table border="0" width="100%">
-					 		<tr>
-					 			<td width="4%">
-									<%=link_to "Fans",see_all_friendship_path(:id=>@user.id,:type=>"fan")%>								
-					 			</td>
-					 			<td  width="4%">
-						 			<%=link_to "Fanned",see_all_friendship_path(:id=>@user.id,:type=>"fanned")%>    					 			
-					 			</td>
-					 			<td  width="4%">
-									<%=link_to "Post",portfolio_path(:id=>@user.id) %>									
-					 			</td>
-					 		</tr>
-					 		<tr style="font-size:1.0em; font-weight:bold;">
-					 			<td>
-									<%=@fan.count%>
-					 			</td>
-					 			<td>
-						 		   <%=@user_performer.count%>
-					 			</td>
-					 			<td>
-								   <%=@user.words.count + @user.videos.count + @user.pictures.count%>
-					 			</td>
-					 		</tr>
-					 	</table>											
-					</div><!-- end of menu_nav-->
-			</div>
+  <%= link_to(badge_path(:id=>@user.id)) do %>    
+    <div class="notification_response_bar">
+      <%=image_tag("badge.png")%>
+      <p>
+        View Your Awards
+      </p>
+    </div>
+  <%end%>
+  <div class="container__top">
+    <div class="container__top--left">
+      <div class="container__top--left-user-name">  
+        <span class="primary_link_font--large-bold"><%=link_to current_user.user_name, portfolio_path(:id=>current_user.id)%></span>
+        <div class="menu_nav primary_link_font">
+          <table border="0" width="100%">
+            <tr>
+              <td width="4%">
+                <%=link_to "Fans",see_all_friendship_path(:id=>@user.id,:type=>"fan")%>               
+              </td>
+              <td  width="4%">
+                <%=link_to "Fanned",see_all_friendship_path(:id=>@user.id,:type=>"fanned")%>                    
+              </td>
+              <td  width="4%">
+                <%=link_to "Post",portfolio_path(:id=>@user.id) %>                  
+              </td>
+            </tr>
+            <tr style="font-size:1.0em; font-weight:bold;">
+              <td>
+                <%=@fan.count%>
+              </td>
+              <td>
+                 <%=@user_performer.count%>
+              </td>
+              <td>
+                 <%=@user.words.count + @user.videos.count + @user.pictures.count%>
+              </td>
+            </tr>
+          </table>                      
+        </div>
+      </div>
 
-			<div class="top_menu_image_container" style="background-color:<%=@user.rank.rankdetail.rank_color%>">
+      <%if User.has_an_image?(current_user.id)%>
+        <%@season_user = @user.userimage%>
+        <%=image_tag @season_user.image.url(:moderate)%>
+      <%else%>
+        <%=image_url("Default_moderate.png")%>
+      <%end%>
+    </div>
+    <div class="container__top--right">
+      <div class="user_point_icon">
+        <%=image_tag("coins.png")%>
+      </div>
+      <div class="user_point">      
+        <span class="light_green_font">
+          2,345,890
+        </span>
+        <span class="user_point__label small_bold_text">
+          Points
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="container_bottom">
+    <div class="container--post_content primary_link_font--small-bold">
+      <div class="post_content--video">
+        <%= link_to "Add a video",create_vid_path, :rel=>"block"%> 
+      </div>
+      <div class="post_content--image">
+        <%= link_to "Share an image",pictures_path, :rel=>"block"%>
+      </div>
+      <div class="post_content--text">
+        <%= link_to "Share an idea",create_word_path, :rel=>"block"%>
+      </div>
+    </div>
 
-				<%unless @user.userimage.blank?%>
-					<%@season_user = @user.userimage%>
-				<%end%>	
-				<%= link_to(portfolio_path(:id=>@user.id)) do %>	
-			    <div class="top_menu_user_smaller_container" style="border:2px solid white;background: url(<%if @season_user.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@season_user.image.url(:moderate))%><%end%>) no-repeat;" >
-			    </div>	
-		    <%end%>    
-			</div>
-		</div> <!-- end of top_menu-->
-		
-		<div class="cheer_line">
-			<div class="cheer_line_header">
-				<div class="cheer_line_header_right">
-				<div class="cheer_line_mini_container">
-					<div class="setting_icon">
-					  <%=image_tag("message_eeeeee.png")%>
-					</div>
-					<div class="setting second_font_method">					
-					  <%=link_to "Message",message_path%>
-					</div>
-				</div>
-				 <div class="task_cover second_font_method">			 	
-				 	<%unless Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>	 		
-			 		<%=link_to "View #{@interest_season.interest_name} League", see_all_path(:id=>@interest_season.id)%>
-					<%end%>	 
-				 </div>
-				</div>
-				<div class="post_container second_font_method_alternate">
-					&nbsp;<%= link_to "Add a video",create_vid_path, :rel=>"block"%>&nbsp;&nbsp;|&nbsp;&nbsp; 
-					<%= link_to "Share an image",pictures_path, :rel=>"block"%>&nbsp;&nbsp;|&nbsp;&nbsp;
-					<%= link_to "Share an idea",create_word_path, :rel=>"block"%>
-				</div>
-			</div>
-			<%= link_to(add_interest_path) do %>		
-				<div class="cheer_line_interest_change">
-						<div class="interest_change_logo">
-							<%=image_tag("interest_mid.png")%>
-						</div>
-						<div class="cheer_line_interest_label smaller_bark_font_method">
-							Change Interest
-						</div>
-				</div>
-			<%end%>
-			<div class="task_winner">		
-				<div class="cheer_line_middle smaller_bark_font_method">
-					<%= link_to(rank_info_path,:rel=>"block") do %>	
-						<div class="rank_info" style="border-bottom:2px solid <%=@user.rank.rankdetail.rank_color%>">
-							<%=image_tag("star.png")%>
-								<div class="rank_info_label">
-									Rank info
-								</div>					
-						</div>
-					<%end%>
-				</div>
-				<div class="cheer_line_left">
-					<%if !(@user_task.empty?) and !(@user.enrolled?) %>
-							<%= render :partial=>"new_task"%>
-					<%else%>
-						<%= link_to(task_path(:id=>"Enrolled Task")) do %>	
-							<%= render :partial=>"right_sidebar"%>
-						<%end%>
-					<%end%>
-				</div>
-			</div>	<!--end of task_winner-->
-		</div><!--end of cheer line-->
-	</div>
+    <div class="container--menu primary_link_font--small-bold">     
+      <div class="container--menu__large_screen">
+        <div class="menu--rank_info">    
+          <div class="menu--icon">
+            <%=image_tag("store.png")%>
+          </div>
+          <div class="menu_label">
+            <%= link_to "Stagemine store",store_path%> 
+          </div>
+        </div>
+        <div class="menu--change_interest">
+          <div class="menu--interest-icon">
+            <%=image_tag("interest_mid.png")%>
+          </div>
+          <%= link_to "Change Interest",add_interest_path%>
+        </div>
+        <div class="menu--message">
+          <%=link_to image_tag("message_icon.png"),message_path%>
+        </div>
+      </div>
+      <div class="container--menu__smaller_screen">
+        <%if Season.all.blank? or @interest_season.blank? or @interest_season.interest_name == "Random"%>
+          <div class="menu--rank_info">    
+            <div class="menu--icon">
+              <%=image_tag("store.png")%>
+            </div>
+            <div class="menu_label">
+              <%= link_to "Stagemine store",store_path%> 
+            </div>
+          </div>
+          <div class="menu--change_interest">
+            <div class="menu--interest-icon">
+              <%=image_tag("interest_mid.png")%>
+            </div>
+            <%= link_to "Change Interest",add_interest_path%>
+          </div>
+          <div class="menu--message">
+            <%=link_to image_tag("message_icon.png"),message_path%>
+          </div>
+        <%else%>
+          <div class="season_notification primary_link_font--small-bold">               
+            <%=link_to "Check out the #{@interest_season.interest_name} League", see_all_path(:id=>@interest_season.id)%>            
+          </div>
+          <div class="responsive_menu">
+            <div class="top_container_drop_down">
+              <ul class="top_container_drop_down_list">
+                <li>
+                  <span class="top_container_clicker">
+                  <%=image_tag("drop.png")%>        
+                  </span>
+                  <ul>
+                    <li><%= link_to "Stagemine store",store_path%></li>
+                    <li><%=link_to "Messages",message_path%></li>
+                    <li><%= link_to "Change Interest",add_interest_path%></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
 
-	 <div class="content_stage">
-		<div class="portfolio_interest second_font_method">
- 			&bull;<br/>
-	 		<div class="interest_filter">
-				<div class="stage-nav-click">
-				  <ul class="stage_interest_name">
-				    <li>
-				      <span class="stage-clicker">
-					      <table>
-					      	<tr>
-						      	<td>
-											<%if @filter_code == "all" %>
-												<%=link_to "All feed",stage_path(:id=>"all")%>
-											<%else%>
-												<%if @filter_code == "fan" %>
-													<%=link_to "Fan's feed",stage_path(:id=>"fan")%>
-												<%else%>
-													<%if @filter_code == "fanned"%>
-														<%= link_to "Fanned feed",stage_path(:id=>"follow")%>
-													<%else%>
-														<%if @filter_code == "task"%>
-															<%= link_to "Task",stage_path(:id=>"task")%>
-														<%else%>		    
-															<%= link_to @current_filter,stage_path(:id=>@filter_code)%>
-														<%end%>
-													<%end%>
-												<%end%>
-											<%end%>
-						      	</td>
-						      	<td>
-						      		&nbsp;<%=image_tag("pointer.png")%>
-						      	</td>
-					      	</tr>
-					      </table>				      	
-				      </span>
-							<ul>
-								<%for interest in @user.interests%>
-									<li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
-								<%end%>
-								<li><%= link_to "All feed",stage_path(:id=>"all")%></li>
-								<li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
-								<li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
-								<li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
-				      </ul>
-				    </li>
-				  </ul>
-				</div>
-		  </div>
-		  <br/>&bull;
-	 	</div>
-	 	
-	 	<%if @feed.blank?%>
-			<div class="feed_icon">
-				<%=image_tag("feed.png")%><br/>
-				No feed
-			</div>
-		<%else%>	
-		 <div id="columns">
-		 	   <div class="stage_content">		 	   
-					<!--THIS JQUERY CODE HANDLES THE FACEBOK EFFECT-->
-					<script>
-					  jQuery(document).ready(function($) {
-					    $('a[rel*=facebox]').live("mousedown", function() { 
-						    $(this).unbind('click'); //everytime you click unbind the past event handled.
-						    $(this).facebox();
-						});
-						$('a[rel*=imagepop]').live("mousedown", function() { 
-						    $(this).unbind('click'); //everytime you click unbind the past event handled.
-						    $(this).imagepop();
-						});
-					  });
-					</script>
-					
-					<%unless @friend_suggestion.blank?%>
-						<div class="pin">
-							<div class="suggested_header bold_header">
-							Find new performers
-							</div> <!--end of suggested_header-->
-							<%for suggested_friend  in @friend_suggestion %>						
-								<div class="suggested_friend_area">									
-										<%unless suggested_friend.userimage.blank?%>
-											<%@suggested_image = suggested_friend.userimage%>
-										<%end%>
-										<div class="add_friend light_bold_font">
-											<%=link_to "Fan", add_performer_path(:id=> suggested_friend.id)%>
-										</div> <!--end of add_friend-->
-										<div class="suggested_user_name second_font_method_alternate third_font_method">					
-											<%=link_to suggested_friend.user_name,portfolio_path(:id=>suggested_friend.id)%>
-											<div class="rank_name">
-											<%=suggested_friend.rank.rankdetail.name%>
-											</div> <!--end of rank_name-->
-										</div>
-										<div class="suggested_friend_radi" style="border:2px solid <%=suggested_friend.rank.rankdetail.rank_color%>;background: url(<%if @suggested_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@suggested_image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
-					     				<%=@suggested_image = nil %>				  
-								</div><!--end of suggested_friend_area-->						
-							<%end%>
-							<div class="network_image">
-								<%=image_tag("network_small.png")%>
-							</div>
-						</div><!--end of pin-->
-					<%end%>
-										  				
-				<%= render :partial=>"stage_feed"%>	 <!--The news feed is located in this partial-->
-		  	   </div>
-		   </div> <!-- end of content_stage -->
- 	  </div> <!--end of columns-->
- 	  <%end%>
-	  <div class="paginate_loader">
-			<%=image_tag("loading.gif")%>
-	  </div>	
-      <span style="display;"><%=paginate @feed%></span>  
-	  <div class="footer small_bark_font_method">
-	    <p>www.stagemine.com &copy; 2014</p> 
-	  </div><!-- end .footer -->
-</div>  <!-- end .container -->
-  
-
-<!--
-The javascript below handles the following
-1) League timings 
-2) Task timings
-3) Sideber Responsiveness 
--->
-
-<script>
-$(function () {
-  $('.stage-nav-click > ul').toggleClass('stage_interest_name js');
-  $('.stage-nav-click .js ul').hide();
-  $('.stage-nav-click .js').click(function(e) {
-    $('.stage-nav-click .js ul').slideToggle(200);
-    $('.stage-clicker').toggleClass('active');
-    e.stopPropagation();
-  });
-  $(document).click(function() {
-    if ($('.stage-nav-click .js ul').is(':visible')) {
-      $('.stage-nav-click .js ul', this).slideUp();
-      $('.stage-clicker').removeClass('active');
-    }
-  });
-});
-$(document).ready(function(){ 
-	  $('a[rel*=block]').block();
-	  if($(window).width() < 1227)
-	  { 
-		$('.sidebar1').hide();
-	 	$('.sidebar2').hide(); 
-	 	$('.task_cover').show(); 
-    $('.season-task-help').show();
-	  }	  
-	  else if($(window).width() > 1227)
-	  { 
-		$('.sidebar1').show();
-	    $('.sidebar2').show();
-	    $('.task_cover').hide(); 
-	    $('.season-task-help').show();
-	  }	  
-	$(window).resize(function() {
-	  // This will execute whenever the window is resized	 
-	  if($(window).width() < 1227)
-	  { 
-		$('.sidebar1').hide();
-		$('.sidebar2').hide();
-		$('.task_cover').show(); 
-	  }
-	  else if($(window).width() > 1227)
-	  { 
-		$('.sidebar1').show();
-		$('.sidebar2').show();
-		$('.task_cover').hide(); 	
-	  }	
-	});
-	});	
-
-	var closeid = document.getElementById('close')
-	closeid.onclick = function(){
-		$(".pin_close").hide();
-	};  
-	$( ".task_header_title" ).fadeOut( "slow" );
-	$( ".task_header_title" ).fadeIn( "slow" );
-	$('.delete_link').hide(); 
-	
-		 <%unless Season.all.blank? %>
-			  <%@season_duration = Season.last%>
-			  <%if @season_duration.status == "active" and (@season_duration.end_date.to_date - DateTime.now.to_date).to_i < 2%>
-					  window.setTimeout(function(){
-					  /// call your function here
-					  	 $.ajax({
-					        url: '/season_checker',
-					        type: 'get'
-					     });
-					  }, 900000); //15 mins
-			  <%end%>
-	    <%end%>
-	 	
-	 <%unless @user.tasks.blank?%>
-	   <%if @user.tasks.last.status == "active" and (@user.tasks.last.end_date.to_date - DateTime.now.to_date).to_i < 2 %>		  
-		//window.setInterval(function(){
-		  window.setTimeout(function(){	
-		  /// call your function here
-		  	 $.ajax({
-		        url: '/task_checker',
-		        type: 'get'
-		     });
-		  }, 900000); //15 mins
-		<%end%>
-	 <%end%>
-</script>
+  <%=render :partial=>"interest_selection"%>
+  <div id="columns">
+    <%= render :partial=>"stage_feed"%>
+  </div>
+  <%if @feed.blank?%>
+    <div class="feed_icon">
+      <%=image_tag("feed.png")%><br/>
+      No feed
+    </div>
+  <%end%>
+</div>

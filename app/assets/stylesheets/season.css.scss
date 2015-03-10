@@ -1,3 +1,38 @@
 // Place all the styles related to the season controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.season_user_position_radi{ 
+  float:right;
+  margin-top:40px;
+  width:140px;
+}
+
+.season_title{ 
+  text-align: center;
+  width:100%;
+}
+.season_title_header{ 
+  padding-top: 10px;
+  height: 38px;
+}
+
+.preseason_title{ 
+  height: 44px;
+  background: #eeeeee;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid lightblue;
+  padding-top: 32px;
+  text-align: center;
+  font-size: small;
+  font-weight: bold;
+}
+
+.season_notification{ 
+  float: left;
+  width: 282px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+

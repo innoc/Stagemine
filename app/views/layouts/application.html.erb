@@ -19,8 +19,8 @@
   <%= csrf_meta_tags %>
   
   <link href='http://fonts.googleapis.com/css?family=Oxygen:700,400' rel='stylesheet' type='text/css'>
-  
-
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	
 <script>
 	$(function () {
 	  $('.click-nav > ul').toggleClass('header_user_name js');
@@ -43,7 +43,7 @@
 	<style type="text/css">
 	body {
 	  font-family: 'Oxygen', sans-serif;	  
-	  background-image:url(<%=image_path("noise2.png")%>);
+	  background-image:url(<%=image_path("noise2.png")%>); 
 	  background-color: rgb(235,235,235);
 	  margin: 0;
 	  padding: 0;
@@ -64,90 +64,54 @@
 						<%unless current_user.userimage.blank?%>
 						<%@userimage = current_user.userimage%>
 						<%end%>
-			 	    <%end%>
-			 	    <div class="search_bar_sample">
-			    		<%=form_tag(view_search_path) do%>
-			    			<div class="search_icon">
-			    				<%= image_submit_tag("search-icon.png") %>
-			    			</div>			    	
-					    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
-			       	<%end%>
-			      </div>
-			 	</div> 
-			 	
-			 	 	<div class="search_bar">					
-						<%unless current_user.usertype=="admin"%>
-							<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
-						<%end%>
-						<div class="click-nav">
-						  <ul class="header_user_name">
-						    <li>
-						      <span class="clicker"><%=current_user.user_name%>&nbsp;<%=image_tag("pointer.png")%></span>
-						      <ul>
-   						      <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
-						        <li><%=link_to "Message",message_path%></li>
-						        <li><%=link_to "Help"%></li>
-						        <li><%=link_to "Settings",alter_path%></li>
-   						      <li><%=link_to "Log Out", destroy_path%></li>
-						      </ul>
-						    </li>
-						  </ul>
-						</div>
-				  </div>
-    
-			    <div class="brand_icon">
-			    	
-			    	<%unless current_user.notifications.where("status=?",0).blank?%>
-			 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
+		 	    <%end%>
+		 	    <div class="search_bar_sample">
+		    		<%=form_tag(view_search_path) do%>
+		    			<div class="search_icon">
+		    				<%= image_submit_tag("search-icon.png") %>
+		    			</div>			    	
+				    	<%=text_field_tag(:search,nil,:class=>"search_field",:placeholder=>"Search")%>
+		       	<%end%>
+		      </div>
+			 	</div>			 	
+		 	 	<div class="search_bar">					
+					<%unless current_user.usertype=="admin"%>
+						<div class="radi_header" style="border:2px solid <%=current_user.rank.rankdetail.rank_color%>;background: url(<%if  @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat;" ></div>
+					<%end%>
+					<div class="click-nav">
+					  <ul class="header_user_name">
+					    <li>
+					      <span class="clicker"><%=current_user.user_name%>&nbsp;<%=image_tag("pointer.png")%></span>
+					      <ul>
+ 						      <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
+					        <li><%=link_to "Message",message_path%></li>
+					        <li><%=link_to "Help"%></li>
+					        <li><%=link_to "Settings",alter_path%></li>
+ 						      <li><%=link_to "Log Out", destroy_path%></li>
+					      </ul>
+					    </li>
+					  </ul>
+					</div>
+			  </div>    
+		    <div class="brand_icon">			    	
+		    	<%unless current_user.notifications.where("status=?",0).blank?%>
+		 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
 					<%end%>	
-					
-			    	<% unless current_user.blank? or current_user.usertype == "admin"%>
-				 		<div class="header_user_detail">							
-							<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%> | 
-			 	        </div>
-			 	    <%end%>
-			 	  	<%=image_tag("logo.png")%>
-			    </div>
+				
+		    	<% unless current_user.blank? or current_user.usertype == "admin"%>
+			 		<div class="header_user_detail">							
+						<%= link_to "Stage",stage_path%>  &nbsp; | &nbsp; <%= link_to "Portfolio",portfolio_path(:id=>current_user.id)%> | 
+		 	        </div>
+		 	    <%end%>
+		 	  	<%=image_tag("logo.png")%>
+		    </div>
 		 </div >
 		 <!-- end .header -->
 	</div>
 <%end%>
 <script>
-$.ajaxSetup({ dataType: 'script' });
+	$.ajaxSetup({ dataType: 'script' });
 </script>
 <%=yield%>
-<script>
-	 $(document).ready(function(){  
-	  if($(window).width() < 1227)
-	  { 
-		$('.notification_top_icon').show();
-		$('.stagemine_name').hide();
-		
-	  }
-	  else if($(window).width() > 1227)
-	  { 
-		$('.notification_top_icon').hide();
-		$('.stagemine_name').show();
-	
-	
-	  }
-	  
-	$(window).resize(function() {
-	  // This will execute whenever the window is resized
-	 
-	  if($(window).width() < 1227)
-	  { 
-	    $('.notification_top_icon').show();
-	    $('.stagemine_name').hide();
-	  }
-	  else if($(window).width() > 1227)
-	  { 
-		$('.notification_top_icon').hide();
-		$('.stagemine_name').show();
-	  }
-	
-	});
-	});
-	</script>
 </body>
 </html>

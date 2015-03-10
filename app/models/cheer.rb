@@ -4,6 +4,7 @@ class Cheer < ActiveRecord::Base
   belongs_to :picture
   belongs_to :video
   has_many :points, autosave: true
+  belongs_to :league
 
 
 end

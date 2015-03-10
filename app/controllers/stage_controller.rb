@@ -1,5 +1,7 @@
+
 class StageController < ApplicationController
-layout :resolve_layout
+ layout :resolve_layout
+
 
 def stage
     @vid_id= current_user.videos.last

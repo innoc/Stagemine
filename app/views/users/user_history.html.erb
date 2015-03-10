@@ -39,7 +39,7 @@
             </div>
           </div>
             <div class="task_season_container third_font_method">
-              <%@task = @user.tasks.where("start_date > ? and end_date < ? ", user_history.season.start_date, user_history.season.end_date)%>
+              <%@task = @user.tasks.where("start_date > ? and end_date < ? or start_date > ? and end_date = ? ", user_history.season.start_date, user_history.season.end_date,user_history.season.start_date, user_history.season.end_date)%>
               <%if @task.blank?%>
                 no task to show
               <%else%>

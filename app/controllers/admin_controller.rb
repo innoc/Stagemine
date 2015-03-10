@@ -127,7 +127,12 @@ class AdminController < ApplicationController
         @new_season.end_date = DateTime.new(params[:end_year].to_i,params[:end_month].to_i,params[:end_day].to_i)
         @new_season.status = "Inactive"
         @new_season.description = params[:description]
-        @new_season.incentive = params[:incentive]
+        @new_season.first_place = params[:first_place]
+        @new_season.second_place = params[:second_place]
+        @new_season.third_place = params[:third_place]
+        @new_season.fourth_place = params[:fourth_place]
+        @new_season.fifth_place = params[:fifth_place]
+        @new_season.other_positions = params[:other_positions]
         @preseason_start = DateTime.new(params[:pre_start_year].to_i,params[:pre_start_month].to_i,params[:pre_start_day].to_i)
         @new_season.build_preseason(start_day:@preseason_start, end_day:@new_season.start_date, status: "active")
         

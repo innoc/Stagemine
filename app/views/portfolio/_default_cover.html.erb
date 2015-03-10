@@ -3,36 +3,37 @@
     <div class="portfolio__top--right__image-container">
       <%=image_tag("clouds.png")%>
     </div>
-    <p>
-    </p>
-    <p id="mini_menu_trigger">
-      Change content
-    </p>
-    <div id="mini_menu_id">
-      <div class="mini_menu_arrow">
-
+    <%if @portfolio_restriction == "allow"%>
+      <p>
+      </p>
+      <p id="mini_menu_trigger">
+        Change content
+      </p>
+      <div id="mini_menu_id">
+        <div class="mini_menu_arrow">
+        </div>
+        <div class="mini_menu">
+          <table align="center">
+            <tr>
+              <td>
+                <%= link_to image_tag("video_icon.png"), cover_video_path(:id=>@user.id),:rel=>"block"%>
+              </td>
+              <td></td>
+              <td>|</td>
+              <td></td>
+              <td>
+                <div id="imgButton">
+                  <%=form_for :coverimage,:url=>{:controller=>"portfolio",:action=>"change_cover_image",:id=>@user.id},:html=>{:multipart=>true,:id=>"change_image"} do |f|%>
+                    <%= f.file_field :image, :id=>"imgFile"%>
+                    <%= link_to image_tag("small_image_icon.png")%>
+                  <%end%>
+                </div> 
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
-      <div class="mini_menu">
-        <table align="center">
-          <tr>
-            <td>
-              <%= link_to image_tag("video_icon.png"), cover_video_path(:id=>@user.id),:rel=>"block"%>
-            </td>
-            <td></td>
-            <td>|</td>
-            <td></td>
-            <td>
-              <div id="imgButton">
-                <%=form_for :coverimage,:url=>{:controller=>"portfolio",:action=>"change_cover_image",:id=>@user.id},:html=>{:multipart=>true,:id=>"change_image"} do |f|%>
-                  <%= f.file_field :image, :id=>"imgFile"%>
-                  <%= link_to image_tag("small_image_icon.png")%>
-                <%end%>
-              </div> 
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <%end%>
   </div>
 </div>
 

@@ -43,13 +43,10 @@ ActiveRecord::Schema.define(version: 20242616020378) do
 
   create_table "cheers", force: true do |t|
     t.integer  "user_id"
-    t.integer  "cheerer_id"
     t.integer  "cheer_number"
+    t.integer  "cheerer_id"
     t.integer  "video_id"
-    t.integer  "word_id"
-    t.integer  "picture_id"
-    t.integer  "interest_id"
-    t.integer  "task_id"
+    t.integer  "league_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -190,31 +187,10 @@ ActiveRecord::Schema.define(version: 20242616020378) do
     t.string   "image_meta"
   end
 
-  create_table "pointdata", force: true do |t|
-    t.integer  "point_number"
-    t.decimal  "picture_divider"
-    t.integer  "word_divider"
-    t.decimal  "vote_adder"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pointhistories", force: true do |t|
-    t.integer  "position"
-    t.integer  "point"
-    t.integer  "interest_id"
-    t.integer  "season_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "points", force: true do |t|
     t.integer  "user_id"
-    t.integer  "user_interest_id"
     t.integer  "status"
-    t.decimal  "previous_point"
-    t.decimal  "point"
+    t.integer  "point"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -279,7 +255,12 @@ ActiveRecord::Schema.define(version: 20242616020378) do
   create_table "seasons", force: true do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "incentive"
+    t.integer  "first_place"
+    t.integer  "second_place"
+    t.integer  "third_place"
+    t.integer  "fourth_place"
+    t.integer  "fifth_place"
+    t.integer  "other_positions"
     t.string   "status"
     t.string   "name"
     t.text     "description"

@@ -1,95 +1,20 @@
-	<%@winner = Winner.task_winner(@user)%>
-		<%unless @winner == nil%>
-				<div class="task_notification_winner small_bark_font_method">
-					<div class="task_winner_header third_font_method">
-					Here is the winner of the "<%=@winner[1].title%>" task
-					</div>
-					<%end%>
-					<%unless @winner == nil%>
-						<div class="league_user">
-						<%unless @winner[0].userimage.blank?%>
-							<%@winner_user_image = @winner[0].userimage%>
-						<%end%>
-							<div class="league_user_detail">
-								<div class="league_rank_color" style="background-color:<%=@winner[0].rank.rankdetail.rank_color%>">	</div>
-								<div class="unit_box">
-									
-								</div>
-								<div class="league_user_name second_font_method">
-									<%= link_to @winner[0].user_name,portfolio_path(:id=>@winner[0].id)%><br/>
-									<span class="third_font_method">
-									<%=@winner[0].rank.rankdetail.name%>
-									</span>
-								</div>
-						    </div>
-				      	    <div class=""><%if @winner_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@winner_user_image.image.url(:smallest))%><%end%></div>
-						</div>
-				</div>
-		<%end%>
+<%unless Season.last.status == "active"%>
+  <div class="cheers_activation">
+  	<div class="cheers_activation-icon">
+  		<%=image_tag("Cheers-chained.png")%>
+  	</div>
+  	<div class="bold_grey_font">
+  		Cheers are locked until season starts	
+  	</div>
+  </div>
+<%else%>
+  <div class="cheers_activation">
+    <div class="cheers_activation-icon">
+      <%=image_tag("Cheers-unchained.png")%>
+    </div>
+    <div class="bold_grey_font">
+      Cheers are now unlocked
+    </div>
+  </div>
+<%end%>
 
-	<%unless @user.notifications.where("status=?",0).blank?%>
-
-		<%for notification in @user.notifications.where("status=?",0)%>
-			  <% if notification.notification_type == "Point" or notification.notification_type == "Friendship" %>
-				   	<%= link_to(notification_path) do %>
-					    <div class="notification">
-					    	<div class="notification_icon">
-					    	<%=image_tag("notification.png")%>
-					    	</div>
-					    	<div class="notification_content">
-					    		new notification
-					    	</div>
-					    </div>
-				    <%end%>
-			   <%end%>
-			   
-			    <% if notification.notification_type == "Message" %>
-				   	<%= link_to(notification_path) do %>
-					    <div class="notification">
-					    	<div class="notification_icon">
-					    	<%=image_tag("smaller_message_icon.png")%>
-					    	</div>
-					    	<div class="notification_content">
-					    	<%user= User.find(notification.secondary_user)%>
-					    	<%if user.usertype == "admin"%>
-					    		New Message from Stagemine
-					    	<%else%>
-					    		New message from <span class="second_font_method"><%=link_to User.find(notification.secondary_user).user_name, portfolio_path(:id=>notification.secondary_user)%></span>
-					    	<%end%>
-					    	</div>
-					    </div>
-				    <%end%>
-			   <%end%>
-			   
-		   	  <%if notification.notification_type == "Rank" %>
-				   	<%= link_to(notification_path) do %>
-					     <div class="notification">
-					    	<div class="notification_icon">
-					    	<%=image_tag("rank_upgrade_icon.png")%>
-					    	</div>
-					    	<div class="notification_content">
-					    		Rank Upgraded
-					    	</div>
-					    </div>
-				    <%end%>
-			  <%end%>
-		 <%end%>
-    <%end%>    
-   <%unless @user_task.empty?%>
-	   <%= link_to(task_info_path,:rel=>"block") do %>
-			        <div class="notification">
-				    	<div class="notification_icon">
-				    	<div class="task_notification_count">
-				    	<%=image_tag("task_small.png")%>
-				    	</div>
-				    	</div>
-				    	<div class="notification_content">
-				    		<%=pluralize(@user_task.count,'Task Alert')%>
-				    	</div>
-				    </div>
-	   <%end%>
-   <%end%>
-   <div class="notification_text">
-   	<%=image_tag("notification_large.png")%>
-   	<p>Notification</p>
-   </div>

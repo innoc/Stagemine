@@ -17,4 +17,15 @@ module StageHelper
 		end  
 	end
 
+	def generate_season_interest(filter_code,random_interest)
+		if filter_code == "all" or filter_code == "fan" or filter_code == "fanned" or filter_code == "task"  or filter_code.blank?
+			interest_season = random_interest[0]
+		else
+			interest_season = Interest.find(filter_code)
+			if interest_season.interest_name == "Random"
+				interest_season = random_interest[0] 
+			end
+		end	
+		return interest_season
+	end
 end

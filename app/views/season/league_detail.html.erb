@@ -1,26 +1,70 @@
 <div class="facebox_header">
-	<%=@league.season.name%>
+	Season Reward
 </div>
-<br/>
-
-<div class=" league_details small_bark_font_method">
-<span class="font_method_alternative">Season name :</span> <%=@league.season.name%>
-<br/><br/>
-<span class="font_method_alternative">League name :</span> <%=@league.interest.interest_name%> dance league
-<br/><br/>
-<span class="font_method_alternative">Incentives  :</span> <%=@league.season.incentive%>
-<br/><br/>
-<span class="font_method_alternative">Season Description  :</span> <%=@league.season.description%>
-<!-- <br/><br/>
-<span class="font_method_alternative">Maximum enrollment  :</span> <%=@league.enrollment_limit%> people
-<br/><br/>
-<span class="font_method_alternative">Qualification Criteria:</span> 
-<%if @league.cheers_to_qualify == 0 %> first come first served basis 
-<%else%>
-The first <%=@league.enrollment_limit%> people to get <%=@league.cheers_to_qualify%> cheers from an original video qualifies to enroll in this league. 
-<%end%>  -->
+<p></p>
+<div class=" league_details ">
+  <span class="small_bark_font_method"><%=@league.season.description%> </span>
+  <p></p>
+  <p></p>
+  <p></p>
+  <table width="100%" >
+    <tr align="center" class="bold_grey_font">
+      <td>
+        <%=1.ordinalize%> position     
+      </td>
+      <td>
+        <%=2.ordinalize%> position    
+      </td>
+      <td>
+        <%=3.ordinalize%> position    
+      </td>    
+    </tr>
+    <tr align="center">
+      <td class="league_info_border">
+        <span class="light_green_font--small"><%=@league.season.first_place%></span> 
+        <p class="light_grey_font">points</p>
+      </td>
+      <td class="league_info_border">
+         <span class="light_green_font--small"><%=@league.season.second_place%></span> 
+        <p class="light_grey_font">points</p>  
+      </td>
+      <td>
+         <span class="light_green_font--small"><%=@league.season.third_place%></span> 
+        <p class="light_grey_font">points</p>  
+      </td>    
+    </tr>
+    <tr align="center" class="bold_grey_font">
+      <td>
+        <%=4.ordinalize%> position     
+      </td>
+      <td>
+        <%=5.ordinalize%> position    
+      </td>
+      <td>
+        Everyone else
+      </td>
+    </tr>
+    <tr align="center">
+      <td class="league_info_border">
+        <span class="light_green_font--small"><%=@league.season.fourth_place%></span>
+        <p class="light_grey_font">points</p> 
+      </td>
+      <td class="league_info_border">
+         <span class="light_green_font--small"><%=@league.season.fifth_place%></span>
+        <p class="light_grey_font">points</p>
+      </td>
+      <td>
+         <span class="light_green_font--small"><%=@league.season.other_positions%></span>
+        <p class="light_grey_font">points</p>
+      </td>
+    </tr>
+  <table>
 </div>
-<br/>
+<p></p>
 <div class="centralize">
-<%=image_tag('season_default.png')%><br/><br/>
+  <%=image_tag("coins-large.png")%>
+</div>
+
+<div class="centralize">
+  <p></p><p><span class="light_grey_font">use points to purchase items from the</span> <span class="primary_link_font-small"><%= link_to "stagemine store", store_path%></span></p>
 </div>

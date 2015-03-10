@@ -25,7 +25,6 @@ has_one  :rank, :dependent=>:destroy, autosave: true
 has_many :notifications, :dependent=>:destroy
 has_many :task_points, :dependent=>:destroy
 has_many :Leaguewinners, :dependent=>:destroy
-has_many :pointhistories, :dependent=> :destroy
 has_many :auditions, :dependent=>:destroy
 has_many :winner_notification_checks, :dependent=>:destroy 
 validates_uniqueness_of :user_name
@@ -46,6 +45,10 @@ end
 def self.searchsuggestion(prefix)
   suggestions = User.where("user_name ILIKE ? OR first_name ILIKE ? OR last_name ILIKE ?", "#{prefix}%","#{prefix}%","#{prefix}%")
   return suggestions.limit(10)
+end
+
+def self.has_an_image?(user_id)
+  User.find(user_id).userimage
 end
 
 def authenticated?(password)

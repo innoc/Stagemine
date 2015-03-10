@@ -38,6 +38,14 @@ gem 'figaro'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+group :developement, :test do 
+  gem 'rspec-rails'
+end 
+
+group :test do 
+  gem "capybara"
+  gem "factory_girl_rails", '~> 4.5.0'
+end
 # Use unicorn as the app server
 # gem 'unicorn'
 

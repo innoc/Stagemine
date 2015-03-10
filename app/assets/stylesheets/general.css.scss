@@ -1,0 +1,135 @@
+// Place all the styles related to the friendship controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$font-stack:    Helvetica, sans-serif;
+$primary-link-font-color: #2b6cc2;
+$font-color-stack1: rgb(134,198,63);
+$font-color-stack2: rgb(100,100,115);
+$font-color-stack3: rgb(170,170,170);
+$font-color-stack4: #86c63f;
+
+
+ul, ol, dl { 
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0; 
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+a img { 
+  border: none;
+  outline: none; 
+}
+
+
+a:link {    
+  text-decoration: none;
+  font-size:.8em;
+}
+
+a:visited {
+  text-decoration: underline;
+}
+
+a:hover, a:active, a:focus {
+ text-decoration:underline;
+}
+
+.header {
+  padding: 0;
+  width: 100%;
+  height: 50px;
+  position:fixed;
+  opacity:0.9;
+  z-index:50;
+  filter:alpha(opacity=40); 
+  top:0px;
+  z-index:100;
+  background-color: rgb(100,100,115);
+  background-image:url(noisecolor2.png);
+  -webkit-box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .52);
+  box-shadow: 2px 0px 2px #999;
+  }
+
+.primary_link_font a{ 
+  font-size:small;
+  font-weight:400;
+  color:$primary-link-font-color;  
+}
+
+.primary_link_font--large-bold a{ 
+  color: $font-color-stack2;
+  font-size: 14px;
+  font-weight: 800; 
+}
+
+.small_bold_text{
+  font-size:12px;
+  font-weight: bold;
+}
+
+.primary_link_font--small-bold a{ 
+  color: $font-color-stack2;
+  font-size: 12px;
+  font-weight: 800; 
+}
+
+.secondary_link_font a{ 
+  color: $font-color-stack4;
+  font-size: 14px;
+  font-weight: 800; 
+}
+
+
+.primary_link_font-small a{ 
+  color: $font-color-stack2;
+  font-size: 10px;
+  font-weight: 800; 
+}
+
+.light_grey_font{ 
+  color:$font-color-stack3;
+  font-size:smaller;
+}
+
+.bold_grey_font{ 
+  color:$font-color-stack3;
+  font-size:11px;
+  font-weight: bold;
+}
+
+.light_green_font{ 
+  color: #86c63f;
+  font-family: 'Abel', sans-serif;
+  font-size: 49px;
+}
+
+.light_green_font--small{ 
+  color: #86c63f;
+  font-family: 'Abel', sans-serif;
+  font-size: 32px;
+}
+
+.small_bark_font_method{ 
+  color:#333;
+  font-size:0.8em;  
+}
+
+.task_title_header a:hover{
+  text-decoration:none;
+}
+
+.task_title_header{ 
+  font-weight:bold;
+}
+
+.task_title_header a{ 
+  color:rgb(85,172,238);
+  font-weight: bold;
+  font-size: 1.0em; 
+}

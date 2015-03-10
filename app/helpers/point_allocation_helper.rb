@@ -1,17 +1,13 @@
 module PointAllocationHelper
+  def already_cheered?(user,post)
+    return true if post.cheers.where(:cheerer_id=>user.id).count > 0 
+    return false
+  end
 
-def user_notify(user,post)
-    @post_cheers= post.cheers
-    for post_list in @post_cheers
-         if post_list.cheerer_id == user.id
-            user_status = 1
-         end
+  def cheer_access?(post)
+    user = post.user
+    if post.label.try(:interest).try(:leagues).try(:last).try(:status) == "active"
+      return user.leagues.include?(post.label.interest.leagues.last)
     end
-    
-    if user_status.nil?
-        return "no"
-    else
-        return "yes"
-    end
-end
+  end
 end

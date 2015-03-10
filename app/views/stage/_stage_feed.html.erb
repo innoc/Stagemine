@@ -66,11 +66,11 @@
             </div>
           <%end%>
         </div>
-       </div>
+      </div>
       </span>
     <%end%>
   <%end%>
-
+  
    <%for feed in @feed%>
 	     <%if feed.feed_name == "Video"%>
 	     	<%= render :partial=>"stage/video_feed" , :locals=>{:feed=>feed}%>

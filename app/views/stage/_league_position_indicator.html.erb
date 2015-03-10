@@ -1,0 +1,106 @@
+<%if @current_user_is_enrolled %>
+  <%unless @user_contains == 0%>
+    <%hash=Hash[@season_table.map.with_index.to_a]%>
+    <div class="user_position_domain">
+      <div class="brief_league_header">
+        &bull;&bull;&bull;
+      </div>  
+      <%if hash[@user.id] == 0%>
+      <%else%>
+        <% above_user = hash[@user.id] - 1%>                
+        <%unless @user.id == @season_table.last%>
+         <%below_user = hash[@user.id] + 1%>
+        <%end%>                      
+        <%unless above_user.blank?%>
+        <%@above_user = User.find(@season_table[above_user])%>                  
+        <%above_user_cheer_count = Cheer.where(["user_id = ? and league_id = ?",@above_user, @interest_season.leagues.last.id])%> 
+          <div class="league_user_transparent">
+            <%unless @above_user.userimage.blank?%>
+              <%@brief_league_user_image = @above_user.userimage%>
+            <%end%>               
+            <div class="league_user_detail">
+              <div class="league_rank_color" style="background-color:<%=@above_user.rank.rankdetail.rank_color%>"></div>
+                <div class="unit_box">
+                  <%unless above_user_cheer_count.blank?%>
+                    <%position = hash[@above_user.id] + 1%>
+                    <%= position.ordinalize%>
+                  <%end%>
+                </div>                  
+                <div class="league_user_name second_font_method">
+                  <%= link_to @above_user.user_name,portfolio_path(:id=>@above_user.id)%>
+                  <div style="font-size:11px;", class="third_font_method">
+                    <%unless above_user_cheer_count.blank?%>
+                      Cheers : <%=above_user_cheer_count.inject(0){|sum,e| sum += e.cheer_number}%><br/>
+                    <%else%>
+                      Cheers : 0
+                    <%end%>
+                  </div>
+                </div>
+              </div>
+            <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+                  <%@brief_league_user_image  = nil%>
+            </div>
+          <%end%>                         
+        <div class="league_user_nontransparent">
+          <%unless @user.userimage.blank?%>
+            <%@brief_league_user_image = @user.userimage%>
+          <%end%>  
+          <%middle_user_cheer_count = Cheer.where(["user_id = ? and league_id = ?",@user.id, @interest_season.leagues.last.id])%>    
+          <div class="league_user_detail">
+            <div class="league_rank_color" style="background-color:<%=@user.rank.rankdetail.rank_color%>">
+            </div>
+            <div class="unit_box">
+              <%unless middle_user_cheer_count.blank?%>
+                <%@position = hash[@user.id] + 1%>
+                <%=@position.ordinalize%>
+              <%end%>
+            </div>
+            <div class="league_user_name second_font_method">
+              <%= link_to @user.user_name,portfolio_path(:id=>@user.id)%>
+              <div style="font-size:11px;", class="third_font_method">
+                <%unless middle_user_cheer_count.blank?%>
+                  Cheers: <%=middle_user_cheer_count.inject(0){|sum,e| sum += e.cheer_number}%> <br/>
+                <%else%>
+                  Cheers: 0
+                <%end%>
+              </div>
+            </div>
+          </div>
+        <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+          <%@brief_league_user_image  = nil%>
+        </div>  
+
+        <%unless below_user.blank?%>
+          <%@below_user = User.find(@season_table[below_user])%>
+          <%below_user_cheer_count = Cheer.where(["user_id = ? and league_id = ?",@below_user.id, @interest_season.leagues.last.id])%>    
+            <div class="league_user_transparent">
+              <%unless @below_user.userimage.blank?%>
+                <%@brief_league_user_image = @below_user.userimage%>
+              <%end%>
+              <div class="league_user_detail">
+                <div class="league_rank_color" style="background-color:<%=@below_user.rank.rankdetail.rank_color%>"></div>
+                <div class="unit_box">
+                  <%unless below_user_cheer_count.blank?%>
+                    <%position = hash[@below_user.id] + 1%>
+                    <%= position.ordinalize%>
+                  <%end%>
+                </div>
+                <div class="league_user_name second_font_method">
+                  <%= link_to @below_user.user_name,portfolio_path(:id=>@below_user.id)%>
+                  <div style="font-size:11px;", class="third_font_method">
+                    <%unless below_user_cheer_count.blank?%>
+                      Cheers: <%=below_user_cheer_count.inject(0){|sum,e| sum += e.cheer_number}%>
+                    <%else%>
+                      Cheers: 0
+                    <%end%>
+                  </div>
+                </div>
+              </div>
+            <div class=""><%if @brief_league_user_image.blank?%><%=image_tag("Default_smallest.png")%><%else%><%=image_tag(@brief_league_user_image.image.url(:smallest))%><%end%></div>
+              <%@brief_league_user_image  = nil%>
+            </div>
+          <%end%>                                         
+      <%end%>
+    </div>
+  <%end%>
+<%end%>

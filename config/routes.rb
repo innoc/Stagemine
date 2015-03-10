@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'welcome#welcome'
   get '/stage' =>"stage#stage", :as=>"stage"
   get '/vid_display' => "stage#vid_display", :as=>"video"
+  get '/store' => "store#index", :as=>"store"
   match '/create_vid' => "stage#create_vid", :as=>"create_vid", via: :all
   match '/create_word' => "stage#create_word", :as=>"create_word", via: :all
   match '/create_image' => "stage#create_image", :as=>"pictures", via: :all
