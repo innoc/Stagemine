@@ -54,12 +54,33 @@ a:hover, a:active, a:focus {
   background-image:url(noisecolor2.png);
   -webkit-box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .52);
   box-shadow: 2px 0px 2px #999;
-  }
+}
 
 .primary_link_font a{ 
   font-size:small;
   font-weight:400;
   color:$primary-link-font-color;  
+}
+
+.primary_link_font_smaller a{ 
+  font-size:11px;
+  font-weight:400;
+  color:$primary-link-font-color;  
+}
+
+.google_font_type1{ 
+  font-family: 'Poiret One', cursive;
+  font-size:40px; 
+}
+.google_font_type1--larger{ 
+  font-family: 'Poiret One', cursive;
+  font-size:50px; 
+  color: #86c63f; 
+} 
+.secondary_font_method a{ 
+  font-size:small;
+  font-weight:400;
+  color:#2b6cc2;  
 }
 
 .primary_link_font--large-bold a{ 
@@ -68,9 +89,33 @@ a:hover, a:active, a:focus {
   font-weight: 800; 
 }
 
+.primary_link_font--larger-bold a{ 
+  color: $font-color-stack2;
+  font-size: 20px;
+  font-weight: 800; 
+}
+
+.primary_link_font--nodecoration a{ 
+  color: $font-color-stack2;
+  font-size: 14px;
+  font-weight: 800; 
+  text-decoration:none;
+}
+.primary_link_font--nodecoration a:hover{ 
+  text-decoration:none;
+}
+
 .small_bold_text{
   font-size:12px;
   font-weight: bold;
+}
+
+.small_light_text{
+  font-size:12px;
+}
+
+.smaller_light_text{
+  font-size:11px;
 }
 
 .primary_link_font--small-bold a{ 
@@ -85,7 +130,6 @@ a:hover, a:active, a:focus {
   font-weight: 800; 
 }
 
-
 .primary_link_font-small a{ 
   color: $font-color-stack2;
   font-size: 10px;
@@ -95,6 +139,10 @@ a:hover, a:active, a:focus {
 .light_grey_font{ 
   color:$font-color-stack3;
   font-size:smaller;
+}
+.light_grey_font-large{ 
+  color:$font-color-stack3;
+  font-size: 15px;
 }
 
 .bold_grey_font{ 
@@ -113,6 +161,13 @@ a:hover, a:active, a:focus {
   color: #86c63f;
   font-family: 'Abel', sans-serif;
   font-size: 32px;
+}
+
+.light_green_font--smaller {
+  color: #86c63f;
+  font-family: 'Abel', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .small_bark_font_method{ 

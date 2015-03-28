@@ -2,14 +2,23 @@ class PortfolioController < ApplicationController
   layout :resolve_layout
 
   def portfolio
+   flash.discard(:notice) 
    @user = User.find(params[:id]) 
    @feed = []
-   @link_type = 1
+   @portfolio_page = true 
    @badge_count = @user.badge_allocations.count
    @user_cheers = @user.cheers.count
-   @user_interest = @user.interests
-   @fan = Friendship.where("friend_id=?",@user.id).order('created_at DESC').limit(10)
-   @fanned = @user.friends.order('created_at DESC').limit(10)
+   @user_interest = @user.interests   
+   @user_represents = @user.country_supported unless @user.country_supported.blank?
+   @user_represents = @user.city_supported unless @user.city_supported.blank?
+   @user_represents = @user.school_supported unless  @user.school_supported.blank?
+   @awards_count = @user.badge_allocations.count
+   @task_enrollment = @user.enrolls
+   @league_enrollment = @user.league_enrollments
+   @user_task_history = @user.histories.where(:competition_type=>"task").limit(5)
+   @user_season_history = @user.histories.where(:competition_type=>"season").limit(5)
+   @fan = Friendship.where("friend_id=?",@user.id).order('created_at DESC')
+   @fanned = @user.friends.order('created_at DESC')
    if @user.id == current_user.id
    @portfolio_restriction = "allow"
    end
@@ -62,7 +71,8 @@ class PortfolioController < ApplicationController
     if request.post?
       portfolio_image = PortfolioImage.find(params[:id])
       if params[:dimension][0] == "-"
-        portfolio_image.update_attributes(:margin=>params[:dimension])
+        dimension = (params[:dimension]).to_i - 277
+        portfolio_image.update_attributes(:margin=>dimension)
       else
         portfolio_image.update_attributes(:margin=>0)
       end 

@@ -15,6 +15,10 @@
   text-align: center;
 }
 
+.no_interest {
+  padding-top: 26px;
+}
+
 .responsive_menu{ 
   border-left: 1px solid lightblue;
   padding: 12px;
@@ -23,7 +27,34 @@
   padding-top: 10px;
   height: 18px;
   background: #eeeeee;
-} 
+}
+
+.graph_sample {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.season_winner_container {
+  border: 1px solid lightblue;
+  border-top: 0;
+  width: 400px;
+  margin: auto;
+  margin-top: 36px;
+  background: white;
+}
+
+.winner_point{ 
+  text-align: right;
+  float: right;
+  padding-right: 10px;
+}
+
+.facebox_conatiner {
+  width: 330px;
+  height: 49px;
+  float: right;
+  margin-top: -5px;
+}
 
 .top_container_drop_down ul {
   position:relative;
@@ -44,6 +75,27 @@
   text-align: left;
   padding: 5px;
   z-index: 99;
+}
+
+.image_facebox_content{ 
+  background-color:white;
+  padding:5px;
+  padding-left:10px;  
+  padding-right:10px;
+  min-height: 100px;
+}
+
+ .close_notification{ 
+  float: right;
+  width: 45px;
+  height: 21px;
+  color: lightblue;
+  font-weight: 300;
+  font-size:20px;
+ }
+
+.task_notification--top {
+  height: 27px;
 }
 
 .top_container_drop_down ul .top_container_clicker {
@@ -304,11 +356,28 @@
   background:transparent;
 }
 
+.league_reward_display {
+  margin-top: 53px;
+  background: white;
+  padding-top: 13px;
+  width: 230px;
+  border: 1px solid lightblue;
+}
+
+.league_table_container{ 
+  margin-left:54px;
+  min-height:400px;
+  background-color:white;
+  border:1px solid lightblue;
+  width:400px;
+  margin-top: 17px;
+}
+
 .pin {
   display: inline-block;
   background: #FEFEFE;
   border: 1px solid lightblue;
-  margin: 7px 0px 15px;
+  margin: 17px 0px 15px;
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
@@ -353,9 +422,7 @@
   top:15px;
   left:18px;
 }
-.task_feed_content{ 
-  padding:15px 0px 10px 10px;
-}
+
 .image_container{
   width:293px;
   background: lightblue;
@@ -372,9 +439,7 @@
 }
 
 .interest_tag{ 
-  border-top:1px solid lightblue;
-  border-bottom:1px solid lightblue;
-  height:40px;
+  min-height:40px;
   margin-top:15px;
 }
 
@@ -455,19 +520,22 @@
   margin-top: 7px;
   float: left;
 }
-.cheers_container--icon {
+.cheers_container__icon--active, .cheers_container__icon--inactive {
   border-right: 1px solid lightblue;
   width: 52px;
-  height: 28px;
+  height: 30px;
   padding: 3px;
   float: left;
-  background: rgb(100,100,115);
-  padding-top: 10px;
+  padding-top: 8px;
   text-align: center;
+}
+
+.cheers_container__icon--active:hover{ 
   -moz-box-shadow: inset 1px 1px 1px #bbb;
   -webkit-box-shadow: inset 1px 1px 1px #bbb;
-  box-shadow: inset 1px 1px 7px #bbb;
+  box-shadow: inset 1px 1px 7px #bbb; 
 }
+
 .cheers_container--text {
   float: left;
   width: 158px;
@@ -475,9 +543,13 @@
   margin-left: 7px;
 }
 .user_name {
-  margin-top: 30px;
+  margin-top: 38px;
   margin-left: 70px;
   width: 190px;
+}
+
+.feed_icons {
+  border-bottom: 1px solid lightblue;
 }
 
 .feed_comment{ 
@@ -501,7 +573,6 @@
   width: 50px;
   margin: 50px auto;
 }
-
 
 .time_remaining {
   background: white;
@@ -534,7 +605,7 @@
 }
 
 .league_info_border{ 
-  border-right: 1px dotted #86c63f;
+  border-right: 1px solid lightblue;
 }
 
 .feed_border_top{ 
@@ -553,6 +624,15 @@
   background-color: #716f42;
   z-index: 10;
   position: absolute;
+}
+
+.radi{ 
+  border-radius:100%;
+  width:55px;
+  height:55px;
+  margin-top :12px;
+  margin-left:5px;
+  float:left;
 }
 
 .dot {

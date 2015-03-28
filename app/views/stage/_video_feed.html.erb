@@ -6,15 +6,6 @@
 				<div class="vid_click"> <div class='arrow-right'></div> </div>
 		  </div>
 		<%end%>		
-		<%unless feed.video.task.blank?%> 
-			<div class="task_feed_content small_bark_font_method">
-				<div class="task_title_header">
-					<%if feed.video.task.status == "active"%>
-				    <%=link_to feed.video.task.title, task_path(:id=>feed.video.task.label.interest.interest_name)%>
-				  <%end%>
-				</div>			    		    
-			</div>	
-		<%end%>
 		<%unless feed.video.description.blank?%>
 		  <div class=" feed_description small_bark_font_method">
 		  	<%=feed.video.description%>
@@ -27,7 +18,7 @@
 			<%@image = feed.user.userimage%>
 		<%end%>
 		<div class="radi" style="border:2px solid <%=feed.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>		
-		<%if @link_type == 1 and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
+		<%if @portfolio_page and @portfolio_restriction == "allow"%> <!--This means that the user is currently in the profile page-->
 			<div  class="<%="#{feed.id}_hover"%> delete_link second_font_method">
 				<%=link_to "Delete", delete_feed_path(:id=>feed.id, :type=>"v")%>
 			</div>

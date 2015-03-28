@@ -80,14 +80,19 @@
         </div>
       <%end%><!--end of loop-->
       <%=render :partial=>"league_position_indicator"%>
-      <div class="join_leave_league second_font_method"><!--check if user is enrolled or not-->                   
+      <div class="join_leave_league second_font_method"><!--check if user is enrolled or not-->                  
         <%unless @user.leagues.include?(@interest_season.leagues.last)%>
           <%=link_to "Join League", league_enroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
         <%else%>
           <%=link_to "Leave League", league_disenroll_path(:id=>@interest_season.leagues.last.id)%>&nbsp;&nbsp;
         <%end%>
         <%=link_to "See all", see_all_path(:id=>@interest_season.id)%>
-     </div>   
+      </div> 
+      <div class="pulse_container">
+        <div class="dot"></div>
+        <div class="pulse" style="background: url(<%if @userimage.blank?%><%=image_path("Default_tiny.png")%><%else%><%=image_path( @userimage.image.url(:tiny))%><%end%>) no-repeat; background-position:center;" >
+        </div>
+      </div>      
     <%end%> <!--end of "if not user enrolled in a season"-->                      
   <%end%> <!--end of "if season has ended"-->            
 <%else%>        
@@ -114,7 +119,7 @@
     <%=link_to "Invite friends"%>
     <%unless @interest_season.interest_name == "Random"%>
       &nbsp;&nbsp;
-      <%=link_to "View  Rewards", league_detail_path(:league_id=>@interest_season.leagues.last.id),:rel=>"block"%>
+      <%=link_to "View Rewards", league_detail_path(:league_id=>@interest_season.leagues.last.id),:rel=>"block"%>
     <%end%>
   </div>
   <div class="pulse_container">

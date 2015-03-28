@@ -20,12 +20,12 @@ has_many :comments, :dependent=>:destroy
 has_many :cheers, :dependent=>:destroy
 has_many :points, :dependent=>:destroy
 has_one  :userimage, :dependent=>:destroy
+has_many :votes, :dependent=> :destroy
 has_one  :portfolio_cover, :dependent=>:destroy 
 has_one  :rank, :dependent=>:destroy, autosave: true
 has_many :notifications, :dependent=>:destroy
-has_many :task_points, :dependent=>:destroy
 has_many :Leaguewinners, :dependent=>:destroy
-has_many :auditions, :dependent=>:destroy
+has_many :histories, :dependent=>:destroy
 has_many :winner_notification_checks, :dependent=>:destroy 
 validates_uniqueness_of :user_name
 validates_uniqueness_of :email

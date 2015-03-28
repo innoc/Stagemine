@@ -1,0 +1,105 @@
+  <div class="Portfolio_sidebar_header small_bold_text">
+    Performance
+  </div>  
+  <div class="portfolio_award secondary_font_method">
+    <%= link_to pluralize(@awards_count,'Award'), badge_path(:id=>@user.id)%>
+  </div>
+  <%if @user_season_history.blank? and @user_task_history.blank?%>
+    <div class="blank_performance small_light_text">
+      Nothing to show
+    </div>
+  <%else%>  
+    <%unless @user_season_history.blank?%>
+      <%season_id = 0%>
+      <table width="100%">
+        <%for season_history in @user_season_history%>
+          <%league_name = League.find(season_history.league_id).interest.interest_name%>
+          <%if season_history.season_id == season_id%>              
+            <tr class="bold_grey_font">
+              <td><%="#{league_name} league".truncate(20)%></td> 
+              <td>
+                <%if season_history.position == 0 %>
+                  -
+                <%else%>
+                  <%=season_history.position.ordinalize%>
+                <%end%>
+              </td> 
+              <td>
+                <%if season_history.cheer == 0 %>
+                  -
+                <%else%>
+                  <%=season_history.cheer%>
+                <%end%>
+              </td>               
+            </tr>
+          <%else%>
+            <%season_id = season_history.season_id%>
+            <tr>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="smaller_light_text">Season: <%=Season.find(season_history.season_id).name%></span>
+              </td>
+            </tr>
+            <tr td width="140px" class="bold_grey_font">
+              <td>league</td> <td>position</td> <td>cheers</td>             
+            </tr>                
+            <tr class="bold_grey_font">
+              <td><%="#{league_name} league".truncate(20)%></td> 
+              <td>
+                <%if season_history.position == 0 %>
+                  -
+                <%else%>
+                  <%=season_history.position.ordinalize%>
+                <%end%>                
+              </td> 
+              <td>
+                <%if season_history.cheer == 0 %>
+                  -
+                <%else%>
+                  <%=season_history.cheer%>
+                <%end%>
+              </td>               
+            </tr>
+          <%end%>
+        <%end%>
+      </table>
+    <%end%>
+    <%unless @user_task_history.blank?%>
+      <table width="100%">
+        <tr>
+          <td>
+            <span class="smaller_light_text"> Tasks</span>
+          </td>
+        </tr>
+        <tr class="bold_grey_font">
+          <td width="140px">Task</td> <td width="55px">position</td> <td>vote</td>             
+        </tr> 
+        <%for task_history in @user_task_history%>
+          <%task_name = Task.find(task_history.task_id)%>              
+          <tr class="bold_grey_font">
+            <td><%="#{task_name.title}".truncate(30)%></td> 
+            <td>
+              <%if task_history.position == 0 %>
+                -
+              <%else%>
+                <%=task_history.position.ordinalize%>
+              <%end%>
+            </td> 
+            <td>
+              <%if task_history.vote == 0 %>
+                -
+              <%else%>
+                <%=task_history.vote%>
+              <%end%>
+            </td> 
+          </tr>              
+        <%end%>
+      </table>
+    <%end%> 
+  <%end%>
+  <div class="graph_sample">
+    <%= image_tag("chart-sample.png")%>
+  </div>

@@ -4,164 +4,132 @@ class StageController < ApplicationController
 
 
 def stage
-    @vid_id= current_user.videos.last
-    @feed = []
-    @user_task = []
-    user_check = [] # you need this to prevent duplicate feed
-    @user_interest_league = []
-    @user = current_user   
-    @user_cheers = current_user.cheers.count
-    @task_list = Task.where("status=?","active")
-    @filter_code = params[:id]
-    @user_interest_old = current_user.interests
-    @user_interest = @user_interest_old.reject { |a| a == Interest.where(:interest_name => "Random")[0] } 
-    
-    for user_interest in @user_interest_old
-      if @user.leagues.include?(user_interest.leagues.last)
-         @user_interest_league << user_interest
-      end
+  @vid_id= current_user.videos.last
+  @feed = []
+  @user_task = []
+  user_check = [] # you need this to prevent duplicate feed
+  @user_interest_league = []
+  @user = current_user   
+  @user_cheers = current_user.cheers.count
+  @task_list = Task.where("status=?","active")
+  @filter_code = params[:id]
+  @user_interest_old = current_user.interests
+  @user_interest = @user_interest_old.reject { |a| a == Interest.where(:interest_name => "Random")[0] } 
+  for user_interest in @user_interest_old
+    if @user.leagues.include?(user_interest.leagues.last)
+      @user_interest_league << user_interest
     end
-    
-    if @user_interest_league.blank?
-      @random_interest = @user_interest.sample(1)
-    else
-      @random_interest = @user_interest_league.sample(1)
-    end    
-    @fan = Friendship.where("friend_id=?",@user.id)
-    @user_performer = current_user.friends
-      
-    #get suggested friends
-    # the approach is to first get an array of the user's friends
-    # Loop through the user's interest, selecting the enrolled user for each interest 
-    # Store each user that is enrolled in each interest but not already a firend 
-    
-    user_friends = current_user.friends #Get user friends
-    @friend_suggestion = []
-   
-    for user_interest in @user_interest #Loop through the user interest
-      unless user_interest == "Random"
-        for interested_user in user_interest.users #Loop through the users that have similar interest
-          unless interested_user.usertype 
-            unless interested_user.id == current_user.id 
-              unless user_friends.include? interested_user 
-                unless user_check.include? interested_user
-                 user_check << interested_user
-                 @friend_suggestion << interested_user 
-                end
-              end
-            end
-          end            
+  end    
+  if @user_interest_league.blank?
+    @random_interest = @user_interest.sample(1)
+  else
+    @random_interest = @user_interest_league.sample(1)
+  end    
+  @fan = Friendship.where("friend_id=?",@user.id)
+  @user_performer = current_user.friends
+  unless @task_list.blank?
+    for task in @task_list
+        if @user_interest.include?(task.label.interest)
+         @user_task << task
         end
-      end 
     end
-    if @friend_suggestion.count > 3 
-      @friend_suggestion  = @friend_suggestion.sample(3)
-    end
-    #end of friend suggestion
-    
-    # find any active task that is related to the users interest
-    unless @task_list.blank?
-      for task in @task_list
-          if @user_interest.include?(task.label.interest)
-           @user_task << task
-          end
-      end
-    end
-
-    # By default all the feed from the user's interest will be displayed
-    # I can achieve this by first getting the interests of the current 
-    # user and then getting all other users following that interest
-    # finally, get the feeds of each user 
-          
-    if params[:id] == "all" or params[:id].blank? # 01 means everyone's feed
-      for interest in current_user.interests
-         for interest_feed in interest.feeds
-              @feed << interest_feed
-         end
-      end
-      @filter_code = "all"
+  end
+  if @filter_code == "all" or @filter_code == "fan" or @filter_code == "fanned" or @filter_code == "task"  or @filter_code.blank?
+    filtered_interest = @random_interest[0]            
+  else
+    interest_season = Interest.find(@filter_code)
+    if interest_season.interest_name == "Random"
+      filtered_interest = @random_interest[0]
     else
-      if params[:id] == "fan" #02 means fan's feed             
-          #@user_feed_remote = Feed.find(:all,:conditions=>["primary_user_id=?",current_user.id])
-          unless @fan.blank?
-             for fan in @fan
-               for fan_feed in fan.user.feeds
-                 @feed << fan_feed
-               end
-             end
+      filtered_interest = Interest.find(params[:id])
+    end
+  end 
+  @season_winner_notification_finder = filtered_interest.try(:leagues).try(:last).try(:season).try(:season_winner_notification)
+  unless @season_winner_notification_finder.blank?
+    @season_winner_notification_active = @season_winner_notification_finder if @season_winner_notification_finder.status == "active"
+    @season_winner_notification = @season_winner_notification_active if !(@season_winner_notification_active.blank?) and current_user.winner_notification_checks.where(:winner_notification_id=>@season_winner_notification_active.id, :interest_name=>filtered_interest.interest_name).blank?
+  end  
+  # By default all the feed from the user's interest will be displayed
+  # I can achieve this by first getting the interests of the current 
+  # user and then getting all other users following that interest
+  # finally, get the feeds of each user 
+        
+  if params[:id] == "all" or params[:id].blank? # 01 means everyone's feed
+    for interest in current_user.interests
+      for interest_feed in interest.feeds
+        @feed << interest_feed
+      end
+    end
+    @current_filter = "All feeds"   
+  else
+    if params[:id] == "fan" #02 means fan's feed             
+      #@user_feed_remote = Feed.find(:all,:conditions=>["primary_user_id=?",current_user.id])
+      unless @fan.blank?
+        for fan in @fan
+          for fan_feed in fan.user.feeds
+            @feed << fan_feed
           end
+        end
+      end
+    else
+    if params[:id] == "fanned" #03 means following feed
+      @user_performer = current_user.friends
+      unless @user_performer.blank?
+        for performer in @user_performer
+          for performer_feed in performer.feeds
+            @feed << performer_feed
+          end
+        end
+     end
+    else
+      if params[:id] == "task"
+        unless Task.all.where(:status=>"active").blank?
+          for interest in current_user.interests
+            for interest_feed in interest.feeds.where(:feed_name=="Video")
+              unless interest_feed.video.try(:task).blank?
+                unless interest_feed.video.task.status == "inactive"
+                  @feed << interest_feed
+                end
+              end 
+            end
+          end
+        end
       else
-      if params[:id] == "fanned" #03 means following feed
-          @user_performer = current_user.friends
-          unless @user_performer.blank?
-             for performer in @user_performer
-               for performer_feed in performer.feeds
-                 @feed << performer_feed
-               end
-             end
-         end
-      else
-        if params[:id] == "task"
-           unless Task.all.where(:status=>"active").blank?
-               for interest in current_user.interests
-                   for interest_feed in interest.feeds.where(:feed_name=="Video")
-                      unless interest_feed.video.try(:task).blank?
-                             unless interest_feed.video.task.status == "inactive"
-                                    @feed << interest_feed
-                             end
-                      end 
-                   end
-               end
-           end
-        else
-            #filter feed based on interest 
-            filtered_interest = Interest.find(params[:id])
-            unless filtered_interest.interest_name == "Random"
-              @season_winner_notification_finder = filtered_interest.try(:leagues).try(:last).try(:season).try(:season_winner_notification)
-              unless @season_winner_notification_finder.blank?
-                @season_winner_notification_active = @season_winner_notification_finder if @season_winner_notification_finder.status == "active"
-                @season_winner_notification = @season_winner_notification_active if !(@season_winner_notification_active.blank?) and current_user.winner_notification_checks.where(:season_winner_notification_id=>@season_winner_notification_active.id, :interest_name=>filtered_interest.interest_name).blank?
+        @user_list = filtered_interest.users
+        for user_list in @user_list
+          for user_feed in user_list.feeds
+            unless user_feed.word_id.blank?
+              unless user_feed.word.label.blank?
+                if user_feed.word.label.interest.id == filtered_interest.id
+                  @feed << user_feed
+                end
+              end
+            else
+              unless user_feed.picture_id.blank?                     
+                unless user_feed.picture.label.blank?
+                  if user_feed.picture.label.interest.id == filtered_interest.id
+                    @feed << user_feed
+                  end
+                end  
+              else
+                unless user_feed.video_id.blank?
+                  unless user_feed.video.label.blank?
+                    if user_feed.video.label.interest.id == filtered_interest.id
+                       @feed << user_feed
+                    end
+                  end
+                end
               end
             end
-            @user_list = filtered_interest.users
-             for user_list in @user_list
-                for user_feed in user_list.feeds
-                    unless user_feed.word_id.blank?
-                       unless user_feed.word.label.blank?
-                           if user_feed.word.label.interest.id == Interest.find(params[:id]).id
-                              @feed << user_feed
-                           end
-                       end
-                    else
-                      unless user_feed.picture_id.blank?                     
-                        unless user_feed.picture.label.blank?
-                          if user_feed.picture.label.interest.id == Interest.find(params[:id]).id
-                             @feed << user_feed
-                          end
-                        end  
-                    else
-                        unless user_feed.video_id.blank?
-                          unless user_feed.video.label.blank?
-                            if user_feed.video.label.interest.id == Interest.find(params[:id]).id
-                               @feed << user_feed
-                            end
-                          end
-                        end
-                      end
-                   end
-                end
-             end
-             @current_filter = filtered_interest.interest_name
-             #end of interest filter
-            end
-        end #end of follow
+          end
+        end
+        @current_filter = filtered_interest.interest_name          
       end
-         #end of fan
-   end
-     #end of all
-    @sorted_feed = @feed.sort! { |a,b| b[:created_at] <=> a[:created_at] }
-    @feed = Kaminari.paginate_array(@sorted_feed).page(params[:page]).per(20)
-    #end of default feed
+    end #end of follow
+  end             
+end
+  @sorted_feed = @feed.sort! { |a,b| b[:created_at] <=> a[:created_at] }
+  @feed = Kaminari.paginate_array(@sorted_feed).page(params[:page]).per(20)
 end
   
 def vid_display

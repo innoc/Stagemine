@@ -5,53 +5,6 @@ class Season < ActiveRecord::Base
   has_one  :preseason, :dependent=>:destroy
   has_one  :season_winner_notification
   
-   def self.league_top_three(league_id)
-     league = League.find(league_id)
-     enrolled_users=[]        
-      unless league.blank?
-        enrolled_users = League.find(league_id).users
-        enrolled_users=[]
-        
-        for user in enrolled_users
-          enrolled_users << user.id
-        end
-                
-        if enrolled_users.length == 1
-            if user_contained == 1
-              enrolled_users << enrolled_users.index(user_id) + 1 
-            end
-            user_contained = 0     
-            return enrolled_users   #error here
-        else
-             i = enrolled_users.length - 1
-             while i > 0 do
-                 first = 0 
-                 j = 1
-                 while j <= i do 
-                      first_user_point = UserInterest.where(["user_id = ? and interest_id = ?",enrolled_users[j], league.interest.id])
-                      second_user_point = UserInterest.where(["user_id = ? and interest_id = ?",enrolled_users[first], league.interest.id])                           
-                      if first_user_point[0].point.blank? 
-                        first = j
-                      else
-                         unless second_user_point[0].point.blank?
-                            if first_user_point[0].point.point  <  second_user_point[0].point.point
-                                first = j
-                            end
-                         end
-                      end
-                      j = j + 1
-                 end
-                 temp = enrolled_users[first]
-                 enrolled_users[first] = enrolled_users[i]
-                 enrolled_users[i] = temp
-                 i = i - 1
-             end
-             return enrolled_users
-         end
-      end 
-  end
-   
-   
   def self.league_table(league_id, user_id)    
     league = League.find(league_id)
     if league.season.status == "active"
@@ -60,13 +13,11 @@ class Season < ActiveRecord::Base
         enrolled_users=[]        
         for user in enrolled_users_list
           enrolled_users << user.id
+          if user.id == User.find(user_id)
+            current_user_enrolled = true
+          end
         end
       end
-      #enrolled_users = enrolled_users.to_a 
-      if enrolled_users.include?(User.find(user_id))
-        current_user_enrolled = true
-      end
-      #get the sorted list users
       unless enrolled_users.blank?
         if enrolled_users.length == 1 
           return enrolled_users                       
@@ -84,6 +35,14 @@ class Season < ActiveRecord::Base
                 unless second_user_cheers.blank?
                   if first_user_cheers <  second_user_cheers
                     first = j
+                  else
+                    if first_user_cheers == second_user_cheers
+                      enrollment_time_j = LeagueEnrollment.where(["user_id = :user_id and league_id = :league_id", { user_id: User.find(enrolled_users[j]) , league_id: league_id}]).last.created_at
+                      enrollment_time_first = LeagueEnrollment.where(["user_id = :user_id and league_id = :league_id", { user_id: User.find(enrolled_users[first]) , league_id: league_id}]).last.created_at
+                      if enrollment_time_j > enrollment_time_first
+                        first = j
+                      end 
+                    end
                   end
                 end
               end
@@ -103,64 +62,6 @@ class Season < ActiveRecord::Base
       if league.season.status == "complete" 
         return 0
       end
-    end #end of if statement
+    end 
   end
-     
-     
-     def self.league_table_admin(league_id, user_id)
-         league = League.find(league_id)
-         
-              enrolled_users = League.find(league_id).users
-              enrolled_users=[]
-              for user in enrolled_users
-                enrolled_users << user.id
-                if user.id == user_id
-                 user_contained = 1
-                end
-              end
-              #get the sorted list users
-              unless enrolled_users.blank?
-                    if enrolled_users.length == 1
-                      if user_contained == 1
-                        enrolled_users << "_#{enrolled_users.index(user_id) + 1}" 
-                      else
-                        enrolled_users << "blank"
-                      end 
-                      user_contained = 0     
-                      return enrolled_users   #error here
-                  else
-                       i = enrolled_users.length - 1
-                       while i > 0 do
-                            first = 0 
-                            j = 1
-                             while j <= i do 
-                                first_user_point = UserInterest.where(["user_id = ? and interest_id = ?",enrolled_users[j], league.interest.id])
-                                second_user_point = UserInterest.where(["user_id = ? and interest_id = ?",enrolled_users[first], league.interest.id])                           
-                                 
-                                if first_user_point[0].point.blank? 
-                                first = j
-                                else
-                                 unless second_user_point[0].point.blank?
-                                    if first_user_point[0].point.point  <  second_user_point[0].point.point
-                                        first = j
-                                    end
-                                 end
-                                end
-                                j = j + 1
-                              end
-                            temp = enrolled_users[first]
-                            enrolled_users[first] = enrolled_users[i]
-                            enrolled_users[i] = temp
-                            i = i - 1
-                        end
-                   if user_contained == 1
-                     enrolled_users << "_#{enrolled_users.index(user_id) + 1}" 
-                   else
-                      enrolled_users << "blank"
-                   end 
-                   user_contained = 0     
-                   return enrolled_users
-                   end
-               end
-     end
 end

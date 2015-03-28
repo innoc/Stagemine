@@ -1,63 +1,105 @@
-<div class="container">
+<div class="container">	
 	<%if (@preseason = Preseason.where(status: "active")).blank?%>
-		<!-- if there is no preseason-->
-		<%@season_table = Season.league_table(@interest_id.leagues.last.id,@user.id)%>  
-		<%unless @user.userimage.blank?%>
-		<%@image = @user.userimage%>
-		<%end%>		
-    <%if @interest_id.blank? or Season.all.blank? or @season_table == 0%> 
-   		<!-- if there are no leagues-->
-			<div class="season_header small_bark_font_method">							
-				<div class="season_title_default second_font_method">
-					<span class="third_font_method">Cant display page at the moment</span>
+		<%unless @season_winner_notification.blank?%>
+			<div class="season_winner_header">							
+				<div class="season_title_default">
+					 <span class="small_bold_text">Winners</span> 
+					<div class="bold_grey_font">of the <%=@interest_id.interest_name%></div>
 				</div>
 			</div> 
-			<div class="no_season small_bark_font_method">
-				<div class="default_season">
-					<%=image_tag('season_default.png')%>
-				</div>
-				<br/>
-					Error
-				<br/>
-				<div class="season_text third_font_method">
-					You cant view this page because there is either no season running at the moment or you have not selected an interest yet 
-				</div>
-			</div>			
+			<div class="season_winner_container">
+				<%league_winners = league_winner(@interest_id.id)%>     
+			  <%if league_winners.blank?%>
+			    <div class="league_winner_small_box small_bold_text">  
+			      No Winners
+			    </div>
+			  <%else%>
+			    <%for winner in league_winners%>  
+			      <%unless winner.user.userimage.blank?%>
+			        <%@image = winner.user.userimage%>
+			      <%else%>
+			        <%@image = nil%>
+			      <%end%>			      
+			      <div class="league_winner_container-border">  
+		          <div class="league_winner_container">
+		            <div class="league_winner_container--top">
+		              <div clas="league_winner_container--top--left">
+		                <div class="league_winner_image_radi" style="border:2px solid <%=winner.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>)no-repeat;">
+		                </div>
+		              </div>
+		              <div class="league_winner_container--top--right_large primary_link_font--small-bold">
+		                <div class="league_winner_position small_bold_text">
+		                	<%=winner.user.histories.where(:league_id=>winner.league_id).first.cheer%> cheers
+		                </div>
+		                <%=link_to winner.user.user_name, portfolio_path(:id=>winner.user_id)%>		                
+		                <div class="light_green_font--smaller">
+		                  <%=winner.position.ordinalize%>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+			      </div>
+			    <%end%>
+			  <%end%>
+			</div>
 		<%else%>
-			<!-- if there arse leagues-->
-		  <%unless @season_table == -1%> <!--no enrollments-->
-				<%@place = 1%> 	<!--The represents the position of each user in the league-->												
-				<div class="season_user_container">
-					<div class="season_user_position_radi"> 
-						<span class="primary_link_font--large-bold">
-							<%=link_to "#{@user.first_name}  #{@user.last_name}", portfolio_path(:id=>@user.id) %><br/>
-						</span>
-						<%unless @user.leagues.where(:id=>@interest_id.leagues.last.id)[0].blank?%> <!--This is used in case the user is not enrolled in the league-->
-							<span class="bold_grey_font">
-								<%cheer_count = Cheer.where(["user_id = ? and league_id = ?",@user.id, @interest_id.leagues.last.id])%> 
-								<%unless cheer_count.blank?%>
-									Cheers: <%=cheer_count.inject(0){|sum,e| sum += e.cheer_number}%><br/>
-								<%else%>
-									Cheers: 0
-								<%end%>
-							</span>
-						<%else%>
-							<div class="leave_season">
-								<span class="second_font_method">	
-									<%unless @user.leagues.include?(@interest_id.leagues.last)%>
-										<%=link_to "Join League", league_enroll_path(:id=>@interest_id.leagues.last.id)%>&nbsp;&nbsp;
-									<%else%>
-										<%=link_to "Leave League", league_disenroll_path(:id=>@interest_id.leagues.last.id)%>&nbsp;&nbsp;
-									<%end%>
-										<%=link_to "View  details", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
-								</span>
-							</div>
-						<%end%>
+			<%@season_table = Season.league_table(@interest_id.leagues.last.id,@user.id)%>  
+			<%unless @user.userimage.blank?%>
+				<%@image = @user.userimage%>
+			<%end%>		
+	    <%if @interest_id.blank? or Season.all.blank? or @season_table == 0%> 
+	   		<!-- if there are no leagues-->
+				<div class="season_header small_bark_font_method">							
+					<div class="season_title_default second_font_method">
+						<span class="third_font_method">Cant display page at the moment</span>
 					</div>
-					<div class="season_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@image.image.url(:thumb))%><%end%>) no-repeat;" ></div><br/>
-					<div class="leave_season second_font_method"></div>
-					<%=render :partial=>"league_position_allocation"%>
-				</div>
+				</div> 
+				<div class="no_season small_bark_font_method">
+					<div class="default_season">
+						<%=image_tag('season_default.png')%>
+					</div>
+					<br/>
+						Ensure that you have selected an interest
+					<br/>
+					<div class="season_text third_font_method">
+						You cant view this page because there is either no season running at the moment or you have not selected an interest yet 
+					</div>
+				</div>			
+			<%else%>
+				<!-- if there arse leagues-->
+			  <%unless @season_table == -1%> <!--no enrollments-->
+					<%@place = 1%> 	<!--The represents the position of each user in the league-->			
+					<div class="season_user_container">
+						<div class="season_user_position_radi"> 
+							<span class="primary_link_font--large-bold">
+								<%=link_to "#{@user.first_name}  #{@user.last_name}", portfolio_path(:id=>@user.id)%><br/>
+							</span>
+							<%unless @user.leagues.where(:id=>@interest_id.leagues.last.id)[0].blank?%> <!--This is used in case the user is not enrolled in the league-->
+								<span class="bold_grey_font">
+									<%cheer_count = Cheer.where(["user_id = ? and league_id = ?",@user.id, @interest_id.leagues.last.id])%> 
+									<%unless cheer_count.blank?%>
+										Cheers: <%=cheer_count.inject(0){|sum,e| sum += e.cheer_number}%><br/>
+									<%else%>
+										Cheers: 0
+									<%end%>
+								</span>
+							<%else%>
+								<div class="leave_season">
+									<span class="second_font_method">	
+										<%unless @user.leagues.include?(@interest_id.leagues.last)%>
+											<%=link_to "Join League", league_enroll_path(:id=>@interest_id.leagues.last.id)%>&nbsp;&nbsp;
+										<%else%>
+											<%=link_to "Leave League", league_disenroll_path(:id=>@interest_id.leagues.last.id)%>&nbsp;&nbsp;
+										<%end%>
+											<%=link_to "View  Rewards", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
+									</span>
+								</div>
+							<%end%>
+						</div>
+						<div class="season_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(@image.image.url(:thumb))%><%end%>) no-repeat;" ></div><br/>
+						<div class="leave_season second_font_method"></div>
+						<%=render :partial=>"league_position_allocation"%>					
+					</div>
 					<div class="season_table_container">
 						<div class="season_interest small_bark_font_method">
 							<%=@interest_id.interest_name%><br/> <span style="font-weight:normal">Dance league</span>
@@ -118,27 +160,25 @@
 					</div>
 				<%end%>
 			<%end%>
-		<%else%>
-		<div class="season_header small_bark_font_method">		
-				<div class="season_title_default second_font_method">
-				    <span class="third_font_method">The season is coming soon</span><!--The name of the most recent active season-->
-				</div>				
-				<!--div class="unit_box"></div-->
-		</div> 
-		
-		<div class='preseason_central'>
-		<br/>
-		<div class="largest_font">
-			<%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%>
-		</div>
-
-		<br/>
-		<%if @duration == 1%>
-			<span class="small_bark_font_method">day left</span><br/>
-		<%else%>
-			<span class="small_bark_font_method">days left</span><br/>
 		<%end%>
-		
+	<%else%>
+		<div class="season_header small_bark_font_method">		
+			<div class="season_title_default second_font_method">
+			  <span class="third_font_method">The season is coming soon</span><!--The name of the most recent active season-->
+			</div>				
+			<!--div class="unit_box"></div-->
+		</div>		
+		<div class='preseason_central'>
+			<br/>
+			<div class="largest_font">
+				<%=@duration = (@preseason[0].end_day.to_date - DateTime.now.to_date).to_i%>
+			</div>
+			<br/>
+			<%if @duration == 1%>
+				<span class="small_bark_font_method">day left</span><br/>
+			<%else%>
+				<span class="small_bark_font_method">days left</span><br/>
+			<%end%>		
 			<div class="preseason_description small_bark_font_method">
 				The next season starts in <%=pluralize((@preseason[0].end_day.to_date - DateTime.now.to_date).to_i, 'day')%>. 
 				Use this time to gather supporters by inviting friends. 
@@ -146,23 +186,16 @@
 		</div>
 		<br/>
 		<div class="join_leave_league second_font_method">
-		<%=link_to "Invite friends"%>
-		<%unless @interest_id.interest_name == "Random"%>
-		&nbsp;&nbsp;
-		<%=link_to "View  details", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
-		<%end%>
-		</div>
-		
-		
+			<%=link_to "Invite friends"%>
+			<%unless @interest_id.interest_name == "Random"%>
+				&nbsp;&nbsp;
+				<%=link_to "View Rewards", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
+			<%end%>
+		</div>		
 		<div class="no_season small_bark_font_method">
 			<div class="default_season">
-			<%=image_tag('season_default.png')%>
+				<%=image_tag('season_default.png')%>
 			</div>			
 		</div>
-		<%end%>
-	</div>
-<script>
-$(document).ready(function(){ 
-	  $('a[rel*=block]').block();
-});
-</script>
+	<%end%>
+</div>

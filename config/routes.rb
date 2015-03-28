@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   match '/delete_comment' => "comment#delete_comment", :as=>"delete_comment", via: :all
   match '/image_display' => "stage#image_display", :as=>"picture_display", via: :all
   match '/all_comment' => 'comment#all_comment', :as=>'all_comment', via: :all
-  match '/create_cheer' => 'point_allocation#create_cheer', :as=>'point', via: :all
+  post '/create_cheer' => 'point_allocation#create_cheer', :as=>'point', via: :all
+  post '/create_vote' => 'point_allocation#create_vote', :as=>'vote'
   match '/user_avatar'=>"edit#user_avatar", :as=>'avatar', via: :all  
   match '/portfolio'=>"portfolio#portfolio", :as=>'portfolio', via: :all
   match '/notification'=>"notification#notification", :as=>'notification', via: :all

@@ -32,9 +32,10 @@ class MessageController < ApplicationController
       else
         #the following lines of code are for portfolio messaging
         unless params[:content].blank? or params[:content] == nil
-          @message = Message.new(:user_id =>@user.id, :sender_id => current_user.id, :content=> params[:content])
-          if @message.save
-           Notification.create(:notification_type=>"Message",:notification_type_id=>@message.id,:user_id=>@user.id,:secondary_user=>current_user.id)
+          conversation = Conversation.create(:user_id=>current_user.id, :recipient_id=>@user.id)
+          conversation.messages.create(:user_id =>@user.id, :sender_id => current_user.id, :content=> params[:content])
+          if conversation.save
+           Notification.create(:notification_type=>"Message",:notification_type_id=>conversation.messages.last.id,:user_id=>@user.id,:secondary_user=>current_user.id)
            flash[:notice]="Message has been sent"
           else
             flash[:notice]="Something went wrong, please resend the message"

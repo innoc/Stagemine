@@ -1,0 +1,43 @@
+  <div class="league_winner_header">
+    <span class="small_bold_text">
+      Winners
+    </span>
+    <div class="bold_grey_font">
+      of the <%=@interest_season.interest_name%> league
+    </div>
+  </div>   
+  <%league_winners = league_winner(@interest_season.id)%>     
+  <%if league_winners.blank?%>
+    <div class="league_winner_small_box small_bold_text">  
+      No Winners
+    </div>
+  <%else%>
+    <%for winner in league_winners%>  
+      <%unless winner.user.userimage.blank?%>
+        <%@image = winner.user.userimage%>
+      <%else%>
+        <%@image = nil%>
+      <%end%>
+      <div class="league_winner_container-border">  
+        <div class="league_winners"> 
+          <div class="league_winner_container">
+            <div class="league_winner_container--top">
+              <div clas="league_winner_container--top--left">
+                <div class="league_winner_image_radi" style="border:2px solid <%=winner.user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>)no-repeat;">
+                </div>
+              </div>
+              <div class="league_winner_container--top--right primary_link_font--small-bold">
+                <%=link_to winner.user.user_name, portfolio_path(:id=>winner.user_id)%>
+                <div class="light_green_font--smaller">
+                  <%=winner.position.ordinalize%>
+                </div>
+                <div class="winner_cheers bold_grey_font">
+                  <%=winner.user.histories.where(:league_id=>winner.league_id).first.cheer%>&nbsp<%=image_tag("cheers_active_small.png")%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  <%end%>

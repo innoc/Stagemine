@@ -1,3 +1,9 @@
+<style type="text/css"> 
+.portfolio_top_container{
+  height: 315px;
+}
+</style>
+
 <%unless @user.portfolio_cover.portfolio_image.blank?%>
   <% cover_image = @user.portfolio_cover.portfolio_image%>
 <%end%>
@@ -9,7 +15,7 @@
           Change Position
         </div>
       <%end%>
-      <div class="portfolio__top--right__change second_font_method">       
+      <div class="portfolio__top--right__change primary_link_font">       
         <table align="center">
           <tr>
             <td>
@@ -38,4 +44,3 @@
     </div>
   <%end%>
 </div>
-

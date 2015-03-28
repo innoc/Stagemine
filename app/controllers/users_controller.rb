@@ -27,8 +27,8 @@ class UsersController < ApplicationController
  end
  
  def winner_notification_check
-  if request.xhr?    
-    WinnerNotificationCheck.create(:user_id=>current_user.id,:season_winner_notification_id=>params[:id],:interest_name=>params[:interest_name])
+  if request.xhr? 
+    WinnerNotificationCheck.create(:user_id=>current_user.id,:winner_notification_id=>params[:id],:interest_name=>params[:interest_name])
   end
  end
   
@@ -70,6 +70,11 @@ class UsersController < ApplicationController
     current_user.user_name = user_params[:user_name]      
     current_user.gender = user_params[:gender]
     current_user.email = user_params[:email]
+    current_user.country_supported = user_params[:country_supported]
+    current_user.city_supported = user_params[:city_supported]
+    current_user.school_supported = user_params[:school_supported]
+    current_user.portfolio_link = user_params[:portfolio_link]
+    current_user.youtube_link = user_params[:youtube_link]
     current_user.usertype = current_user.usertype
     current_user.hashed_password = "placeholder"
     if current_user.save
@@ -90,7 +95,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name,:last_name,:user_name,:gender,:email,:password,:password_confirmation)
+    params.require(:user).permit(:school_supported,:youtube_link,:portfolio_link,:country_supported, :city_supported,:first_name,:last_name,:user_name,:gender,:email,:password,:password_confirmation)
   end
   
   def user_history

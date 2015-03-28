@@ -1,72 +1,104 @@
-
+<%unless @post.task.blank?%>
+  <style>
+    .facebox_conatiner{ 
+      margin-top:-5px;
+    }
+  </style>  
+<%else%>
+  <style>
+    .facebox_conatiner{ 
+      margin-top:5px;
+    }
+  </style>
+<%end%>
 <%if cheer_access?(@post)%>	
 	<%unless @post.user_id == current_user.id%>
-		<%if already_cheered?(current_user,@post)%>
+		<%if @post.task.blank?%>			
 			<div class="interest_tag second_font_method bold_grey_font">	   
-				<div class="cheers_container--icon">
-					<%=image_tag("Cheers-inactive.png")%>
-				</div>
+				<%if already_cheered?(current_user,@post)%>
+					<div class="cheers_container__icon--inactive">
+						<%=image_tag("Cheers-inactive.png")%>
+					</div>
+				<%else%>
+					<%= link_to({:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post",:remote=>true) do %>				
+					<div class="cheers_container__icon--active">
+						<%=image_tag("Cheers-active.png")%>
+					</div>
+					<%end%>
+				<%end%>
 				<div class="cheers_container--text">
-					<%unless @post.class.name=="Video"%>
-						<%=pluralize(@post.cheers.count, 'cheer')%>
-					<%else%>
-						<%unless @post.task.blank?%>
-							<%=pluralize(@post.cheers.count, 'vote')%>
-						<%else%>
-							<%=pluralize(@post.cheers.count, 'cheer')%>
+					<%=pluralize(@post.cheers.count, 'cheer')%>
+				</div>
+			</div>			
+		<%else%>
+			<div class="vote_container">				
+				<%if @post.task.status == "active"%>	
+					<%if already_voted?(current_user,@post)%>	
+						<%=image_tag("vote-inactive.png")%>
+					<%else%>					
+						<%= link_to({:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post",:remote=>true) do %>				
+							<%=image_tag("vote-active.png")%>
 						<%end%>
+					<%end%>
+				<%else%>
+					<%=image_tag("vote-inactive.png")%>
+				<%end%>
+				<p class="bold_grey_font">
+					<%=pluralize(@post.votes.count, 'vote')%>
+				</p>
+				<div class="vote_text bold_grey_font">
+					<%if @post.task.status == "active"%>					
+						<span class="primary_link_font"><%=link_to "see details", task_path(:id=>@post.task.label.interest.interest_name)%></span>
+					<%else%>
+					inin						
+						Task has ended
+					<%end%>
+				</div>
+			</div>		
+		<%end%>
+	<%else%>	
+		<%unless @post.task.blank?%>
+			<div class="vote_container">
+				<%=image_tag("vote-inactive.png")%>
+				<p class="bold_grey_font">
+					<%=pluralize(@post.votes.count, 'vote')%>
+				</p>
+				<div class="vote_text bold_grey_font">
+					<%if @post.task.status == "active"%>					
+						<span class="primary_link_font"><%=link_to "see details", task_path(:id=>@post.task.label.interest.interest_name)%></span>
+					<%else%>
+						Task has ended
 					<%end%>
 				</div>
 			</div>
 		<%else%>
-			<div class="interest_tag second_font_method bold_grey_font">	   
-				<%= link_to({:controller=>"point_allocation",:action=>'create_cheer',:id=>@post.id,:post_type=>@feed_id.id,:authenticity_token => form_authenticity_token},:method=>"post",:remote=>true) do %>
-					<div class="cheers_container--icon">
-						<%=image_tag("Cheers-active.png")%>
-					</div>
-				<%end%>
-				<div class="cheers_container--text">
-					<%unless @post.class.name=="Video"%>
-							<%=pluralize(@post.cheers.count, 'cheer')%> 
-					<%else%>
-						<%unless @post.task.blank?%>
-							<%=pluralize(@post.cheers.count, 'vote')%>
-						<%else%>
-						 	<%=pluralize(@post.cheers.count, 'cheer')%> 
-						<%end%>
-					<%end%>
-				</div>  
-			</div>
-		<%end%>
-	<%else%>
-		<div class="interest_tag">				   
-			<div class="cheers_container--count">
-				<%unless @post.class.name=="Video"%>
+			<div class="interest_tag">				   
+				<div class="cheers_container--count">
 					<span class="light_green_font--small"><%=@post.cheers.count%></span>
-					<span class="bold_grey_font">&nbspcheers</span>
-				<%else%>
-					<%unless @post.task.blank?%>
-						<span class="light_green_font--small"><%=@post.cheers.count%></span>
-						<span class="bold_grey_font">&nbspvotes</span>
-					<%else%>
-						<span class="light_green_font--small"><%=@post.cheers.count%></span>
-						<span class="bold_grey_font">&nbspcheers</span>
-					<%end%>
-				<%end%>
-			</div>
-		</div>   
-	<%end%>	
+					<span class="bold_grey_font">Cheers</span>
+				</div>
+			</div> 
+		<%end%>
+  <%end%>	
 <%else%>
 	<div class="interest_tag">				   
-		<div class="cheers_container--count">
-			<%unless @post.class.name=="Video"%>
-				<span class="light_green_font--small"><%=@post.cheers.count%></span><span class="bold_grey_font">&nbspcheers</span>
+		<div class="cheers_container--count">			
+			<%unless @post.task.blank?%>
+				<div class="vote_container">
+					<%=image_tag("vote-inactive.png")%>
+					<p class="bold_grey_font">
+						<%=pluralize(@post.votes.count, 'vote')%>
+					</p>
+					<div class="vote_text bold_grey_font">
+						<%if @post.task.status == "active"%>					
+							<span class="primary_link_font"><%=link_to "see details", task_path(:id=>@post.task.label.interest.interest_name)%></span>
+						<%else%>
+							Task has ended
+						<%end%>
+					</div>
+				</div>
 			<%else%>
-				<%unless @post.task.blank?%>
-					<span class="light_green_font--small"><%=@post.cheers.count%></span><span class="bold_grey_font">&nbspvotes</span>
-				<%else%>
-					<span class="light_green_font--small"><%=@post.cheers.count%></span><span class="bold_grey_font">&nbspcheers</span>
-				<%end%>
+				<span class="light_green_font--small"><%=@post.cheers.count%></span><span class="bold_grey_font">&nbspcheers</span>
 			<%end%>
 		</div>
 	</div> 

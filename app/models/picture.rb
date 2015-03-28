@@ -2,7 +2,6 @@ class Picture < ActiveRecord::Base
     
   has_one :feed, :dependent=>:destroy, autosave: true
   belongs_to :user
-  has_many :cheers, :dependent=>:destroy  
   has_one :label,:dependent=>:destroy  ,autosave: true
   has_attached_file :image, :styles => { :large=> "400x",:medium => "330x", :thumb => "100x100>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/

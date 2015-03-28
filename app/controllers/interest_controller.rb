@@ -1,7 +1,6 @@
 class InterestController < ApplicationController
   layout :resolve_layout
-  def interest
-    
+  def interest    
     if request.post?
       unless params[:interest_ids].blank?
         for interest_id in params[:interest_ids]
@@ -9,10 +8,8 @@ class InterestController < ApplicationController
         end
       end
       redirect_to stage_path
-    end
-   
-  end
-  
+    end  
+  end  
   
   def add_interest
     @user = current_user

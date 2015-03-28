@@ -1,7 +1,7 @@
 <%enrollment = @user.enrolled_task%>
 <%task_table = Task.task_table(enrollment.task_id,@user.id)%>
 <%if task_table == -2 %>
-	<div class="aligned_well">	
+	<div class="task_enrrolled_align">	
 		<div class="no_contest">	
 			Waiting for more poeple to enroll <br/><br/><br/><br/>
 		</div>
@@ -24,26 +24,30 @@
 				<%=@user.user_name%>
 			</div>
 			<div class="third_font_method">
-				<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=>@user.id).first.blank?%>
-					Points: <%=TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> @user.id).first.point.round%><br/>
+				<% vote_count = Vote.where(["user_id = ? and task_id = ?",@user.id, enrollment.task_id])%>										
+				<%unless vote_count.blank?%>
+					Vote: <%=vote_count.inject(0){|sum,e| sum += e.vote_number}%>
 				<%else%>
-					Points: 0
+					Vote: 0
 				<%end%>
-			</div>			
-			<div class="third_font_method">
-					<%unless task_table.blank?%>
-						<%unless task_table.last == "blank"%>
-							<div class="task_position_left">		
-								<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> @user.id).first.blank?%>
-									<%=task_table.last[1..-1].to_i.ordinalize%>
-								<%end%>
-							</div>
-						<%end%>
-					<%end%>
+				<%unless task_table.blank?%>
+					<%unless task_table.last == "blank"%>
+						<div>
+							<%unless vote_count.blank?%>
+								Position: <%=task_table.last[1..-1].to_i.ordinalize%>
+							<%end%>
+						</div>
+					<%end%>				
+				<%end%>
 			</div>
+			<div class="task_reward_positioning">
+				<span class="light_grey_font">win</span>
+				<span class="light_green_font--small"><%=enrollment.task.task_reward%></span>
+				<span class="light_grey_font">points</span>
+			</div>			
+		</div>
+		<div class="task_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@image.image.url(:moderate))%><%end%>) no-repeat;" ></div>
 	</div>
-	<div class="task_user_radi" style="border:2px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_moderate.png")%><%else%><%=image_path(@image.image.url(:moderate))%><%end%>) no-repeat;" ></div>
-</div>
 <div class="league_table_container">
 	<div class="season_interest small_bark_font_method">
 		<%=interest_info.interest_name%> Task <br/> <span style="font-weight:normal">	<%=@duration%> days remaining										
@@ -51,7 +55,7 @@
 	</div>
 	<%@place = 0%>
 	<%for task_user in task_table%>
-		<%unless hash[task_user] == hash[task_table.last]%>	
+		<%unless task_user == task_table.last%>	
 			<%task_user = User.find(task_user)%>
 			<div class="season_league_user">
 				<%unless task_user.userimage.blank?%>
@@ -60,21 +64,21 @@
 				<div class="season_league_user_detail">
 					<div class="rank_color" style="background-color:<%=task_user.rank.rankdetail.rank_color%>"></div>
 					<div class="unit_box">
-						<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.blank?%>
-						<%task_point = TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first%>
+						<%task_vote_count = Vote.where(["user_id = ? and task_id = ?",task_user.id, enrollment.task_id])%>		
+						<%unless task_vote_count.blank?%>
 							<%@place = @place + 1%>
 							<%=@place.ordinalize%>
 						<%end%>
 					</div>
 					<div class="season_league_user_name second_font_method">
-						<%= link_to task_user.user_name,portfolio_path(:id=>task_user.id)%><br/>
-						<span style="font-size:11px;", class="third_font_method">
-							<%unless TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.blank?%>
-								Points: <%=TaskPoint.where(:task_id=>enrollment.task_id, :user_id=> task_user.id).first.point.round%><br/>
+						<%= link_to task_user.user_name,portfolio_path(:id=>task_user.id)%>
+						<div style="font-size:11px;", class="third_font_method">
+							<%unless task_vote_count.blank? %>
+								Votes: <%=task_vote_count.inject(0){|sum,e| sum += e.vote_number}%>
 							<%else%>
-								Points: 0
+								Votes: 0
 							<%end%>
-						</span>
+						</div>
 					</div>
 				</div>
 				<div class=""><%if @task_user_image.blank?%><%=image_tag("Default_small.png")%><%else%><%=image_tag(@task_user_image.image.url(:small))%><%end%></div>

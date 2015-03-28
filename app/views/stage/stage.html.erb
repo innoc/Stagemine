@@ -1,10 +1,11 @@
 <div class="sidebar--left">
-  <%= render :partial=>"season_sidebar"%>
+  <%=render :partial=>"season_sidebar"%>
 </div>
 <div class="sidebar--right">
   <%= render :partial=>"left_sidebar"%>
 </div>
 <div class="container"> 
+  <% if !flash.empty? %><div class="error_message_font"><%= flash[:notice] %> </div><% end %>
   <%= link_to(badge_path(:id=>@user.id)) do %>    
     <div class="notification_response_bar">
       <%=image_tag("badge.png")%>
@@ -41,15 +42,14 @@
                  <%=@user.words.count + @user.videos.count + @user.pictures.count%>
               </td>
             </tr>
-          </table>                      
+          </table>                
         </div>
       </div>
-
       <%if User.has_an_image?(current_user.id)%>
         <%@season_user = @user.userimage%>
         <%=image_tag @season_user.image.url(:moderate)%>
       <%else%>
-        <%=image_url("Default_moderate.png")%>
+        <%=image_tag("Default_moderate.png")%>
       <%end%>
     </div>
     <div class="container__top--right">
@@ -58,7 +58,11 @@
       </div>
       <div class="user_point">      
         <span class="light_green_font">
-          2,345,890
+          <%if @user.points.blank?%>
+            0
+          <%else%>
+            <%=@user.points.inject(0){|sum,e| sum += e.point}%>
+          <%end%>
         </span>
         <span class="user_point__label small_bold_text">
           Points
@@ -142,9 +146,20 @@
       </div>
     </div>
   </div>
-
   <%=render :partial=>"interest_selection"%>
   <div id="columns">
+    <script>
+      jQuery(document).ready(function($) {
+        $('a[rel*=facebox]').live("mousedown", function() { 
+          $(this).unbind('click'); //everytime you click unbind the past event handled.
+          $(this).facebox();
+      });
+      $('a[rel*=imagepop]').live("mousedown", function() { 
+          $(this).unbind('click'); //everytime you click unbind the past event handled.
+          $(this).imagepop();
+      });
+      });
+    </script> 
     <%= render :partial=>"stage_feed"%>
   </div>
   <%if @feed.blank?%>

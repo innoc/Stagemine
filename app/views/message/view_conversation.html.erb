@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <div class="middle_cover">
-    <div class="middle_cover_header small_bark_font_method second_font_method">
+    <div class="middle_cover_header second_font_method">
       <%=image_tag "message_icon.png"%><br/>
       <%=link_to "Send a new message",create_message_path(:id=>current_user.id,:flag_message=>"flag"),:rel=>"block"%>
     </div>

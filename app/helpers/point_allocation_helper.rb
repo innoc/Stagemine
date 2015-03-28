@@ -1,6 +1,12 @@
 module PointAllocationHelper
+
   def already_cheered?(user,post)
     return true if post.cheers.where(:cheerer_id=>user.id).count > 0 
+    return false
+  end
+
+  def already_voted?(user,post)
+    return true if post.votes.where(:voter_id=>user.id).count > 0 
     return false
   end
 

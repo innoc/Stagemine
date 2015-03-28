@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20242616020378) do
+ActiveRecord::Schema.define(version: 20242616020383) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,19 @@ ActiveRecord::Schema.define(version: 20242616020378) do
     t.datetime "updated_at"
   end
 
+  create_table "histories", force: true do |t|
+    t.integer  "user_id"
+    t.string   "competition_type"
+    t.integer  "season_id"
+    t.integer  "task_id"
+    t.integer  "league_id"
+    t.integer  "position"
+    t.integer  "cheer"
+    t.integer  "vote"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "historypendings", force: true do |t|
     t.integer  "season_id"
     t.string   "historypending"
@@ -164,12 +177,11 @@ ActiveRecord::Schema.define(version: 20242616020378) do
   end
 
   create_table "notifications", force: true do |t|
-    t.integer  "cheer_storage"
     t.string   "notification_type"
     t.integer  "notification_type_id"
     t.integer  "user_id"
     t.integer  "status",               default: 0
-    t.integer  "notification_counter"
+    t.integer  "point_count"
     t.integer  "secondary_user"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -190,7 +202,9 @@ ActiveRecord::Schema.define(version: 20242616020378) do
   create_table "points", force: true do |t|
     t.integer  "user_id"
     t.integer  "status"
+    t.string   "point_source"
     t.integer  "point"
+    t.integer  "previous_point"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -295,7 +309,7 @@ ActiveRecord::Schema.define(version: 20242616020378) do
     t.text     "video_url"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "task_type"
+    t.integer  "task_reward"
     t.string   "status",      default: "active"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -329,6 +343,11 @@ ActiveRecord::Schema.define(version: 20242616020378) do
     t.string   "activated"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country_supported"
+    t.string   "city_supported"
+    t.string   "school_supported"
+    t.string   "portfolio_link"
+    t.string   "youtube_link"
   end
 
   create_table "videos", force: true do |t|
@@ -343,15 +362,17 @@ ActiveRecord::Schema.define(version: 20242616020378) do
 
   create_table "votes", force: true do |t|
     t.integer  "user_id"
+    t.integer  "voter_id"
     t.integer  "task_id"
     t.integer  "vote_number"
+    t.integer  "video_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "winner_notification_checks", force: true do |t|
     t.integer  "user_id"
-    t.integer  "season_winner_notification_id"
+    t.integer  "winner_notification_id"
     t.string   "interest_name"
     t.datetime "created_at"
     t.datetime "updated_at"

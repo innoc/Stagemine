@@ -36,7 +36,7 @@
             <%for interest in @user.interests%>
               <li><%= link_to interest.interest_name ,stage_path(:id=>interest.id)%></li>
             <%end%>
-            <li><%= link_to "All feed",stage_path(:id=>"all")%></li>
+            <li><%= link_to "All feeds",stage_path(:id=>"all")%></li>
             <li><%= link_to "Fan's feed",stage_path(:id=>"fan")%></li>
             <li><%= link_to "Fanned feed",stage_path(:id=>"fanned")%></li>
             <li><%= link_to "Tasks",stage_path(:id=>"task")%></li>
@@ -47,5 +47,3 @@
   </div>
   <p>&bull;</p>
 </div>
-
-

@@ -1,36 +1,18 @@
 <div class="image_display">
-
 	<%=image_tag(@image.image.url(:large))%>
-
-
 	<div class="image_facebox_content small_bark_font_method">
-	<% unless @image.feed.blank?%>
-	<%=@image.feed.picture.description%>
-	<br/>
-	<%end%>
-		
+		<% unless @image.feed.blank?%>
+		<%=@image.feed.picture.description%>
+		<br/>
+		<%end%>			
 		<%unless @user.userimage.blank?%>
-	    <%@avatar= @user.userimage%>
-	    <%end%>
-		<div class="radi" style="border:3px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @avatar.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@avatar.image.url(:small))%><%end%>) no-repeat;" ></div>
-		
-		<div class="user_name second_font_method_alternate third_font_method">
-			<%=link_to @user.user_name, portfolio_path%>
-			<div class="rank_name">
-			<%=@user.rank.rankdetail.name%>
-			</div>
-		</div>
-	
-	<div class="feed_icons"> 
-		<%unless @image.feed.user_id == @user.id%>
-		<%@post = @image%>
-		<%@feed_id = @image.feed%>
-		<%=render :partial=>"point_allocation/cheers_added"%> 
+			<%@avatar= @user.userimage%>
 		<%end%>
-	</div>
-		
+		<div class="radi" style="border:3px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @avatar.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@avatar.image.url(:small))%><%end%>) no-repeat;" >
+		</div>
+		<div class="user_name">
+			<span class="primary_link_font--large-bold"><%=link_to @user.user_name,portfolio_path%></span>
+			<div class="rank_name bold_grey_font"><%=@user.rank.rankdetail.name%></div>
+		</div>
+	</div>		
 </div>
-
-</div>
-
-

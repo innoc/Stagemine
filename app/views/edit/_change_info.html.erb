@@ -28,7 +28,6 @@
         <td><%= f.radio_button(:gender, "Female")%></td> <td>Female </td>
       </tr>
     </table>
-
     </td>
     </tr>
     <tr><td></td><td></td></tr>
@@ -36,6 +35,57 @@
     <td colspan="2"><label>Email:</lable><br/><%=f.text_field(:email,:class=>"loginemailinput")%></td>
     </tr>
     </table>
+    <div class="form_text bold_grey_font">
+      Optional
+    </div>
+    <div class="optional_region">
+      <table border="0" width=90%, align=center >
+        <tr>
+          <td>
+            External Portfolio link
+            <p><%=f.text_field(:portfolio_link,:class=>"logininput")%></p>
+          </td> 
+          <td>
+            YouTube channel link
+            <p><%=f.text_field(:youtube_link,:class=>"logininput")%></p>
+          </td>
+        </tr>
+      </table>
+      <div class="rep-nav">
+        <ul class="rep_container">
+          <li>
+            <span class="rep-clicker">
+              What do you represent&nbsp;&nbsp;<%=image_tag("pointer.png")%>
+            </span>
+            <ul>
+              <li id="country">Your Country</li>
+              <li id="city">Your City</li>
+              <li id="school">Your School</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="hidden_box">
+        <div id="country_box">
+          Enter country name
+          <p> 
+            <%=f.text_field(:country_supported,:id=>"country_field_id",:class=>"loginemailinput")%>
+          </p>
+        </div>
+        <div id="city_box">
+          Enter city name
+          <p>         
+            <%=f.text_field(:city_supported,:id=>"city_field_id",:class=>"loginemailinput")%>
+          </p>
+        </div>
+        <div id="school_box">
+          Enter school name
+          <p> 
+            <%=f.text_field(:school_supported,:id=>"school_field_id",:class=>"loginemailinput")%>
+          </p>
+        </div>
+      </div> 
+    </div> 
     <div class="register_button">
       <%=submit_tag "Update",:class => 'submit_class'%>
     </div>

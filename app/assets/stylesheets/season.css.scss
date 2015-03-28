@@ -17,6 +17,23 @@
   height: 38px;
 }
 
+.league_winner_small_box{ 
+  padding-top: 42px;
+  padding-bottom: 3px;
+  background: whi;
+  text-align: center;
+  border-top: 1px solid lightblue;
+}
+
+
+.season_winner_header {
+  border-bottom: 1px solid lightblue;
+  height: 47px;
+  border-right: 1px solid lightblue;
+  border-left: 1px solid lightblue;
+  background: white;
+}
+
 .preseason_title{ 
   height: 44px;
   background: #eeeeee;
@@ -34,5 +51,76 @@
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
+}
+
+.league_winner_container {
+  padding-bottom: 3px;
+}
+
+.league_winner_container--top {
+  height: 60px;
+}
+
+.league_winner_container--top--left {
+  width: 86px;
+  float: left;
+  height: 60px;
+}
+
+.league_winner_container-border {
+  border-top: 1px solid lightblue;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.league_winner_position {
+  float: right;
+  width: 100px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.league_winner_header {
+  height: 58px;
+  text-align: center;
+  padding-top: 14px;
+}
+
+.winner_cheers {
+  width: 105px;
+  text-align: right;
+}
+
+.league_winner_container--top--right {
+  width: 110px;
+  float: right;
+  test-align: center;
+  height: 54px;
+  padding-top: 10px;
+}
+
+.league_winner_container--top--right_large {
+  width: 304px;
+  float: right;
+  test-align: center;
+  height: 40px;
+  padding-top: 10px;
+}
+
+.league_winner_container--bottom {
+  height: 20px;
+}
+
+.league_winners {
+  width: 197px;
+  margin: auto;
+}
+
+.league_winner_image_radi{ 
+  border-radius: 100%;
+  width: 55px;
+  height: 55px;
+  margin-left: 24px;
+  float: left;
 }
 

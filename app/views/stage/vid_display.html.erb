@@ -25,32 +25,29 @@ function callPlayer(frame_id, func, args) {
 }
 </script>
 
-<div id="yid"><iframe width="640" height="390" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@vid_id.vid%>?enablejsapi=1&autoplay=1&showinfo=0&autohide=1&rel=0" "></iframe></div>
+
+<div id="yid"><iframe width="640" height="390" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/<%=@vid_id.vid%>?enablejsapi=1&autoplay=1&showinfo=0&autohide=1&rel=0"></iframe></div>
 <div class="image_facebox_content small_bark_font_method">
-	<% unless @vid_id.feed.blank?%>
-	<%=@vid_id.feed.video.description%>
-	<br/>
-	<%end%>
-   
-    <%unless @user.userimage.blank?%>
-	    <%@image= @user.userimage%>
-	    <%end%>
-		<div class="radi" style="border:3px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;" ></div>
-		
-		<div class="user_name second_font_method_alternate third_font_method">
-			<%=link_to @user.user_name, portfolio_path(:id=>@user.id)%>
-			<div class="rank_name">
-			<%=@user.rank.rankdetail.name%>
-			</div>
+	<%unless @vid_id.feed.blank?%>
+	 <p>
+    <%=@vid_id.feed.video.description%>
+   </p>
+	<%end%>     
+  <%unless @user.userimage.blank?%>
+    <%@image= @user.userimage%>
+  <%end%>
+	<div class="radi" style="border:3px solid <%=@user.rank.rankdetail.rank_color%>;background: url(<%if @image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@image.image.url(:small))%><%end%>) no-repeat;"></div>		
+    <div class="facebox_conatiner">
+      <%@post = @vid_id%>
+      <%@facebox = true%>
+      <%@feed_id = @vid_id.feed%>
+      <%=render :partial=>"point_allocation/cheers_added"%> 
+    </div>
+  <div class="user_name">
+		<div class="primary_link_font--large-bold">
+      <%=link_to @user.user_name, portfolio_path(:id=>@user.id)%>
+    </div>
+		<div class="rank_name bold_grey_font">
+		  <%=@user.rank.rankdetail.name%>
 		</div>
-
-	<div class="feed_icons"> 
-		<%unless @vid_id.feed.user_id == @user.id%>
-		<%@post = @vid_id%>
-		<%@feed_id = @vid_id.feed%>
-		<%=render :partial=>"point_allocation/cheers_added"%> 
-		<%end%>
 	</div>
-
-
-

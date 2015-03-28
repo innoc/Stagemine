@@ -48,7 +48,7 @@ $(document).ready(function(){
 		<%end%>
 		<div class="comment_radi" style="border:2px solid <%=@comment.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_image.image.url(:smallest))%><%end%>) no-repeat;" >
 		</div>
-		<div class="feed_comment_box small_bark_font_method">
+		<div class="feed_comment_box">
 			<div class="<%="#{@comment.id}_comment"%>">
 				<p> 
 					<div class="delete-comment">
@@ -60,15 +60,15 @@ $(document).ready(function(){
 					</div>
 
 					<div class="comment_user_info">
-						<span class="second_font_method_alternate">
+						<span class="primary_link_font--large-bold">
 							<%=link_to @comment.user.user_name, portfolio_path(:id=>@comment.user.id)%>
 		      		&nbsp
-				      <span class="third_font_method"><%= distance_of_time_in_words_to_now(@comment.created_at)%> ago 
+				      <span class="bold_grey_font"><%= distance_of_time_in_words_to_now(@comment.created_at)%> ago 
 				      </span>
 						</span>
 					</div>
 				</p> 
-				<p>
+				<p class="small_bark_font_method">
 					<%=@comment.content%>
 				</p>
 			</div>
@@ -81,7 +81,7 @@ $(document).ready(function(){
 					<%end%>						
 				<%end%>	
 				<span class="<%="#{@feed_id.id}_add"%>">						
-					<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field third_font_method">
+					<div class="<%="#{@feed_id.id}_toggle"%> add_comment_field light_grey_font">
 						Add a comment
 					</div>
 				</span>						

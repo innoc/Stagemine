@@ -1,10 +1,26 @@
+<style type="text/css"> 
+.portfolio_top_container{
+  height: 315px;
+}
+.portfolio_user_info {
+  margin-top: -49px;
+}
+
+.stage_content {
+  padding-top: 101px;
+}
+
+.portfolio_sidebar {
+  margin-top: 118px;
+}
+</style>
 <div class="portfolio__top--right--video">
   <div id="player"></div>
   <%unless @user.portfolio_cover.portfolio_video.blank?%>
     <% cover_video = @user.portfolio_cover.portfolio_video%>
   <%end%>
   <%if @portfolio_restriction == "allow"%>
-    <div class="portfolio__top--right__change__video second_font_method">       
+    <div class="portfolio__top--right__change__video primary_link_font">       
       <table align="center">
         <tr>
           <td>

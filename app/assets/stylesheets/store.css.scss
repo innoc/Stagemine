@@ -1,3 +1,49 @@
 // Place all the styles related to the store controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.store_container {
+  width: 100%;
+  background: white;
+  height: 162px;
+  border-bottom: 1px solid lightblue;
+  margin-top: 51px;
+}
+
+.store_content {
+  width: 680px;
+  margin: auto;
+  height: 160px;
+  text-align: center;
+}
+
+.store_content__icon {
+  float: left;
+  margin-left: 154px;
+  margin-top: 36px;
+}
+
+.store_content__title {
+  width: 386px;
+  margin: left;
+  float: right;
+  margin-right: 84px;
+  margin-top: 31px;
+  text-align: left;
+}
+
+.store_content__body {
+  clear: both;
+  padding-top: 25px;
+}
+
+.store_item_list {
+  border: 1px solid lightblue;
+  width: 680px;
+  margin: auto;
+  margin-top: 60px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  text-align: center;
+  background: white;
+}

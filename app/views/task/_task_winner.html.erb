@@ -1,0 +1,32 @@
+<%unless already_seen?(@user.id,@winner[1].id)%>
+  <div class="task_notification--winner">
+    <div class="task_notification--top">
+      <div class="close_notification second_font_method">
+        <%=link_to "X",close_path(:id=>@winner[1].id,:interest_name=>"task"),:id=>"taskclose",:remote=>true%>
+      </div>
+      <div class="task_winner_icon">
+        <%=image_tag("task_smaller.png")%>
+      </div>
+    </div>
+    <div class="task_notification_winner bold_grey_font">
+      Here is the winner of the " <%=@winner[1].title%> " task
+    </div>
+    <div class="task_winner_user_info"> 
+      <%unless @winner[0].userimage.blank?%>
+        <%@winner_user_image = @winner[0].userimage%>
+      <%end%>
+      <div class="task_winner_user_image" style="border:2px solid <%=@winner[0].rank.rankdetail.rank_color%>;background: url(<%if @winner_user_image.blank?%><%=image_path("Default_small.png")%><%else%><%=image_path(@winner_user_image.image.url(:small))%><%end%>) no-repeat;" >
+      </div>
+      <div class="task_winner_user_name">
+        <span class="primary_link_font--large-bold"><%= link_to @winner[0].user_name,portfolio_path(:id=>@winner[0].id)%></span>
+        <div class="bold_grey_font">
+          <%=@winner[0].rank.rankdetail.name%>
+        </div>
+      </div>
+    </div>
+    <div class="winner_point">
+      <span class="light_green_font--small">+ <%=@winner[1].task_reward%></span>
+      <span class="bold_grey_font">points<span>
+    </div>
+  </div>
+<%end%>

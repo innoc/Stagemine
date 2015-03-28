@@ -33,7 +33,7 @@ function callPlayer(frame_id, func, args) {
       <div class="all-comment__container">
         <div class="comment-radi__alternative" style="border:2px solid <%=@feed_id.user.rank.rankdetail.rank_color%>;background: url(<%if @comment_owner_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@comment_owner_image.image.url(:smallest))%><%end%>) no-repeat;">
         </div>
-        <div class="comment__owner__image second_font_method_alternate">
+        <div class="comment__owner__image primary_link_font--large-bold">
           <%= link_to @feed_id.user.user_name, portfolio_path(:id=>@feed_id.user.id)%>
           <p>
             <span class="third_font_method"><%= distance_of_time_in_words_to_now(@feed_id.created_at)%> ago

@@ -17,6 +17,12 @@ module StageHelper
 		end  
 	end
 
+	def already_seen?(user_id,task_id)
+		user = User.find(user_id)
+		return false if user.winner_notification_checks.where(:interest_name=>"task",:winner_notification_id=>task_id).blank?
+		return true
+	end
+
 	def generate_season_interest(filter_code,random_interest)
 		if filter_code == "all" or filter_code == "fan" or filter_code == "fanned" or filter_code == "task"  or filter_code.blank?
 			interest_season = random_interest[0]

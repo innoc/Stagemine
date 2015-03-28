@@ -2,25 +2,19 @@
 <%if @enrolled_task.blank?%>
 	<%=link_to "enroll",enroll_path(:id=>@user_task[0].id)%> <br/>
 <%else%>
-<%if @enrolled_task.task_id== @user_task[0].id%>
-	<%=link_to "disenroll",disenroll_path(:id=>@user_task[0].id),remote:true%> <br/>
-<br/>
-	<%if @user_task[0].task_type == "image"%>
-		<%= link_to "Add an image",pictures_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block" %>
+	<%if @enrolled_task.task_id== @user_task[0].id%>
+		<%=link_to "disenroll",disenroll_path(:id=>@user_task[0].id),remote:true%> <br/>
+		<br/>		
+		<div class="add_content__link">
+			<%= link_to(create_vid_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block") do %>	
+				<div class="add_content">
+					Add a video
+				</div>
+			<%end%>
+		</div>
 	<%else%>
-		<%if @user_task[0].task_type == "video"%>
-			<div class="add_content__link">
-				<%= link_to(create_vid_path(:task_id=>@user_task[0].id), :rel=>"block",:layout => false,:rel=>"block") do %>	
-					<div class="add_content">
-						Add a video
-					</div>
-				<%end%>
-			</div>
-		<%end%>
+		<span style="font-size:11px;"class="third_font_method">
+			You can only enroll in one task at a time
+		</span>
 	<%end%>
-<%else%>
-	<span style="font-size:11px;"class="third_font_method">
-		You can only enroll in one task at a time
-	</span>
-<%end%>
 <%end%>

@@ -28,7 +28,7 @@
 	      </span> 
 	    <%end%>
     </div>    
-		<div class="all-comment__box small_bark_font_method second_font_method_alternate">
+		<div class="all-comment__box small_bark_font_method primary_link_font--large-bold">
 			<%=link_to comment.user.user_name, portfolio_path(:id=>comment.user.id)%>
 			&nbsp
 			<span class="third_font_method"><%= distance_of_time_in_words_to_now(comment.created_at)%> ago

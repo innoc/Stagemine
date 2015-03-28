@@ -1,147 +1,151 @@
-<%=render :partial=>"fans"%>
-<%=render :partial =>"fanned"%>
-
+<%=render :partial=>"portfolio_top"%> 
 <div class="container_portfolio">
- <div class="portfolio_content">
-    <%=render :partial=>"portfolio_top"%> 	
-  	<%if @feed.blank?%>
-  		<div class="feed_icon">
-  			<%=image_tag("feed.png")%><br/>
-  			No feed
-  		</div>
-  	<%else%>	
-     	<div id="columns">
-        <div class="stage_content">		 	   
-      	  <!--THIS JQUERY CODE HANDLES THE FACEBOK EFFECT-->
-        	<script>
-        	  jQuery(document).ready(function($) {
-        	    $('a[rel*=facebox]').live("mousedown", function() { 
-        		    $(this).unbind('click'); //everytime you click unbind the past event handled.
-        		    $(this).facebox();
-        		});
-        		$('a[rel*=imagepop]').live("mousedown", function() { 
-        		    $(this).unbind('click'); //everytime you click unbind the past event handled.
-        		    $(this).imagepop();
-        		});
-        	  });
-        	</script>  	
-        	<%unless @friend_suggestion.blank?%>
-        		<div class="pin">
-        			<div class="suggested_header bold_header">
-        			 Find new performers
-        			</div> <!--end of suggested_header-->
-        			<%for suggested_friend  in @friend_suggestion %>						
-        				<div class="suggested_friend_area">									
-        					<%unless suggested_friend.userimage.blank?%>
-        						<%@suggested_image = suggested_friend.userimage%>
-        					<%end%>
-        					<div class="add_friend light_bold_font">
-        						<%=link_to "Fan", add_performer_path(:id=> suggested_friend.id)%>
-        					</div> <!--end of add_friend-->
-        					<div class="suggested_user_name second_font_method third_font_method">					
-        						<%=link_to suggested_friend.user_name,portfolio_path(:id=>suggested_friend.id)%>
-        						<div class="rank_name">
-        						<%=suggested_friend.rank.rankdetail.name%>
-        						</div> <!--end of rank_name-->
-        					</div>
-        					<div class="suggested_friend_radi" style="border:2px solid <%=suggested_friend.rank.rankdetail.rank_color%>;background: url(<%if @suggested_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(@suggested_image.image.url(:smallest))%><%end%>) no-repeat;" ></div>
-        	     			<%=@suggested_image = nil %>				  
-        				</div><!--end of suggested_friend_area-->						
-        			<%end%>
-        			<div class="network_image">
-        				<%=image_tag("network_small.png")%>
-        			</div>
-        		</div><!--end of pin-->
-        	<%end%>								  				
-          <%= render :partial=>"stage/stage_feed"%>	 <!--The news feed is located in this partial-->
-    	 </div>
-  	 </div> <!-- end of content_stage -->
-   </div> <!--end of columns-->
-  <%end%>
-	  <div class="paginate_loader">
-			<%=image_tag("loading.gif")%>
-	  </div>	
-      <span style="display;"><%=paginate @feed%></span>  
-	  <div class="footer small_bark_font_method">
-	    <p>www.stagemine.com &copy; 2014</p> 
-	  </div><!-- end .footer -->
- 	
-  <!-- end .content -->
+  <div class="portfolio_user_info_container">
+    <div class="portfolio_user_info">
+      <div class="portfolio_user_info--right">
+        <div class="portfolio_stat-top-left">
+          <span class="bold_grey_font">List of interest</span>
+          <div class="portfolio_control--top small_light_text">
+            <ul>
+              <%for interest in @user_interest%>
+                <%unless interest.id == 1%>
+                  <li><%=interest.interest_name%></li>  
+                <%end%>
+              <%end%>
+            </ul>            
+          </div>
+        </div>
+        <div>
+          <div class="portfolio_control--bottom">            
+           <%unless @portfolio_restriction == "allow"%>
+              <%=link_to create_message_path(:id=>@user.id),:rel=>"block" do%>
+                <div class="portfolio_control--bottom-left">
+                  Message
+                </div>
+              <%end%>
+            <%end%>
+            <%unless @portfolio_restriction == "allow"%>
+              <%if @fan_check.blank?%>
+                <%=link_to add_performer_path(:id=>@user.id) do%>
+                  <div class="portfolio_control--bottom-right">
+                    Fan
+                  </div>
+                <%end%>
+              <%else%>
+                <%=link_to disconnect_path(:fan_id=>@fan_check[0].id,:id=>@user.id) do%>
+                  <div class="portfolio_control--bottom-right">
+                    Unfan
+                  </div>
+                <%end%>
+              <%end%>
+            <%else%>
+              <%=link_to alter_path do%>
+                <div class="portfolio_control--bottom-right">
+                  Edit
+                </div>
+              <%end%>
+            <%end%>
+          </div>
+        </div>
+        <div class="portfolio_stat_info primary_link_font_smaller">                      
+          <%=link_to pluralize(@fan.count,"Fans"),see_all_friendship_path(:id=>@user.id,:type=>"fan")%> &nbsp; | &nbsp; <%=link_to "#{@fanned.count} Fanned",see_all_friendship_path(:id=>@user.id,:type=>"fanned")%>        
+        </div>     
+      </div>
+      <div class="portfolio_user_info--left">
+        <%unless @user.userimage.blank?%>
+        <%user_image = @user.userimage%>
+        <%end%>
+        <div class="portfolio_user_image" style="background: url(<%if user_image.blank?%><%=image_path("Default_large.png")%><%else%><%=image_path(user_image.image.url(:large))%><%end%>) no-repeat;background-position: center">
+        </div>
+        <div class="portfolio_user_details">
+          <span class="primary_link_font--larger-bold">
+            <%= link_to "#{@user.first_name} #{@user.last_name}", portfolio_path(:id=>@user.id) %>
+          </span>
+          <div>
+            <span class="light_grey_font-large"><%=@user.user_name%> &nbsp</span> 
+            <%unless @user_represents.blank?%>
+              <span class="user_rep">
+                <span class="small_light_text">| Reppin :</span>
+                <span class="bold_grey_font"><%=@user_represents%></span>
+              </span>
+            <%end%>
+          </div>
+          <div class="portfolio_user_rank">
+            <div class="portfolio_user_rank-color" style="background: <%=@user.rank.rankdetail.rank_color%>">
+            </div>
+            <div class="portfolio_user_rank_name primary_link_font--small-bold">    
+              <%=link_to "#{@user.rank.rankdetail.name} Rank",rank_info_path,:rel=>"block" %>
+            </div>
+          </div>
+          <div class="portfolio_user_point">
+            <span class="light_green_font--small"><%=@user.points.inject(0){|sum,e| sum += e.point}%></span> <span class="small_bold_text">points</span>
+          </div>
+          <div class="portfolio_user_rep primary_link_font_smaller">
+            <%unless  @user.youtube_link.blank?%><%=image_tag("link.png")%> <%= link_to "YouTube Channel", "#{@user.youtube_link}",:target => "_blank"%><%end%>
+            <%if !(@user.youtube_link.blank?) and !(@user.portfolio_link.blank?)%> &nbsp;| &nbsp;<%end%>
+            <%unless  @user.portfolio_link.blank?%><%=image_tag("link.png")%> <%= link_to "External Portfolio", "#{@user.portfolio_link}",:target => "_blank"%><%end%>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
+  <div class="portfolio_sidebar">
+  <%= render :partial=>"performance_sidebar"%>
+  </div>
+  <%if @feed.blank?%>
+    <div class="feed_icon">
+      <%=image_tag("feed.png")%><br/>
+      No feed
+    </div>
+  <%else%>
+    <div class="stage_content"> 
+      <div id="portfolio_columns">             
+        <!--THIS JQUERY CODE HANDLES THE FACEBOK EFFECT-->
+        <script>
+          jQuery(document).ready(function($) {
+            $('a[rel*=facebox]').live("mousedown", function() { 
+              $(this).unbind('click'); //everytime you click unbind the past event handled.
+              $(this).facebox();
+          });
+          $('a[rel*=imagepop]').live("mousedown", function() { 
+              $(this).unbind('click'); //everytime you click unbind the past event handled.
+              $(this).imagepop();
+          });
+          });
+        </script>   
+        <%= render :partial=>"stage/stage_feed"%>
+      </div>
+    </div> 
+  <%end%>
+</div>
+
 <script>
-   $(function () {
-    $('.portfolio-nav-click > ul').toggleClass('portfolio_interest_name js');
-    $('.portfolio-nav-click .js ul').hide();
-    $('.portfolio-nav-click .js').click(function(e) {
-      $('.portfolio-nav-click .js ul').slideToggle(200);
-      $('.portfolio-clicker').toggleClass('active');
-      e.stopPropagation();
-    });
-    $(document).click(function() {
-      if ($('.portfolio-nav-click .js ul').is(':visible')) {
-        $('.portfoilio-nav-click .js ul', this).slideUp();
-        $('.portfolio-clicker').removeClass('active');
-      }
-    });
-  });
-  $(document).ready(function(){
-    $(".portfolio__top--right--image").hover(function(){ 
-      $(".portfolio__top--right--bottom").toggle();      
-    })
-    $(".portfolio__top--right--video").hover(function(){ 
-      $(".portfolio__top--right__change__video").toggle();      
-    })
-    $("#mini_menu_trigger").click(function(){ 
+$(document).ready(function(){  
+ $(".portfolio__top--right--image").hover(function(){ 
+    $(".portfolio__top--right--bottom").toggle();      
+  })
+ $(".portfolio__top--right--video").hover(function(){ 
+    $(".portfolio__top--right__change__video").toggle();      
+  })
+
+  $("#mini_menu_trigger").click(function(){ 
       $("#mini_menu_id").toggle();
-    })
-  	$('#myfile').change(function(evt) {
+    });
+
+    $('#myfile').change(function(evt) {
          $('#new_image').submit();
     });
+
     $('#imgFile').change(function(evt) {
       $('#change_image').submit();
     });
-  	  $(".portfolio__top--left--top").hover(
-  		function() {
-  	      $("#mybutton").show();
-  	    }, function() {
-  	       $("#mybutton").hide();
-  	    }
-  	  );  
-  	 
-  	  $('a[rel*=block]').block();
-  	  if($(window).width() < 1227)
-  	  { 
-  		$('.sidebar_left').hide();
-  	 	$('.sidebar2').hide(); 
-  	 	$('.task_cover').show(); 
-  	 	
-  	  }	  
-  	  else if($(window).width() > 1227)
-  	  { 
-  		$('.sidebar_left').show();
-  	    $('.sidebar2').show();
-  	    $('.task_cover').hide(); 
-  	  }	  
-  	$(window).resize(function() {
-  	  // This will execute whenever the window is resized
-  	 
-  	  if($(window).width() < 1227)
-  	  { 
-  		$('.sidebar_left').hide();
-  		$('.sidebar2').hide();
-  		$('.task_cover').show(); 
-  	  }
-  	  else if($(window).width() > 1227)
-  	  { 
-  		$('.sidebar_left').show();
-  		$('.sidebar2').show();
-  		$('.task_cover').hide();	
-  	  }	
-  	});
-  	});	
-  	$( ".task_header_title" ).fadeOut( "slow" );
-	  $( ".task_header_title" ).fadeIn( "slow" );	
+
+    $(".portfolio__top--left--top").hover(
+    function() {
+        $("#mybutton").show();
+      }, function() {
+         $("#mybutton").hide();
+      }
+    ); 
+})
 </script>
-
-

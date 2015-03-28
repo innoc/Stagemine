@@ -6,7 +6,7 @@
         <%else%>
         <%=link_to "Leave League", league_disenroll_path(:id=>@interest_id.leagues.last.id)%>&nbsp;&nbsp;
       <%end%>
-        <%=link_to "View  details", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
+        <%=link_to "View Rewards", league_detail_path(:league_id=>@interest_id.leagues.last.id),:rel=>"block"%>
     </span>
   </div>
   <%hash = Hash[@season_table.map.with_index.to_a]%> 

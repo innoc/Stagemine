@@ -20,27 +20,9 @@
   
   <link href='http://fonts.googleapis.com/css?family=Oxygen:700,400' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 	
-<script>
-	$(function () {
-	  $('.click-nav > ul').toggleClass('header_user_name js');
-	  $('.click-nav .js ul').hide();
-	  $('.click-nav .js').click(function(e) {
-	    $('.click-nav .js ul').slideToggle(200);
-	    $('.clicker').toggleClass('active');
-	    e.stopPropagation();
-	  });
-	  $(document).click(function() {
-	    if ($('.click-nav .js ul').is(':visible')) {
-	      $('.click-nav .js ul', this).slideUp();
-	      $('.clicker').removeClass('active');
-	    }
-	  });
-	});
-</script>
-
-
-	<style type="text/css">
+<style type="text/css">
 	body {
 	  font-family: 'Oxygen', sans-serif;	  
 	  background-image:url(<%=image_path("noise2.png")%>); 
@@ -50,7 +32,7 @@
 	  color: #000;
 	  height:100%;
 	}
-	</style>
+</style>
 </head>
 <body>
 <% unless current_user.blank?%>
@@ -81,7 +63,7 @@
 					<div class="click-nav">
 					  <ul class="header_user_name">
 					    <li>
-					      <span class="clicker"><%=current_user.user_name%>&nbsp;<%=image_tag("pointer.png")%></span>
+					      <span class="clicker"><%=current_user.user_name%>&nbsp;&nbsp;<%=image_tag("pointer.png")%></span>
 					      <ul>
  						      <li><%=link_to "Portfolio", portfolio_path(:id=>current_user.id)%></li>
 					        <li><%=link_to "Message",message_path%></li>
@@ -95,7 +77,11 @@
 			  </div>    
 		    <div class="brand_icon">			    	
 		    	<%unless current_user.notifications.where("status=?",0).blank?%>
-		 				<div class="notification_top_icon"><%=link_to current_user.notifications.where("status=?",0).count,notification_path%></div>
+		    		<%= link_to(notification_path) do %>
+		 					<div class="notification_top_icon">
+		 						<%=current_user.notifications.where("status=?",0).count%>
+		 					</div>
+		 				<%end%>
 					<%end%>	
 				
 		    	<% unless current_user.blank? or current_user.usertype == "admin"%>

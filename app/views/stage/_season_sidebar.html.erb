@@ -1,36 +1,42 @@
 <%@interest_season = generate_season_interest(@filter_code,@random_interest)%>
-<%if @interest_season.blank?%>
-  <div class="sidebar--left__header">	
-		No Interest selected
-	</div> 
-	<div class="no_season small_bark_font_method">
-		<div class="default_season">
-			<%=image_tag('season_default.png')%>
-		</div>
-		<br/>
-			No interest 
-		<br/>
-		<div class="season_text third_font_method">
-			Select an Interest type to get an incredible Stagemine experience
-		</div>
-	</div>	
+<%unless @season_winner_notification.blank?%> 
+<%= render :partial=>"season/league_winners"%>
 <%else%>
-	<%if Season.all.blank?%>
-		<div class="sidebar--left__header">					
-			No Season
+	<%if @interest_season.blank?%>
+	  <div class="sidebar--left__header">	
+			<div class="no_interest">
+				No Interest selected
+			</div>
 		</div> 
 		<div class="no_season small_bark_font_method">
 			<div class="default_season">
 				<%=image_tag('season_default.png')%>
 			</div>
 			<br/>
-				No season at this time
+				No interest 
 			<br/>
 			<div class="season_text third_font_method">
-				A season a period were users accumulate points by enrolling in different dance leagues and tasks.
+				Select an Interest type to get an incredible Stagemine experience
 			</div>
-		</div>
+		</div>	
 	<%else%>
-		<%=render :partial=>"season_component"%>	
-	<%end%> <!-- end of "if season.blank?"-->
-<%end%> <!--end of "no interest"-->
+		<%if Season.all.blank?%>
+			<div class="sidebar--left__header">					
+				No Season
+			</div> 
+			<div class="no_season small_bark_font_method">
+				<div class="default_season">
+					<%=image_tag('season_default.png')%>
+				</div>
+				<br/>
+					No season at this time
+				<br/>
+				<div class="season_text third_font_method">
+					A season a period were users accumulate points by enrolling in different dance leagues and tasks.
+				</div>
+			</div>
+		<%else%>
+			<%=render :partial=>"season_component"%>	
+		<%end%> <!-- end of "if season.blank?"-->
+	<%end%> <!--end of "no interest"-->
+<%end%>

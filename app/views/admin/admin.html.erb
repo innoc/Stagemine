@@ -1,31 +1,29 @@
 <div class="container_large">
-<div class="small_bark_font_method">
-	<% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>		
-		<%if @create_winner == "Yes"%>  				
-			<br/><%= link_to "Create Season Winners",league_winner_path%> <br/><br/>
-		<%else%>
-			<%unless @point_pending.blank?%>			
-				<br/><%= link_to" Create a new user history",create_history_path%> <br/><br/>
+	<div class="small_bark_font_method">
+		<% if !flash.empty? %><div class="error_container"><%= flash[:notice] %> </div><% end %>		
+			<%if @create_winner == "Yes"%>  				
+				<br/><%= link_to "Create Season Winners",league_winner_path%> <br/><br/>
 			<%else%>
-				<%unless Historypending.last.blank?%>	  
-				<br/>The last user history was <%=Historypending.last.updated_at.strftime("created on %m/%d/%Y")%> <br/><br/>
+				<%unless @point_pending.blank?%>			
+					<br/><%= link_to" Create a new user history",create_history_path%> <br/><br/>
+				<%else%>
+					<%unless Historypending.last.blank?%>	  
+					<br/>The last user history was <%=Historypending.last.updated_at.strftime("created on %m/%d/%Y")%> <br/><br/>
+					<%end%>
 				<%end%>
 			<%end%>
+	</div>
+	<%unless @pending_winner.blank?%>	
+	  <%= link_to(pending_winners_path) do %>		
+			<div class="admin_smaller_dashboard small_bark_font_method">		
+				Pending winners!!!
+			</div>
 		<%end%>
-</div>
-
-<%unless @pending_winner.blank?%>	
-  <%= link_to(pending_winners_path) do %>		
-		<div class="admin_smaller_dashboard small_bark_font_method">		
-			Pending winners!!!
-		</div>
 	<%end%>
-<%end%>
-
-<div class="admin_dashboard">
-	<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span>&nbsp;&nbsp;&nbsp;&nbsp;
-	|&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "User Count :  #{@user_count}",all_user_path%><br/>
-</div>
+	<div class="admin_dashboard">
+		<%=link_to "Log Out",destroy_path%>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="season_link">Create Season</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<span class="league_link">Create Task</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		|&nbsp;&nbsp;&nbsp;&nbsp;<%=link_to "User Count :  #{@user_count}",all_user_path%><br/>
+	</div>
 
 <%unless @task.blank?%>
 	<div class="admin_lower_dashboard">
@@ -411,7 +409,27 @@
 </div>
 
 <%=form_tag(task_path) do%>
-
+		<table>
+			<tr>
+				<td>
+					<span class="mid_bark_font_method">Title:</span>
+					<p></p>
+						<select name="task_reward">
+							<option value="10">10 points</option>
+							<option value="20">20 points</option>
+							<option value="30">30 points</option>									
+							<option value="40">40 points</option>
+							<option value="50">50 points</option>
+							<option value="60">60 points</option>									
+							<option value="70">70 points</option>
+							<option value="80">80 points</option>
+							<option value="90">90 points</option>
+							<option value="100">100 points</option>
+						</select>
+				</td>
+			</tr>
+		</table>
+		<p></p>
 				<table>
 					<tr>
 						<td>
@@ -564,7 +582,7 @@
 				</table>				
 		<br/><br/>
 		<div id="form_btn">	
-		<%= submit_tag 'Click to Post',:class => 'classname'%>
+		<%= submit_tag 'Create Task',:class => 'classname'%>
 		</div>
 		<br/>
 <%end%>
@@ -580,6 +598,6 @@ $(document).ready(function(){
 	$(".league_link").click(function(){	
 		$(".league_container").toggle();
 		$(".season_container ").hide();
-
 	});
-})
+});
+</script>

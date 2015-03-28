@@ -1,97 +1,49 @@
-  <%unless @season_winner_notification.blank?%>  
-    <%league_winners = league_winner(@filter_code)%>
-    <%unless league_winners.blank?%>
-      <%first_position = get_first(league_winners)%>
-      <%first_position_user = first_position.user%>
-      <span class="pin_close"> 
-       <div class="pin">
-        <div class="pin_winner_notification_cover">
-          <div class="notification_header">
-              <div class="close_notification second_font_method">
-                <%=link_to "close",close_path(:id=>@season_winner_notification.id,:interest_name=>@current_filter),:id=>"close",:remote=>true%>
+<%@winner = Winner.task_winner(@user)%>
+  <%unless @portfolio_page%>
+    <%unless @winner == nil%>
+      <%=render :partial=>"task/task_winner"%>
+    <%else%>
+      <%unless @user_task.empty?%>
+        <div class="primary_link_font--nodecoration">
+          <%if !(@user_task.empty?) and !(@user.enrolled?) %>
+            <%= link_to(task_info_path,:rel=>"block") do %>
+              <div class="task_notification--small">
+                You have <%=pluralize(@user_task.count,'pending task')%>
+                <div class="task_notification__icon">
+                  <%=image_tag("task_small.png")%>
+                </div>        
               </div>
-              <div class="winner_label">
-                <span class="light_bold_font_second">  
-                  <%=first_position.position.ordinalize%> place winner!!!
-                </span>
-                <div class="third_font_11px">
-                  of the <%=@current_filter%> league
-                </div>
-              </div>
-              <div class="winner_notification_icon">
-              </div>
-          </div>
-          <div class="notification_body">
-            <div class="winner_info_container second_font_method_alternate">
-              <%= link_to "#{first_position_user.first_name} #{first_position_user.last_name}", portfolio_path(:id=>first_position_user.id) %><br/>
-              <span class="third_font_11px"><%=first_position_user.user_name%></span><br/>       
-              <span class="third_font_11px"><%=first_position_user.rank.rankdetail.name%></span><br/>
-               <div class="winner_points">  
-                 <span class="light_bold_font_second">
-                  <%= user_point = userhistory(@filter_code,first_position_user.id).point%>
-                 </span>
-                 <span class="third_font_11px">
-                  <%if  user_point > 1%> points <%else%> point <%end%>
-                 </span>
-               </div>
-            </div>
-            <%first_position_image = first_position_user.userimage%>
-            <div class="winner_image_radius" style="border:2px solid <%=first_position_user.rank.rankdetail.rank_color%>;background: url(<%if first_position_image.blank?%><%=image_path("Default_thumb.png")%><%else%><%=image_path(first_position_image.image.url(:thumb))%><%end%>) no-repeat;">      
-            </div>
-          </div>
-          <%if league_winners.count > 1%>  
-            <div class="notification_footer">
-              <%for winner in league_winners%>
-                <%unless first_position == winner%>
-                  <%other_winners = winner.user%>
-                  <%other_winner_image = other_winners.userimage%>
-                  <div class="other_winner_radi" style="border:2px solid <%=other_winners.rank.rankdetail.rank_color%>;background: url(<%if other_winner_image.blank?%><%=image_path("Default_smallest.png")%><%else%><%=image_path(other_winner_image.image.url(:smallest))%><%end%>) no-repeat;" >
-                  </div>       
-                  <div class="other_winner_detail_box small_bark_font_method third_small_">
-                    <span class="second_font_method_alternate"><%= link_to "#{other_winners.first_name} #{other_winners.last_name}", portfolio_path(:id=>other_winners.id) %><br/>
-                      <span class="third_font_11px"><%=other_winners.user_name%></span><br/>       
-                    </span>
-                    <span class="light_bold_font">
-                      <%= other_winner_point = userhistory(@filter_code,other_winners.id).point%>
-                    </span>
-                    <span class="third_font_11px">
-                      <%if other_winner_point > 1%> points <%else%> point <%end%>
-                    </span>
-                    <div class="other_winner_position">
-                      <%=winner.position.ordinalize%>
-                    </div>
-                  </div><br/>
-                <%end%>
-              <%end%>
-            </div>
-          <%end%>
+            <%end%>
+          <%else%>
+            <%= link_to(task_path(:id=>"Enrolled Task")) do %>  
+              <%= render :partial=>"right_sidebar"%>
+            <%end%> 
+          <%end%>   
         </div>
-      </div>
-      </span>
-    <%end%>
+      <%end%>
+    <%end%> 
   <%end%>
-  
-   <%for feed in @feed%>
-	     <%if feed.feed_name == "Video"%>
-	     	<%= render :partial=>"stage/video_feed" , :locals=>{:feed=>feed}%>
-		 	<%else%>
-		 	<%if feed.feed_name=="Image"%>
-	 		<%= render :partial=>"stage/image_feed" , :locals=>{:feed=>feed}%>
-		 	<%else%>
-		 	<%if feed.feed_name=="Word"%>
-	 		<%= render :partial=>"stage/text_feed" , :locals=>{:feed=>feed}%>
-	 		<%else%>
-	 		<%if feed.feed_name=="Rank"%>
-	 		<%= render :partial=>"stage/rank_feed" , :locals=>{:feed=>feed}%>
-	 		<%else%>
-	 		<%if feed.feed_name=="Task"%>
-	 		<%= render :partial=>"stage/task_feed" , :locals=>{:feed=>feed}%>
-		 	<%end%>
-		 	<%end%>
-		 	<%end%>
-		 	<%end%>
-		 	<%end%>
-	  <%end%>
+<%for feed in @feed%>
+  <%if feed.feed_name == "Video"%>
+   	<%= render :partial=>"stage/video_feed" , :locals=>{:feed=>feed}%>
+ 	<%else%>
+ 	  <%if feed.feed_name=="Image"%>
+		  <%= render :partial=>"stage/image_feed" , :locals=>{:feed=>feed}%>
+ 	  <%else%>
+ 	    <%if feed.feed_name=="Word"%>
+		      <%= render :partial=>"stage/text_feed" , :locals=>{:feed=>feed}%>
+		    <%else%>
+	 	      <%if feed.feed_name=="Rank"%>
+		        <%= render :partial=>"stage/rank_feed" , :locals=>{:feed=>feed}%>
+		      <%else%>
+		        <%if feed.feed_name=="Task"%>
+		          <%= render :partial=>"stage/task_feed" , :locals=>{:feed=>feed}%>
+ 	        <%end%>
+ 	      <%end%>
+ 	    <%end%>
+ 	  <%end%>
+ 	<%end%>
+<%end%>
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {

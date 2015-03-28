@@ -22,6 +22,8 @@ class EditController < ApplicationController
   
   def alter
     @user_detail = current_user
+    @user_represents = current_user.city_supported unless current_user.city_supported.blank?
+    @user_represents = current_user.school_supported unless  current_user.school_supported.blank?
   end
  
 def image_params
