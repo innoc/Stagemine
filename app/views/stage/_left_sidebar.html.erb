@@ -1,19 +1,30 @@
-<%unless Season.last.status == "active"%>
-  <div class="cheers_activation">
-  	<div class="cheers_activation-icon">
-  		<%=image_tag("Cheers-chained.png")%>
-  	</div>
-  	<div class="bold_grey_font">
-  		Cheers are locked until season starts	
-  	</div>
-  </div>
+<%unless Season.blank?%>
+  <%unless Season.last.status == "active"%>
+    <div class="cheers_activation">
+    	<div class="cheers_activation-icon">
+    		<%=image_tag("Cheers-chained.png")%>
+    	</div>
+    	<div class="bold_grey_font">
+    		Cheers are locked until season starts	
+    	</div>
+    </div>
+  <%else%>
+    <div class="cheers_activation">
+      <div class="cheers_activation-icon">
+        <%=image_tag("Cheers-unchained.png")%>
+      </div>
+      <div class="bold_grey_font">
+        Cheers are now unlocked
+      </div>
+    </div>
+  <%end%>
 <%else%>
   <div class="cheers_activation">
     <div class="cheers_activation-icon">
-      <%=image_tag("Cheers-unchained.png")%>
+      <%=image_tag("Cheers-chained.png")%>
     </div>
     <div class="bold_grey_font">
-      Cheers are now unlocked
+      Cheers are locked until season starts 
     </div>
   </div>
 <%end%>
