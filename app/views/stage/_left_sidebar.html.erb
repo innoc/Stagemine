@@ -1,4 +1,13 @@
-<%unless Season.blank?%>
+<%if Season.count == 0%>
+  <div class="cheers_activation">
+    <div class="cheers_activation-icon">
+      <%=image_tag("Cheers-chained.png")%>
+    </div>
+    <div class="bold_grey_font">
+      Cheers are locked until season starts 
+    </div>
+  </div>
+<%else%>
   <%unless Season.last.status == "active"%>
     <div class="cheers_activation">
     	<div class="cheers_activation-icon">
@@ -18,13 +27,4 @@
       </div>
     </div>
   <%end%>
-<%else%>
-  <div class="cheers_activation">
-    <div class="cheers_activation-icon">
-      <%=image_tag("Cheers-chained.png")%>
-    </div>
-    <div class="bold_grey_font">
-      Cheers are locked until season starts 
-    </div>
-  </div>
 <%end%>
